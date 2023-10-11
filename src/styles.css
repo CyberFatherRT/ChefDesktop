@@ -132,7 +132,7 @@ html, body, main, #app {
 }
 
 .tippy-box[data-theme~='custom'] {
-  background-color: #555;
+  background-color: #666;
 }
 
 .no-select {

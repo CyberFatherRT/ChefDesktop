@@ -92,6 +92,8 @@
     background-color: #484848;
     border-color: #484848;
     color: #3dba9f;
+
+    transition: background-color 0.2s;
   }
 
   span {
