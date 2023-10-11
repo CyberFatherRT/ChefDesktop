@@ -1,16 +1,19 @@
 <script lang="ts">
   import Gutter from "./lib/web/componets/Gutter.svelte";
   import Header from "./lib/web/componets/Header.svelte";
+  import Operations from "./lib/web/componets/Operations.svelte";
+  import Recipe from "./lib/web/componets/Recipe.svelte";
+  import IO from "./lib/web/componets/IO.svelte";
 </script>
 
 <main>
   <Header/>
   <div class="content-wrapper">
-    <div class="box"></div>
+    <Operations/>
     <Gutter/>
-    <div class="box"></div>
+    <Recipe/>
     <Gutter/>
-    <div class="box"></div>
+    <IO/>
   </div>
 </main>
 
