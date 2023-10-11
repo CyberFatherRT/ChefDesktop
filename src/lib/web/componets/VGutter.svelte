@@ -7,6 +7,8 @@
     background-repeat: no-repeat;
     background-position: 50%;
     background-color: var(--secondary-border-color);
+
+    height: 100%;
     width: 4px;
   }
 </style>

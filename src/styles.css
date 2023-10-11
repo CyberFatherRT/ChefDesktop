@@ -23,9 +23,9 @@
 
     --banner-font-color: #c5c5c5;
     --banner-bg-color: #252525;
-    --banner-url-color: #1976d2;
+    --banner-url-color: #01d5a7;
 
-    --category-list-font-color: #1976d2;
+    --category-list-font-color: #1de18c;
 
     --loader-background-color: var(--secondary-border-color);
     --loader-outer-color: #3498db;
@@ -46,7 +46,7 @@
     --selected-operation-border-color: #444;
 
     --breakpoint-font-color: #ddd;
-    --breakpoint-bg-color: #073655;
+    --breakpoint-bg-color: #097043;
     --breakpoint-border-color: #444;
 
     --disabled-font-color: #666;
@@ -58,7 +58,7 @@
     --fc-operation-border-color: #444;
 
     --fc-breakpoint-operation-font-color: #ddd;
-    --fc-breakpoint-operation-bg-color: #072b49;
+    --fc-breakpoint-operation-bg-color: #166957;
     --fc-breakpoint-operation-border-color: #444;
 
 
@@ -67,7 +67,7 @@
     --arg-background: #3c3c3c;
     --arg-border-color: #3c3c3c;
     --arg-disabled-background: #4f4f4f;
-    --arg-label-color: rgb(25, 118, 210);
+    --arg-label-color: rgb(26, 138, 121);
 
 
     --disable-icon-color: #9e9e9e;
@@ -131,4 +131,12 @@ html, body, main, #app {
   height: 100%;
 }
 
+.tippy-box[data-theme~='custom'] {
+  background-color: #555;
+}
 
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}

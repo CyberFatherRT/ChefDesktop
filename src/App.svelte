@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Gutter from "./lib/web/componets/Gutter.svelte";
+  import VGutter from "./lib/web/componets/VGutter.svelte";
   import Header from "./lib/web/componets/Header.svelte";
   import Operations from "./lib/web/componets/Operations.svelte";
   import Recipe from "./lib/web/componets/Recipe.svelte";
@@ -10,9 +10,9 @@
   <Header/>
   <div class="content-wrapper">
     <Operations/>
-    <Gutter/>
+    <VGutter/>
     <Recipe/>
-    <Gutter/>
+    <VGutter/>
     <IO/>
   </div>
 </main>
