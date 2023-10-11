@@ -3,17 +3,17 @@
     just --list
 
 @build: install
-    npm run tauri build
+    bun run tauri build
 
 @dev: install
-    npm run tauri dev
+    bun run tauri dev
 
 @update:
     cargo update --manifest-path src-tauri/Cargo.toml
-    npm update
+    bun update
 
 @install:
-    npm install
+    bun install
 
 @clean:
     cargo clean --manifest-path src-tauri/Cargo.toml
