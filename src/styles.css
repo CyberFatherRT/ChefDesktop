@@ -1,4 +1,119 @@
 :root {
+    --primary-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --primary-font-color: #c5c5c5;
+    --primary-font-size: 14px;
+    --primary-line-height: 20px;
+
+    --fixed-width-font-family: "Monaco", "Droid Sans Mono", "Consolas", monospace;
+    --fixed-width-font-color: inherit;
+    --fixed-width-font-size: inherit;
+
+    --subtext-font-color: #999;
+    --subtext-font-size: 13px;
+
+    --primary-background-color: #1e1e1e;
+    --secondary-background-color: #252525;
+
+    --primary-border-color: #444;
+    --secondary-border-color: #3c3c3c;
+
+    --title-color: #fff;
+    --title-weight: bold;
+    --title-background-color: #333;
+
+    --banner-font-color: #c5c5c5;
+    --banner-bg-color: #252525;
+    --banner-url-color: #1976d2;
+
+    --category-list-font-color: #1976d2;
+
+    --loader-background-color: var(--secondary-border-color);
+    --loader-outer-color: #3498db;
+    --loader-middle-color: #e74c3c;
+    --loader-inner-color: #f9c922;
+
+
+    --op-list-operation-font-color: #c5c5c5;
+    --op-list-operation-bg-color: #333;
+    --op-list-operation-border-color: #444;
+
+    --rec-list-operation-font-color: #c5c5c5;
+    --rec-list-operation-bg-color: #252525;
+    --rec-list-operation-border-color: #444;
+
+    --selected-operation-font-color: #c5c5c5;
+    --selected-operation-bg-color: #3f3f3f;
+    --selected-operation-border-color: #444;
+
+    --breakpoint-font-color: #ddd;
+    --breakpoint-bg-color: #073655;
+    --breakpoint-border-color: #444;
+
+    --disabled-font-color: #666;
+    --disabled-bg-color: #444;
+    --disabled-border-color: #444;
+
+    --fc-operation-font-color: #c5c5c5;
+    --fc-operation-bg-color: #2d2d2d;
+    --fc-operation-border-color: #444;
+
+    --fc-breakpoint-operation-font-color: #ddd;
+    --fc-breakpoint-operation-bg-color: #072b49;
+    --fc-breakpoint-operation-border-color: #444;
+
+
+    --op-title-font-weight: bold;
+    --arg-font-color: #bbb;
+    --arg-background: #3c3c3c;
+    --arg-border-color: #3c3c3c;
+    --arg-disabled-background: #4f4f4f;
+    --arg-label-color: rgb(25, 118, 210);
+
+
+    --disable-icon-color: #9e9e9e;
+    --disable-icon-selected-color: #f44336;
+    --breakpoint-icon-color: #9e9e9e;
+    --breakpoint-icon-selected-color: #f44336;
+
+
+    --btn-default-font-color: #c5c5c5;
+    --btn-default-bg-color: #2d2d2d;
+    --btn-default-border-color: #3c3c3c;
+
+    --btn-default-hover-font-color: #c5c5c5;
+    --btn-default-hover-bg-color: #2d2d2d;
+    --btn-default-hover-border-color: #205375;
+
+    --btn-success-font-color: #fff;
+    --btn-success-bg-color: #073655;
+    --btn-success-border-color: #0e639c;
+
+    --btn-success-hover-font-color: #fff;
+    --btn-success-hover-bg-color: #0e639c;
+    --btn-success-hover-border-color: #0e639c;
+
+
+    --hl1: #264f78;
+    --hl2: #675351;
+    --hl3: #c40000;
+    --hl4: #fcf8e3;
+    --hl5: #38811b;
+
+
+    --scrollbar-track: #1e1e1e;
+    --scrollbar-thumb: #424242;
+    --scrollbar-hover: #4e4e4e;
+
+
+    --drop-file-border-color: #0e639c;
+    --table-border-color: #555;
+    --popover-background: #444;
+    --popover-border-color: #555;
+    --code-background: #0e639c;
+    --code-font-color: #fff;
+    --input-highlight-color: #1976d2;
+    --input-border-color: #424242;
+
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -6,22 +121,14 @@
   -webkit-text-size-adjust: 100%;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    color: #f6f6f6;
-    background-color: #2f2f2f;
-  }
-
-  a:hover {
-    color: #24c8db;
-  }
-
-  input,
-  button {
-    color: #ffffff;
-    background-color: #0f0f0f98;
-  }
-  button:active {
-    background-color: #0f0f0f69;
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+html, body, main, #app {
+  height: 100%;
+}
+
+
