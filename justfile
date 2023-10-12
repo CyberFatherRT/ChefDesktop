@@ -18,3 +18,4 @@
 @clean:
     cargo clean --manifest-path src-tauri/Cargo.toml
     rm -rf node_modules dist
+
