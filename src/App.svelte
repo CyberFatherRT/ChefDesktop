@@ -23,6 +23,7 @@
     display: grid;
     grid-template-columns: calc(20% - 2px) 4px calc(30% - 4px) 4px calc(50% - 2px);
     height: 100%;
+    border: 1px solid var(--primary-border-color);
     /* height: calc(100% - 30px); */
   }
 
