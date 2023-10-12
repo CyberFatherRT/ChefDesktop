@@ -6,7 +6,7 @@
     background-repeat: no-repeat;
     background-position: 50%;
     background-color: var(--secondary-border-color);
-
+    cursor: ns-resize;
 
     width: 100%;
     height: 4px;

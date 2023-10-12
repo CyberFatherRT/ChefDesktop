@@ -7,7 +7,7 @@
 </script>
 
 <main>
-  <Header/>
+  <!-- <Header/> -->
   <div class="content-wrapper">
     <Operations/>
     <VGutter/>
@@ -22,7 +22,8 @@
   .content-wrapper {
     display: grid;
     grid-template-columns: calc(20% - 2px) 4px calc(30% - 4px) 4px calc(50% - 2px);
-    height: calc(100% - 30px);
+    height: 100%;
+    /* height: calc(100% - 30px); */
   }
 
   main {
