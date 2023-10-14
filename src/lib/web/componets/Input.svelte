@@ -12,6 +12,11 @@
 
 <div class="input">
   <Title title="Input" id="input" {icons}/>
+  <div class="input-wrapper">
+    <div class="input-tabs"></div>
+    <div class="input-text"></div>
+    <div class="input-status-bar"></div>
+  </div>
 </div>
 
 

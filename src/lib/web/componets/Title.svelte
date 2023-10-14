@@ -1,13 +1,13 @@
 <script lang="ts">
   import tippy, { type Props } from "tippy.js";
-  import "tippy.js/dist/tippy.css"
+  import "tippy.js/dist/tippy.css";
 
   export let title: string;
   export let icons: Object = {};
   export let id: string = "";
 
   type Options = Partial<Props>;
-  
+
   function tooltip(element: HTMLElement, options: Options) {
     let option: Options = {
       ...options,
@@ -74,8 +74,7 @@
     margin-left: 2px;
     width: 2rem;
     min-width: 2rem;
-    
-    margin: 0;
+
     padding: 0;
 
     line-height: 0;
@@ -84,7 +83,7 @@
     background-color: transparent;
     border: none;
     color: #fff;
-    
+
     cursor: pointer;
   }
 
