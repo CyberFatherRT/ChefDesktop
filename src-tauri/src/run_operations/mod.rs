@@ -44,3 +44,5 @@ mod from_base64;
 pub use from_base64::from_base64;
 mod from_base;
 pub use from_base::from_base;
+mod hmac;
+pub use hmac::hmac;
