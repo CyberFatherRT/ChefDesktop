@@ -58,3 +58,5 @@ mod rsa_decrypt;
 pub use rsa_decrypt::rsa_decrypt;
 mod rsa_encrypt;
 pub use rsa_encrypt::rsa_encrypt;
+mod sha1;
+pub use sha1::sha1;
