@@ -136,3 +136,5 @@ mod sha1;
 pub use sha1::sha1;
 mod sha2;
 pub use sha2::sha2;
+mod sha3;
+pub use sha3::sha3;
