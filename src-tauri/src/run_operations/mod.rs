@@ -8,3 +8,5 @@ mod add;
 pub use add::add;
 mod adler32_checksum;
 pub use adler32_checksum::adler32_checksum;
+mod affine_cipher_decode;
+pub use affine_cipher_decode::affine_cipher_decode;
