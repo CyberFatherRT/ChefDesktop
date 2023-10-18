@@ -144,3 +144,5 @@ mod to_base;
 pub use to_base::to_base;
 mod vigenere_cipher_decode;
 pub use vigenere_cipher_decode::vigenere_cipher_decode;
+mod vigenere_cipher_encode;
+pub use vigenere_cipher_encode::vigenere_cipher_encode;
