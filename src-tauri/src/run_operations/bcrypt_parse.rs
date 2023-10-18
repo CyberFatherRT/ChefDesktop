@@ -4,4 +4,3 @@ pub use operations::{run_operations, BcryptParse};
 pub fn bcrypt_parse(request: &str) -> Result<String, String> {
     run_operations(BcryptParse, request)
 }
-

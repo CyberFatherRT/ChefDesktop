@@ -4,4 +4,3 @@ pub use operations::{run_operations, Reverse};
 pub fn reverse(request: &str) -> Result<String, String> {
     run_operations(Reverse, request)
 }
-

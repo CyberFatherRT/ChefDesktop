@@ -4,4 +4,3 @@ pub use operations::{run_operations, Blake2s};
 pub fn blake2s(request: &str) -> Result<String, String> {
     run_operations(Blake2s, request)
 }
-

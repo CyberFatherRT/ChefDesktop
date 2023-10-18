@@ -72,3 +72,5 @@ mod vigenere_cipher_decode;
 pub use vigenere_cipher_decode::vigenere_cipher_decode;
 mod vigenere_cipher_encode;
 pub use vigenere_cipher_encode::vigenere_cipher_encode;
+mod a1z26_cipher_decode;
+pub use a1z26_cipher_decode::a1z26_cipher_decode;

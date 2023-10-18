@@ -4,4 +4,3 @@ pub use operations::{run_operations, Md4};
 pub fn md4(request: &str) -> Result<String, String> {
     run_operations(Md4, request)
 }
-

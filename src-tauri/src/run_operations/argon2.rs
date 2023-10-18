@@ -4,4 +4,3 @@ pub use operations::{run_operations, Argon2};
 pub fn argon2(request: &str) -> Result<String, String> {
     run_operations(Argon2, request)
 }
-

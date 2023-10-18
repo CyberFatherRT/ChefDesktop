@@ -4,4 +4,3 @@ pub use operations::{run_operations, Filter};
 pub fn filter(request: &str) -> Result<String, String> {
     run_operations(Filter, request)
 }
-

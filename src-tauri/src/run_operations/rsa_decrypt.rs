@@ -4,4 +4,3 @@ pub use operations::{run_operations, RsaDecrypt};
 pub fn rsa_decrypt(request: &str) -> Result<String, String> {
     run_operations(RsaDecrypt, request)
 }
-
