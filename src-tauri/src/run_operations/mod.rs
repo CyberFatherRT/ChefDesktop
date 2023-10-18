@@ -130,3 +130,5 @@ mod reverse;
 pub use reverse::reverse;
 mod rsa_decrypt;
 pub use rsa_decrypt::rsa_decrypt;
+mod rsa_encrypt;
+pub use rsa_encrypt::rsa_encrypt;
