@@ -92,3 +92,5 @@ mod and;
 pub use and::and;
 mod argon2_compare;
 pub use argon2_compare::argon2_compare;
+mod argon2;
+pub use argon2::argon2;
