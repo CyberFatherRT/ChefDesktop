@@ -1,6 +1,7 @@
-pub use operations::{run_operations, Blake2s};
+pub use operations::{run_operations, };
 
 #[tauri::command]
 pub fn blake2s(request: &str) -> Result<String, String> {
-    run_operations(Blake2s, request)
+    run_operations(, request)
 }
+
