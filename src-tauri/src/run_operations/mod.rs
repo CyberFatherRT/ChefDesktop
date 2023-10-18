@@ -14,3 +14,5 @@ mod affine_cipher_encode;
 pub use affine_cipher_encode::affine_cipher_encode;
 mod analyse_hash;
 pub use analyse_hash::analyse_hash;
+mod and;
+pub use and::and;
