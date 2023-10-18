@@ -128,3 +128,5 @@ mod md5;
 pub use md5::md5;
 mod reverse;
 pub use reverse::reverse;
+mod rsa_decrypt;
+pub use rsa_decrypt::rsa_decrypt;
