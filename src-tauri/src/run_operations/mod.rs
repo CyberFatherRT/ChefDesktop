@@ -28,3 +28,5 @@ mod bacon_cipher_encode;
 pub use bacon_cipher_encode::bacon_cipher_encode;
 mod bcrypt_compare;
 pub use bcrypt_compare::bcrypt_compare;
+mod bcrypt;
+pub use bcrypt::bcrypt;
