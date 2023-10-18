@@ -80,3 +80,5 @@ mod add_line_numbers;
 pub use add_line_numbers::add_line_numbers;
 mod add;
 pub use add::add;
+mod adler32_checksum;
+pub use adler32_checksum::adler32_checksum;
