@@ -122,3 +122,5 @@ mod hmac;
 pub use hmac::hmac;
 mod md2;
 pub use md2::md2;
+mod md4;
+pub use md4::md4;
