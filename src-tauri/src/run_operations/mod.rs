@@ -84,3 +84,5 @@ mod adler32_checksum;
 pub use adler32_checksum::adler32_checksum;
 mod affine_cipher_decode;
 pub use affine_cipher_decode::affine_cipher_decode;
+mod affine_cipher_encode;
+pub use affine_cipher_encode::affine_cipher_encode;
