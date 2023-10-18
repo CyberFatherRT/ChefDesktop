@@ -46,3 +46,5 @@ mod from_base;
 pub use from_base::from_base;
 mod hmac;
 pub use hmac::hmac;
+mod md2;
+pub use md2::md2;
