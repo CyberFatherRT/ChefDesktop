@@ -142,3 +142,5 @@ mod to_base64;
 pub use to_base64::to_base64;
 mod to_base;
 pub use to_base::to_base;
+mod vigenere_cipher_decode;
+pub use vigenere_cipher_decode::vigenere_cipher_decode;

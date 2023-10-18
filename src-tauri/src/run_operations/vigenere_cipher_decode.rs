@@ -1,6 +1,7 @@
-pub use operations::{run_operations, VigenereCipherDecode};
+pub use operations::{run_operations, };
 
 #[tauri::command]
 pub fn vigenere_cipher_decode(request: &str) -> Result<String, String> {
-    run_operations(VigenereCipherDecode, request)
+    run_operations(, request)
 }
+
