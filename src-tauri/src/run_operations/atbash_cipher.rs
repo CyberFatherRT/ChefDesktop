@@ -1,6 +1,7 @@
-pub use operations::{run_operations, AtbashCipher};
+pub use operations::{run_operations, };
 
 #[tauri::command]
 pub fn atbash_cipher(request: &str) -> Result<String, String> {
-    run_operations(AtbashCipher, request)
+    run_operations(, request)
 }
+
