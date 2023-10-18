@@ -114,3 +114,5 @@ mod blake2s;
 pub use blake2s::blake2s;
 mod filter;
 pub use filter::filter;
+mod from_base64;
+pub use from_base64::from_base64;
