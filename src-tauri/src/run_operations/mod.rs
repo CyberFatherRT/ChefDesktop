@@ -12,3 +12,5 @@ mod affine_cipher_decode;
 pub use affine_cipher_decode::affine_cipher_decode;
 mod affine_cipher_encode;
 pub use affine_cipher_encode::affine_cipher_encode;
+mod analyse_hash;
+pub use analyse_hash::analyse_hash;
