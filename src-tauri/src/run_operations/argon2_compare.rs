@@ -1,6 +1,7 @@
-pub use operations::{run_operations, Argon2Compare};
+pub use operations::{run_operations, };
 
 #[tauri::command]
 pub fn argon2_compare(request: &str) -> Result<String, String> {
-    run_operations(Argon2Compare, request)
+    run_operations(, request)
 }
+
