@@ -124,3 +124,5 @@ mod md2;
 pub use md2::md2;
 mod md4;
 pub use md4::md4;
+mod md5;
+pub use md5::md5;
