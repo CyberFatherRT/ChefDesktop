@@ -1,6 +1,7 @@
-pub use operations::{run_operations, Sha2};
+pub use operations::{run_operations, };
 
 #[tauri::command]
 pub fn sha2(request: &str) -> Result<String, String> {
-    run_operations(Sha2, request)
+    run_operations(, request)
 }
+

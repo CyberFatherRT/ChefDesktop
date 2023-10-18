@@ -134,3 +134,5 @@ mod rsa_encrypt;
 pub use rsa_encrypt::rsa_encrypt;
 mod sha1;
 pub use sha1::sha1;
+mod sha2;
+pub use sha2::sha2;
