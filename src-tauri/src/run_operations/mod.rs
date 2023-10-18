@@ -78,3 +78,5 @@ mod a1z26_cipher_encode;
 pub use a1z26_cipher_encode::a1z26_cipher_encode;
 mod add_line_numbers;
 pub use add_line_numbers::add_line_numbers;
+mod add;
+pub use add::add;
