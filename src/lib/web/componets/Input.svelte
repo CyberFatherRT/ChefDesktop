@@ -18,12 +18,9 @@
         let request = JSON.stringify({
             input: inputValue,
             params: {
-                delimiter: "Space"
             }
         });
-        let res = await invoke("a1z26_cipher_encode", {request});
-        console.log(res);
-        output.innerText = res;
+        output.innerText = await invoke("to_base64", {request});
     }
 
 </script>
