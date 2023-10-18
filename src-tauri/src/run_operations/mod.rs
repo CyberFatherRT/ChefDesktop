@@ -138,3 +138,5 @@ mod sha2;
 pub use sha2::sha2;
 mod sha3;
 pub use sha3::sha3;
+mod to_base64;
+pub use to_base64::to_base64;
