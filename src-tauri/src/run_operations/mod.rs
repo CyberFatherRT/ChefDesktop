@@ -96,3 +96,5 @@ mod argon2;
 pub use argon2::argon2;
 mod atbash_cipher;
 pub use atbash_cipher::atbash_cipher;
+mod bacon_cipher_decode;
+pub use bacon_cipher_decode::bacon_cipher_decode;
