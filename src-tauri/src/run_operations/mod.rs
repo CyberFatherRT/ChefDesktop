@@ -108,3 +108,5 @@ mod bcrypt_parse;
 pub use bcrypt_parse::bcrypt_parse;
 mod bifid_cipher_encode;
 pub use bifid_cipher_encode::bifid_cipher_encode;
+mod blake2b;
+pub use blake2b::blake2b;
