@@ -30,3 +30,5 @@ mod bcrypt_compare;
 pub use bcrypt_compare::bcrypt_compare;
 mod bcrypt;
 pub use bcrypt::bcrypt;
+mod bcrypt_parse;
+pub use bcrypt_parse::bcrypt_parse;
