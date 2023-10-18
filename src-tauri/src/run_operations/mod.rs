@@ -98,3 +98,5 @@ mod atbash_cipher;
 pub use atbash_cipher::atbash_cipher;
 mod bacon_cipher_decode;
 pub use bacon_cipher_decode::bacon_cipher_decode;
+mod bacon_cipher_encode;
+pub use bacon_cipher_encode::bacon_cipher_encode;

@@ -1,6 +1,7 @@
-pub use operations::{run_operations, BaconCipherEncode};
+pub use operations::{run_operations, };
 
 #[tauri::command]
 pub fn bacon_cipher_encode(request: &str) -> Result<String, String> {
-    run_operations(BaconCipherEncode, request)
+    run_operations(, request)
 }
+
