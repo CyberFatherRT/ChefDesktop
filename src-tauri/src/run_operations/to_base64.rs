@@ -1,4 +1,4 @@
-use operations::{run_operations, ToBase64};
+pub use operations::{run_operations, ToBase64};
 
 #[tauri::command]
 pub fn to_base64(request: &str) -> Result<String, String> {
