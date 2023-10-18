@@ -1,6 +1,7 @@
-pub use operations::{run_operations, BcryptParse};
+pub use operations::{run_operations, };
 
 #[tauri::command]
 pub fn bcrypt_parse(request: &str) -> Result<String, String> {
-    run_operations(BcryptParse, request)
+    run_operations(, request)
 }
+
