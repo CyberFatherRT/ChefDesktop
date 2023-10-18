@@ -1988,7 +1988,7 @@ dependencies = [
 [[package]]
 name = "operations"
 version = "0.1.0"
-source = "git+https://github.com/TheGodfatherru/ChefApi_operations#c476243f81e477b321c8797a6b302386bafc65ac"
+source = "git+https://github.com/TheGodfatherru/ChefApi_operations#7f30978746f5848698e1dd4fe58c25ba8db2fcb4"
 dependencies = [
  "bcrypt",
  "blake2",

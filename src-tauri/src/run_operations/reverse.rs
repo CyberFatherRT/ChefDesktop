@@ -1,7 +1,6 @@
-pub use operations::{run_operations, };
+pub use operations::{run_operations, ReverseString};
 
 #[tauri::command]
 pub fn reverse(request: &str) -> Result<String, String> {
-    run_operations(, request)
+    run_operations(ReverseString, request)
 }
-

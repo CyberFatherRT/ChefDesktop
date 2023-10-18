@@ -1,7 +1,6 @@
-pub use operations::{run_operations, };
+pub use operations::{run_operations, FromBase};
 
 #[tauri::command]
 pub fn from_base(request: &str) -> Result<String, String> {
-    run_operations(, request)
+    run_operations(FromBase, request)
 }
-

@@ -21,9 +21,8 @@ EOF
 
 for f in $(ls "$operation_path"); do
   file_name=$(echo "$f" | sed "s/_mod\.rs//g")
-  operation_name=$(grep -E "> for " <(cat "$operation_path/$f.rs")  | cut -f6 -d " ")
+  operation_name=$(grep -E "> for " <(cat "$operation_path$f")  | cut -f6 -d " ")
   if [ "$file_name" = "mod.rs" ]; then continue; fi
-  echo "$file_name"
 
     cat << EOF >> "$tauri_operation_path/mod.rs"
 mod $file_name;
@@ -44,8 +43,8 @@ EOF
 $file_name,
 EOF
 
-  git add -A
-  git commit -m "update $file_name operation"
+#  git add -A
+#  git commit -m "update $file_name operation"
 
 done
 
