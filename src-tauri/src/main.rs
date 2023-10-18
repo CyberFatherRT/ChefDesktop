@@ -11,3 +11,4 @@ fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
 a1z26_cipher_decode,
+a1z26_cipher_encode,
