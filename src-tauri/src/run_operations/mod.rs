@@ -32,3 +32,5 @@ mod bcrypt;
 pub use bcrypt::bcrypt;
 mod bcrypt_parse;
 pub use bcrypt_parse::bcrypt_parse;
+mod bifid_cipher_encode;
+pub use bifid_cipher_encode::bifid_cipher_encode;
