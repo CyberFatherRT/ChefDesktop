@@ -126,3 +126,5 @@ mod md4;
 pub use md4::md4;
 mod md5;
 pub use md5::md5;
+mod reverse;
+pub use reverse::reverse;
