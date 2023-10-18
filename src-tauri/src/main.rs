@@ -12,3 +12,4 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
 a1z26_cipher_decode,
 a1z26_cipher_encode,
+add_line_numbers,
