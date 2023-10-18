@@ -1,6 +1,7 @@
-pub use operations::{run_operations, Filter};
+pub use operations::{run_operations, };
 
 #[tauri::command]
 pub fn filter(request: &str) -> Result<String, String> {
-    run_operations(Filter, request)
+    run_operations(, request)
 }
+
