@@ -1,6 +1,7 @@
-pub use operations::{run_operations, And};
+pub use operations::{run_operations, };
 
 #[tauri::command]
 pub fn and(request: &str) -> Result<String, String> {
-    run_operations(And, request)
+    run_operations(, request)
 }
+
