@@ -7,10 +7,11 @@
         "open_in_browser": "Replace input with output-",
         "fullscreen": "Maximase output- pane"
     };
+
 </script>
 
 <div class="output">
-    <Title title="Output" id="output-" {icons}/>
+    <Title title="Output" id="output" {icons}/>
 
     <div class="output-wrapper">
         <div class="output-tabs"></div>

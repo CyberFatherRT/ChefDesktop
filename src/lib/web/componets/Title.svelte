@@ -1,6 +1,7 @@
 <script lang="ts">
     import tippy, {type Props} from "tippy.js";
     import "tippy.js/dist/tippy.css";
+    // import "./buttons";
 
     export let title: string;
     export let icons: Object = {};
@@ -27,13 +28,14 @@
         }
     }
 
+
 </script>
 
 <div class="title no-select">
     <p>{title}</p>
     <span>
     {#each Object.entries(icons) as [icon, description]}
-      <button use:tooltip={{ content: description }} id={`${id}-${icon}`}>
+      <button use:tooltip={{ content: description }} id="{id}_{icon}" tabindex="-1">
         <i class="material-icons">{icon}</i>
       </button>
     {/each}
