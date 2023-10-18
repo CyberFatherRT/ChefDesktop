@@ -4,7 +4,7 @@
 
   export let title: string;
   export let icons: Object = {};
-  export let id: string = "";
+  export let id: string = '';
 
   type Options = Partial<Props>;
 
