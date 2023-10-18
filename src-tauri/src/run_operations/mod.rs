@@ -38,3 +38,5 @@ mod blake2b;
 pub use blake2b::blake2b;
 mod blake2s;
 pub use blake2s::blake2s;
+mod filter;
+pub use filter::filter;
