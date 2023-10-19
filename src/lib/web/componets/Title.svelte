@@ -1,33 +1,10 @@
 <script lang="ts">
-    import tippy, {type Props} from "tippy.js";
-    import "tippy.js/dist/tippy.css";
-    // import "./buttons";
+    import {tooltip} from "./temp";
+    import {writeText} from "@tauri-apps/api/clipboard";
 
     export let title: string;
     export let icons: Object = {};
     export let id: string = '';
-
-    type Options = Partial<Props>;
-
-    function tooltip(element: HTMLElement, options: Options) {
-        let option: Options = {
-            ...options,
-            arrow: false,
-            theme: "custom"
-        };
-
-        const tooltip = tippy(element, option);
-
-        return {
-            update() {
-                tooltip.setProps(option)
-            },
-            destroy() {
-                tooltip.destroy()
-            }
-        }
-    }
-
 
 </script>
 
@@ -35,7 +12,7 @@
     <p>{title}</p>
     <span>
     {#each Object.entries(icons) as [icon, description]}
-      <button use:tooltip={{ content: description }} id="{id}_{icon}" tabindex="-1">
+      <button use:tooltip={{ content: description }} id="{id}_{icon}" tabindex="-1" on:click={async () => await writeText("Hello, World!")}>
         <i class="material-icons">{icon}</i>
       </button>
     {/each}
