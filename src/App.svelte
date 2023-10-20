@@ -1,10 +1,14 @@
 <script lang="ts">
-    import VGutter from "./lib/web/componets/VGutter.svelte";
-    import Header from "./lib/web/componets/Header.svelte";
-    import Operations from "./lib/web/componets/Operations.svelte";
-    import Recipe from "./lib/web/componets/Recipe.svelte";
-    import IO from "./lib/web/componets/IO.svelte";
+    import VGutter from "./lib/web/components/VGutter.svelte";
+    import Header from "./lib/web/components/Header.svelte";
+    import Operations from "./lib/web/components/Operations.svelte";
+    import Recipe from "./lib/web/components/Recipe.svelte";
+    import IO from "./lib/web/components/IO.svelte";
 </script>
+
+<svelte:head>
+    <script src="lib/web/components/temp.ts" defer/>
+</svelte:head>
 
 <main>
     <!-- <Header/> -->

@@ -19,7 +19,6 @@
   </span>
 </div>
 
-
 <style>
     .title {
         display: flex;
