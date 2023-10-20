@@ -1,8 +1,8 @@
 <script lang="ts">
-    import VGutter from "./lib/web/components/VGutter.svelte";
-    import Operations from "./lib/web/components/Operations.svelte";
-    import Recipe from "./lib/web/components/Recipe.svelte";
-    import IO from "./lib/web/components/IO.svelte";
+    import VGutter from "./lib/web/components/gutters/VGutter.svelte";
+    import Operations from "./lib/web/components/main/Operations.svelte";
+    import Recipe from "./lib/web/components/main/Recipe.svelte";
+    import IO from "./lib/web/components/IO/IO.svelte";
 </script>
 
 

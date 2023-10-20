@@ -1,6 +1,6 @@
 <script lang="ts">
     import {invoke} from "@tauri-apps/api";
-    import Title from "./title/Title.svelte";
+    import Title from "../title/Title.svelte";
 
 
     let icons = {
