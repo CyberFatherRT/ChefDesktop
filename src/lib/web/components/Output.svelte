@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Title from "./Title.svelte";
+    import Title from "./title/Title.svelte";
 
     let icons = {
         "save": "Save output to file",

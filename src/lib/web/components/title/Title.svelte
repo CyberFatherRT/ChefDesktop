@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {tooltip} from "./temp";
+    import {tooltip} from "./title";
     import {writeText} from "@tauri-apps/api/clipboard";
 
     export let title: string;
