@@ -1,5 +1,6 @@
 <script lang="ts">
     import Title from "../title/Title.svelte";
+    import ToBase64 from "../../../core/operations/tobase64";
 
     let icons = {
         "save": "Save output to file",
@@ -7,6 +8,12 @@
         "open_in_browser": "Replace input with output-",
         "fullscreen": "Maximase output- pane"
     };
+
+    let operation = new ToBase64();
+    (async function foo() {
+        let res = await operation.run({input: "flag", params: {}});
+        console.log(res);
+    })()
 
 </script>
 
