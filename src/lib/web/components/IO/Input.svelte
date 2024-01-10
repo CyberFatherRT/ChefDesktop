@@ -52,7 +52,7 @@
         resize: none;
         border-radius: 0;
         outline: none;
-        border;
+        border: none;
         height: calc(100% - 50px);
         background-color: transparent;
         color: white;
