@@ -14,7 +14,7 @@
     let inputValue: string;
 
     async function foo() {
-        let output = document.getElementById("output-textarea") as HTMLTextAreaElement;
+        let output = document.getElementById("output-textarea");
         let request = JSON.stringify({
             input: inputValue,
             params: {
@@ -37,7 +37,7 @@
 </div>
 
 
-<style>
+<style lang="css">
     .input {
         height: calc(50% - 2px);
     }
@@ -52,7 +52,7 @@
         resize: none;
         border-radius: 0;
         outline: none;
-        border: none;
+        border;
         height: calc(100% - 50px);
         background-color: transparent;
         color: white;
