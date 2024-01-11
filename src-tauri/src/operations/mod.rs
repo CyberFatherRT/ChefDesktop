@@ -71,8 +71,8 @@ pub use sha2_mod::*;
 pub use sha3_mod::*;
 pub use to_base64_mod::*;
 pub use to_base_mod::*;
-pub use vigenere_cipher_decode_mod::{VigenereCipherDecode, VigenereCipherDecodeInfo};
-pub use vigenere_cipher_encode_mod::{VigenereCipherEncode, VigenereCipherEncodeInfo};
+pub use vigenere_cipher_decode_mod::*;
+pub use vigenere_cipher_encode_mod::*;
 
 pub use a1z26_cipher_decode_mod::Delimiters;
 pub use analyse_hash_mod::SerializeMeDaddy as AnalyseHashSerializeMeDaddy;

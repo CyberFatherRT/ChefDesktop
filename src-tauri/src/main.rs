@@ -43,6 +43,8 @@ fn main() {
             sha3,
             to_base64,
             to_base,
+            vigenere_cipher_decode,
+            vigenere_cipher_encode,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

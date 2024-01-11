@@ -4,8 +4,10 @@ use crate::{
     create_info_struct, create_me_daddy,
     libs::vigenere_trait::VigenereCipher,
     utils::{add, SupportedLanguages},
-    Operation, DOCS_URL,
+    Operation, DOCS_URL, create_tauri_wrapper, run_operations
 };
+
+create_tauri_wrapper!(vigenere_cipher_encode, VigenereCipherEncode, String, String);
 
 impl VigenereCipher for VigenereCipherEncode {}
 
