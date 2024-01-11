@@ -372,11 +372,29 @@ checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 name = "chef_desktop"
 version = "0.0.0"
 dependencies = [
- "operations",
+ "bcrypt",
+ "blake2",
+ "digest 0.10.7",
+ "hmac",
+ "itertools 0.11.0",
+ "md-5",
+ "md2",
+ "md4",
+ "num",
+ "rand 0.8.5",
+ "regex",
+ "ripemd",
+ "rsa",
+ "rust-argon2",
  "serde",
  "serde_json",
+ "serde_valid",
+ "sha1",
+ "sha2",
+ "sha3",
  "tauri",
  "tauri-build",
+ "whirlpool",
 ]
 
 [[package]]
@@ -2066,34 +2084,6 @@ checksum = "2078c0039e6a54a0c42c28faa984e115fb4c2d5bf2208f77d1961002df8576f8"
 dependencies = [
  "pathdiff",
  "windows-sys 0.42.0",
-]
-
-[[package]]
-name = "operations"
-version = "0.1.0"
-source = "git+https://github.com/TheGodfatherru/ChefApi_operations#3e52422ec2fb01732cb06fc11c158c22c73a1acf"
-dependencies = [
- "bcrypt",
- "blake2",
- "digest 0.10.7",
- "hmac",
- "itertools 0.11.0",
- "md-5",
- "md2",
- "md4",
- "num",
- "rand 0.8.5",
- "regex",
- "ripemd",
- "rsa",
- "rust-argon2",
- "serde",
- "serde_json",
- "serde_valid",
- "sha1",
- "sha2",
- "sha3",
- "whirlpool",
 ]
 
 [[package]]

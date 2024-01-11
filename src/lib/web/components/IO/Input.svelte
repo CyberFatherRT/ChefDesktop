@@ -37,7 +37,7 @@
 </div>
 
 
-<style lang="css">
+<style>
     .input {
         height: calc(50% - 2px);
     }
