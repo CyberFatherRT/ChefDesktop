@@ -1,7 +1,9 @@
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    create_info_struct, create_me_daddy, libs::base64::from_base64, utils::{DataRepresentation, DataRepresentationInput},
+    create_info_struct, create_me_daddy,
+    libs::base64::from_base64,
+    utils::{DataRepresentation, DataRepresentationInput},
     Operation, DOCS_URL,
 };
 

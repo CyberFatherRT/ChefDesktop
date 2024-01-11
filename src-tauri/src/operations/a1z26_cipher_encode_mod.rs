@@ -1,8 +1,10 @@
 use crate::{
     create_info_struct, create_me_daddy, operations::Delimiters, utils::char_repr, Operation,
-    DOCS_URL,
+    DOCS_URL, create_tauri_wrapper, run_operations
 };
 use serde::{Deserialize, Serialize};
+
+create_tauri_wrapper!(a1z26_cipher_encode, A1Z26CipherEncode, String, String);
 
 impl Operation<'_, DeserializeMeDaddy, String> for A1Z26CipherEncode {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {

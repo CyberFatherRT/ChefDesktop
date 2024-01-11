@@ -118,8 +118,7 @@ const NAME: &str = "AND";
 const DESCRIPTION_EN: &str = "AND the input with the given key.";
 const DESCRIPTION_RU: &str = "Применяет операцию ADD по модулю 255.";
 
-const INFO_URL: Option<&str> =
-    Some("https://wikipedia.org/wiki/Bitwise_operation#AND");
+const INFO_URL: Option<&str> = Some("https://wikipedia.org/wiki/Bitwise_operation#AND");
 
 create_info_struct!(
     ANDInfo,

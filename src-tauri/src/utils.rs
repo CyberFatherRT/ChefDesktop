@@ -1,4 +1,4 @@
-use crate::{libs::base64::from_base64, traits::StringTrait};
+use crate::{libs::base64::from_base64, map, regex_check, traits::StringTrait};
 use num::{Integer, ToPrimitive};
 use serde::Deserialize;
 use std::fmt::{Debug, LowerHex};
@@ -32,7 +32,7 @@ pub enum DataRepresentation {
 #[derive(Eq, PartialEq, Debug)]
 pub enum DataRepresentationInput {
     String,
-    ByteArray
+    ByteArray,
 }
 
 #[derive(Deserialize, Debug)]
@@ -346,8 +346,6 @@ pub fn sub(a: i16, b: i16) -> i16 {
 pub fn hex<T: Debug + LowerHex>(c: T) -> String {
     format!("{:08x}", c)
 }
-
-
 
 #[cfg(target_os = "windows")]
 fn windows() {}

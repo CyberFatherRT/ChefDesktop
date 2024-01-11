@@ -5,10 +5,11 @@ use sha2::{Sha224, Sha256, Sha384, Sha512};
 use sha3::{Sha3_224, Sha3_256, Sha3_384, Sha3_512};
 
 use crate::{
-    create_info_struct, create_me_daddy, run_operations,
+    create_info_struct, create_me_daddy, create_tauri_wrapper,
     libs::base64::{from_base64, to_base64},
+    run_operations,
     utils::{to_hex, DataRepresentation, DataRepresentationInput},
-    Operation, OutputFormat, DOCS_URL, create_tauri_wrapper
+    Operation, OutputFormat, DOCS_URL,
 };
 
 create_tauri_wrapper!(rsa_decrypt, RSADecrypt, OutputFormat, String);
@@ -30,13 +31,8 @@ impl Operation<'_, DeserializeMeDaddy, OutputFormat> for RSADecrypt {
             return Err("RSA_OAEP must have message digest algorithm".to_string());
         }
 
-        let DataRepresentation::ByteArray(input) = from_base64(
-            input,
-            "",
-            DataRepresentationInput::ByteArray,
-            false,
-            false,
-        )?
+        let DataRepresentation::ByteArray(input) =
+            from_base64(input, "", DataRepresentationInput::ByteArray, false, false)?
         else {
             unreachable!()
         };
