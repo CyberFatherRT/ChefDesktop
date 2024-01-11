@@ -1,4 +1,4 @@
-use crate::{libs::base64::from_base64, map, regex_check, traits::StringTrait};
+use crate::{libs::base64::from_base64, traits::StringTrait};
 use num::{Integer, ToPrimitive};
 use serde::Deserialize;
 use std::fmt::{Debug, LowerHex};
