@@ -1,5 +1,7 @@
-use crate::{create_info_struct, Operation, DOCS_URL};
+use crate::{create_info_struct, create_tauri_wrapper, run_operations, Operation, DOCS_URL};
 use serde::{Deserialize, Serialize};
+
+create_tauri_wrapper!(analyse_hash, AnalyseHash, SerializeMeDaddy, String);
 
 impl Operation<'_, DeserializeMeDaddy, SerializeMeDaddy> for AnalyseHash {
     fn do_black_magic(&self, request: &str) -> Result<SerializeMeDaddy, String> {
@@ -95,7 +97,7 @@ pub struct SerializeMeDaddy {
 }
 
 #[derive(Deserialize)]
-pub struct DeserializeMeDaddy {
+struct DeserializeMeDaddy {
     input: String,
 }
 
@@ -143,7 +145,7 @@ pub struct DeserializeMeDaddy {
 /// ```
 /// ```http
 /// HTTP/1.1 200 Ok
-/// {
+/// {yc
 ///     "Ok": {
 ///         "hash_length": 56,
 ///         "byte_length": 28.0,
@@ -198,7 +200,7 @@ pub struct DeserializeMeDaddy {
 ///     "Err": "Missing field `input`."
 /// }
 /// ```
-pub struct AnalyseHash;
+struct AnalyseHash;
 
 const NAME: &str = "AnalyseHash";
 const DESCRIPTION_EN: &str = "Tries to determine information about a given hash and suggests which algorithm may have been used to generate it based on its length.";

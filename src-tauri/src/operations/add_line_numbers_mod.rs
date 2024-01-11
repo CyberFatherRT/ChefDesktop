@@ -1,4 +1,4 @@
-use crate::{create_info_struct, Operation, DOCS_URL, create_tauri_wrapper, run_operations};
+use crate::{create_info_struct, create_tauri_wrapper, run_operations, Operation, DOCS_URL};
 use serde::{Deserialize, Serialize};
 
 create_tauri_wrapper!(add_line_number, AddLineNumbers, String, String);
@@ -23,7 +23,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for AddLineNumbers {
 }
 
 #[derive(Deserialize)]
-pub struct DeserializeMeDaddy {
+struct DeserializeMeDaddy {
     input: String,
 }
 

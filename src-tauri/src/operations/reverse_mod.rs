@@ -1,5 +1,7 @@
-use crate::Operation;
+use crate::{Operation, create_tauri_wrapper, run_operations};
 use serde::Deserialize;
+
+create_tauri_wrapper!(reverse, ReverseString, String, String);
 
 impl Operation<'_, DeserializeMeDaddy, String> for ReverseString {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
@@ -10,7 +12,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for ReverseString {
 }
 
 #[derive(Deserialize)]
-pub struct DeserializeMeDaddy {
+struct DeserializeMeDaddy {
     input: String,
 }
 

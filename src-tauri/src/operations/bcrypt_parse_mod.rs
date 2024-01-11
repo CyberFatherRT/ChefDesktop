@@ -1,7 +1,9 @@
-use crate::{create_info_struct, Operation, DOCS_URL};
+use crate::{create_info_struct, create_tauri_wrapper, run_operations, Operation, DOCS_URL};
 use bcrypt::BcryptError;
 use serde::{Deserialize, Serialize};
 use serde_valid::Validate;
+
+create_tauri_wrapper!(bcrypt_parse, BcryptParse, HashParts, String);
 
 impl Operation<'_, DeserializeMeDaddy, HashParts> for BcryptParse {
     fn do_black_magic(&self, request: &str) -> Result<HashParts, String> {
@@ -46,7 +48,7 @@ impl Operation<'_, DeserializeMeDaddy, HashParts> for BcryptParse {
 }
 
 #[derive(Deserialize)]
-pub struct DeserializeMeDaddy {
+struct DeserializeMeDaddy {
     hash: String,
 }
 

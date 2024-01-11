@@ -2,7 +2,9 @@ use num::{BigInt, Num};
 use serde::{Deserialize, Serialize};
 use serde_valid::Validate;
 
-use crate::{create_info_struct, create_me_daddy, Operation, DOCS_URL};
+use crate::{create_info_struct, create_me_daddy, Operation, DOCS_URL, create_tauri_wrapper, run_operations};
+
+create_tauri_wrapper!(to_base, ToBase, String, String);
 
 impl Operation<'_, DeserializeMeDaddy, String> for ToBase {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
@@ -17,7 +19,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for ToBase {
 }
 
 #[derive(Deserialize, Validate)]
-pub struct Params {
+struct Params {
     #[validate(maximum = 36)]
     #[validate(minimum = 2)]
     radix: u32,

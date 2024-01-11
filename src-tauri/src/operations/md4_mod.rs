@@ -1,7 +1,9 @@
 use md4::{Digest, Md4};
 use serde::{Deserialize, Serialize};
 
-use crate::{create_info_struct, utils::to_hex, Operation, DOCS_URL};
+use crate::{create_info_struct, utils::to_hex, Operation, DOCS_URL, create_tauri_wrapper, run_operations};
+
+create_tauri_wrapper!(md4, MD4, String, String);
 
 impl Operation<'_, DeserializeMeDaddy, String> for MD4 {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
@@ -17,7 +19,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for MD4 {
 }
 
 #[derive(Deserialize)]
-pub struct DeserializeMeDaddy {
+struct DeserializeMeDaddy {
     input: String,
 }
 

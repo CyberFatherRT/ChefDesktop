@@ -2,10 +2,12 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     create_info_struct, create_me_daddy,
-    libs::base64::from_base64,
+    libs::base64::from_base64 as from_base64_lib,
     utils::{DataRepresentation, DataRepresentationInput},
-    Operation, DOCS_URL,
+    Operation, DOCS_URL, create_tauri_wrapper, run_operations
 };
+
+create_tauri_wrapper!(from_base64, FromBase64, String, String);
 
 impl Operation<'_, DeserializeMeDaddy, String> for FromBase64 {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
@@ -23,7 +25,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for FromBase64 {
 
         let alphabet = alphabet.unwrap_or_default();
 
-        match from_base64(
+        match from_base64_lib(
             input,
             &alphabet,
             DataRepresentationInput::String,

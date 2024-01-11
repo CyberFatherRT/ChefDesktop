@@ -1,5 +1,9 @@
-use crate::{create_info_struct, utils::hex, Operation, DOCS_URL};
+use crate::{
+    create_info_struct, create_tauri_wrapper, run_operations, utils::hex, Operation, DOCS_URL,
+};
 use serde::{Deserialize, Serialize};
+
+create_tauri_wrapper!(adler32_checksum, Adler32CheckSum, String, String);
 
 impl Operation<'_, DeserializeMeDaddy, String> for Adler32CheckSum {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
@@ -22,7 +26,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for Adler32CheckSum {
 }
 
 #[derive(Deserialize)]
-pub struct DeserializeMeDaddy {
+struct DeserializeMeDaddy {
     input: String,
 }
 

@@ -1,7 +1,11 @@
-use crate::{create_info_struct, create_me_daddy, Operation, DOCS_URL};
+use crate::{
+    create_info_struct, create_me_daddy, create_tauri_wrapper, run_operations, Operation, DOCS_URL,
+};
 use bcrypt::Version;
 use serde::{Deserialize, Serialize};
 use serde_valid::Validate;
+
+create_tauri_wrapper!(bcrypt, Bcrypt, String, String);
 
 impl Operation<'_, DeserializeMeDaddy, String> for Bcrypt {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
@@ -125,7 +129,7 @@ create_me_daddy!();
 ///   "Err": "Missing field `version`."
 /// }
 /// ```
-pub struct Bcrypt;
+struct Bcrypt;
 
 const NAME: &str = "Bcrypt";
 const DESCRIPTION_EN: &str = "bcrypt is a password hashing function designed by Niels Provos and David Mazières, based on the Blowfish cipher, and presented at USENIX in 1999. Besides incorporating a salt to protect against rainbow table attacks, bcrypt is an adaptive function: over time, the iteration count (rounds) can be increased to make it slower, so it remains resistant to brute-force search attacks even with increasing computation power.";

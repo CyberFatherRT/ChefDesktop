@@ -6,8 +6,10 @@ use sha3::{Sha3_224, Sha3_256, Sha3_384, Sha3_512};
 
 use crate::{
     create_info_struct, create_me_daddy, libs::base64::to_base64, utils::to_hex, Operation,
-    OutputFormat, DOCS_URL,
+    OutputFormat, DOCS_URL, create_tauri_wrapper, run_operations
 };
+
+create_tauri_wrapper!(rsa_encrypt, RSAEncrypt, OutputFormat, String);
 
 impl Operation<'_, DeserializeMeDaddy, OutputFormat> for RSAEncrypt {
     fn do_black_magic(&self, request: &str) -> Result<OutputFormat, String> {

@@ -1,5 +1,5 @@
 use crate::{
-    create_info_struct, create_me_daddy,
+    create_info_struct, create_me_daddy, create_tauri_wrapper, run_operations,
     traits::{CharTrait, IntegerTrait},
     utils::{
         get_alphabet, get_char_by_index, get_index_by_char, mod_inv, modulus, validate_lang,
@@ -8,6 +8,8 @@ use crate::{
     Operation, DOCS_URL,
 };
 use serde::{Deserialize, Serialize};
+
+create_tauri_wrapper!(affine_cipher_decode, AffineCipherDecode, String, String);
 
 impl Operation<'_, DeserializeMeDaddy, String> for AffineCipherDecode {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {

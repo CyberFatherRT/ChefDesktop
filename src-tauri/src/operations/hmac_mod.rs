@@ -13,8 +13,10 @@ use crate::{
     libs::base64::to_base64,
     traits::StringTrait,
     utils::{convert_to_byte_array, to_hex, SupportedFormats},
-    Operation, OutputFormat, DOCS_URL,
+    Operation, OutputFormat, DOCS_URL, create_tauri_wrapper, run_operations
 };
+
+create_tauri_wrapper!(hmac, Hmac, OutputFormat, String);
 
 impl Operation<'_, DeserializeMeDaddy, OutputFormat> for Hmac {
     fn do_black_magic(&self, request: &str) -> Result<OutputFormat, String> {

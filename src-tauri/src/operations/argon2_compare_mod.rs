@@ -1,5 +1,9 @@
-use crate::{create_info_struct, create_me_daddy, Operation, DOCS_URL};
+use crate::{
+    create_info_struct, create_me_daddy, create_tauri_wrapper, run_operations, Operation, DOCS_URL,
+};
 use serde::{Deserialize, Serialize};
+
+create_tauri_wrapper!(argon2_compare, Argon2Compare, String, String);
 
 impl Operation<'_, DeserializeMeDaddy, String> for Argon2Compare {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {

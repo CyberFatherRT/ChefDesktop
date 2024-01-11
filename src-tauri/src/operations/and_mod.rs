@@ -1,10 +1,13 @@
 use crate::{
-    create_info_struct, create_me_daddy,
-    libs::bitwise_op::{and, bit_op},
+    create_info_struct, create_me_daddy, create_tauri_wrapper,
+    libs::bitwise_op::{and as and_fun, bit_op},
+    run_operations,
     utils::{convert_to_byte_array, SupportedFormats},
     Operation, DOCS_URL,
 };
 use serde::{Deserialize, Serialize};
+
+create_tauri_wrapper!(and, AND, String, String);
 
 impl Operation<'_, DeserializeMeDaddy, String> for AND {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
@@ -13,7 +16,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for AND {
 
         let key = convert_to_byte_array(&key, &key_format)?;
 
-        let output = String::from_utf8(bit_op(&key, input.as_bytes(), and))
+        let output = String::from_utf8(bit_op(&key, input.as_bytes(), and_fun))
             .map_err(|err| err.to_string())?;
 
         Ok(output)

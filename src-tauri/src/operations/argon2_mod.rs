@@ -1,11 +1,14 @@
 use crate::{
-    create_info_struct, create_me_daddy,
+    create_info_struct, create_me_daddy, create_tauri_wrapper,
     libs::base64::from_base64,
+    run_operations,
     utils::{to_hex, DataRepresentation, DataRepresentationInput},
     Operation, DOCS_URL,
 };
 use argon2::{Config, ThreadMode, Variant, Version};
 use serde::{Deserialize, Serialize};
+
+create_tauri_wrapper!(argon2, Argon2, String, String);
 
 impl Operation<'_, DeserializeMeDaddy, String> for Argon2 {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {

@@ -3,13 +3,15 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
 use crate::{
-    create_info_struct, create_me_daddy,
+    create_info_struct, create_me_daddy, create_tauri_wrapper,
     libs::ciphers::gen_polybius_square,
-    regex_check,
+    regex_check, run_operations,
     traits::CharTrait,
     utils::{get_alphabet, SupportedLanguages},
     Operation, DOCS_URL,
 };
+
+create_tauri_wrapper!(bifid_cipher_encode, BifidCipherEncode, String, String);
 
 impl Operation<'_, DeserializeMeDaddy, String> for BifidCipherEncode {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {

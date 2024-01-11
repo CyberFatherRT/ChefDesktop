@@ -346,9 +346,3 @@ pub fn sub(a: i16, b: i16) -> i16 {
 pub fn hex<T: Debug + LowerHex>(c: T) -> String {
     format!("{:08x}", c)
 }
-
-#[cfg(target_os = "windows")]
-fn windows() {}
-
-#[cfg(target_os = "linux")]
-fn linux() {}

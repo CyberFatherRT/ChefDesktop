@@ -1,11 +1,14 @@
 use crate::{
-    create_info_struct, create_me_daddy,
+    create_info_struct, create_me_daddy, create_tauri_wrapper,
     libs::bacon::{BaconCipher, SupportedBaconAlphabet, SupportedBaconTranslation},
+    run_operations,
     utils::SupportedLanguages,
     Operation, DOCS_URL,
 };
 use serde::{Deserialize, Serialize};
 use std::mem::swap;
+
+create_tauri_wrapper!(bacon_cipher_decode, BaconCipherDecode, String, String);
 
 impl Operation<'_, DeserializeMeDaddy, String> for BaconCipherDecode {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {

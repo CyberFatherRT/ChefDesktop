@@ -1,9 +1,13 @@
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    create_info_struct, create_me_daddy, libs::ciphers::affine_cipher_encode,
-    utils::SupportedLanguages, Operation, DOCS_URL,
+    create_info_struct, create_me_daddy, create_tauri_wrapper,
+    libs::ciphers::affine_cipher_encode as ace, run_operations, utils::SupportedLanguages,
+    Operation, DOCS_URL,
 };
+
+create_tauri_wrapper!(affine_cipher_encode, AffineCipherEncode, String, String);
+
 impl Operation<'_, DeserializeMeDaddy, String> for AffineCipherEncode {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
@@ -15,7 +19,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for AffineCipherEncode {
             request.params.b as i16,
         );
 
-        affine_cipher_encode(&input, lang, a, b)
+        ace(&input, lang, a, b)
     }
 }
 

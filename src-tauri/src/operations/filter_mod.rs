@@ -1,5 +1,7 @@
-use crate::{create_me_daddy, utils::SupportedDelimiter, Operation};
+use crate::{create_me_daddy, utils::SupportedDelimiter, Operation, create_tauri_wrapper, run_operations};
 use serde::Deserialize;
+
+create_tauri_wrapper!(filter, Filter, String, String);
 
 impl Operation<'_, DeserializeMeDaddy, String> for Filter {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {

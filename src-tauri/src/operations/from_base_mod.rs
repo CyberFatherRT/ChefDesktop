@@ -2,7 +2,9 @@ use num::{BigInt, Num};
 use serde::{Deserialize, Serialize};
 use serde_valid::Validate;
 
-use crate::{create_info_struct, create_me_daddy, traits::StringTrait, Operation, DOCS_URL};
+use crate::{create_info_struct, create_me_daddy, traits::StringTrait, Operation, DOCS_URL, create_tauri_wrapper, run_operations};
+
+create_tauri_wrapper!(from_base, FromBase, String, String);
 
 impl Operation<'_, DeserializeMeDaddy, String> for FromBase {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {

@@ -1,9 +1,11 @@
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    create_info_struct, create_me_daddy, libs::ciphers::affine_cipher_encode,
-    utils::SupportedLanguages, Operation, DOCS_URL,
+    create_info_struct, create_me_daddy, create_tauri_wrapper, libs::ciphers::affine_cipher_encode,
+    run_operations, utils::SupportedLanguages, Operation, DOCS_URL,
 };
+
+create_tauri_wrapper!(atbash_cipher, AtbashCipher, String, String);
 
 impl Operation<'_, DeserializeMeDaddy, String> for AtbashCipher {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {

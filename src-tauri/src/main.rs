@@ -3,16 +3,14 @@
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 
-mod run_operations;
-
-use chef_desktop::a1z26_cipher_decode;
+use chef_desktop::*;
 
 fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
             a1z26_cipher_decode,
             a1z26_cipher_encode,
-            add_line_numbers,
+            add_line_number,
             add,
             adler32_checksum,
             affine_cipher_decode,
@@ -45,8 +43,6 @@ fn main() {
             sha3,
             to_base64,
             to_base,
-            vigenere_cipher_decode,
-            vigenere_cipher_encode,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

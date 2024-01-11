@@ -19,7 +19,7 @@ macro_rules! regex_check {
 macro_rules! create_me_daddy {
     () => {
         #[derive(Deserialize)]
-        pub struct DeserializeMeDaddy {
+        struct DeserializeMeDaddy {
             input: String,
             params: Params,
         }
@@ -68,6 +68,7 @@ macro_rules! create_info_struct {
 #[macro_export]
 macro_rules! create_tauri_wrapper {
     ($wrapper_name:ident, $struct_name:ident, $ok_output_format:ident, $err_output_format:ident) => {
+        #[tauri::command]
         pub fn $wrapper_name(request: &str) -> Result<$ok_output_format, $err_output_format> {
             run_operations($struct_name, request)
         }

@@ -1,15 +1,17 @@
-use crate::OutputFormat;
+use crate::{OutputFormat, create_tauri_wrapper};
 use crate::{
     create_info_struct, create_me_daddy,
     libs::base64::to_base64,
     utils::{convert_to_byte_array, to_hex, SupportedFormats},
-    Operation, DOCS_URL,
+    Operation, DOCS_URL, run_operations
 };
 use blake2::{
     digest::{Update, VariableOutput},
     VarBlake2s,
 };
 use serde::{Deserialize, Serialize};
+
+create_tauri_wrapper!(blake2s, Blake2s, OutputFormat, String);
 
 impl Operation<'_, DeserializeMeDaddy, OutputFormat> for Blake2s {
     fn do_black_magic(&self, request: &str) -> Result<OutputFormat, String> {

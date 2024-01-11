@@ -8,6 +8,7 @@ pub use operations::*;
 use serde::{Deserialize, Serialize};
 use traits::StringTrait;
 
+
 pub fn run_operations<'a, I, O>(
     operations: impl Operation<'a, I, O>,
     request: &str,
