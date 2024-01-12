@@ -78,7 +78,7 @@ pub const RU_ALP_WITH_YO: (&str, &str, &str, &str, u8, &str) = (
     33,
     r"^[а-яА-ЯёЁ]+$",
 );
-pub const NUM: (&str, &str) = ("0123456789", r"^\+?(0|[1-9]\d*)$");
+pub const _NUM: (&str, &str) = ("0123456789", r"^\+?(0|[1-9]\d*)$");
 
 pub fn expand_alphabet_range(alphabet: &str) -> Vec<char> {
     let mut result: Vec<char> = Vec::new();
@@ -112,7 +112,7 @@ pub fn expand_alphabet_range(alphabet: &str) -> Vec<char> {
     result
 }
 
-pub fn str_to_array_buffer(string: &str) -> Vec<u32> {
+pub fn _str_to_array_buffer(string: &str) -> Vec<u32> {
     if string.is_empty() {
         return Vec::new();
     }
@@ -140,7 +140,7 @@ pub fn str_to_array_buffer_by_alphabet(string: &str, alphabet: &str) -> Vec<usiz
     result
 }
 
-pub fn byte_array_to_string(byte_array: Vec<u8>) -> Result<String, String> {
+pub fn _byte_array_to_string(byte_array: Vec<u8>) -> Result<String, String> {
     String::from_utf8(byte_array).map_err(|err| err.to_string().capitalize() + ".")
 }
 
@@ -224,7 +224,7 @@ pub fn from_hex(
     Ok(output)
 }
 
-pub fn from_decimal(data: &str, delim: Option<&str>) -> Result<Vec<usize>, String> {
+pub fn _from_decimal(data: &str, delim: Option<&str>) -> Result<Vec<usize>, String> {
     let mut output = Vec::new();
     for i in data.split(char_repr(delim.unwrap_or("Space"))) {
         match i.parse::<usize>() {
@@ -261,7 +261,6 @@ pub fn get_alphabet(
     }
 }
 
-#[inline]
 pub fn get_char_by_index<T: Integer + ToPrimitive>(text: &str, index: T) -> char {
     text.chars().nth(index.to_usize().unwrap()).unwrap()
 }

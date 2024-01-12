@@ -166,7 +166,7 @@ pub struct AlphabetOptions {
     value: &'static str,
 }
 
-pub const ALPHABET_OPTIONS: &[AlphabetOptions] = &[
+pub const _ALPHABET_OPTIONS: &[AlphabetOptions] = &[
     AlphabetOptions {
         name: "Standard (RFC 4648): A-Za-z0-9+/=",
         value: "A-Za-z0-9+/=",
