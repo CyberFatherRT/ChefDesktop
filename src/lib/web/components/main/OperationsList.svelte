@@ -4,18 +4,12 @@
     import SearchBar from "./SearchBar.svelte";
 
 	let search: string;
-	let users: Object[] = [];
+	let users: any = [];
 
-	$: visibleUsers = search ?
-		users.filter(user => {
-			return user.name.first.match(`${search}.*`) || user.name.last.match(`${search}.*`)
-		}) : users;
-
-	onMount(async () => {
-		const resp = await fetch('https://randomuser.me/api?results=5')
-		const data = await resp.json();
-		users = data.results;
-	});
+    $: visibleUsers = search ?
+        users.filter(user => {
+        return user.name.first.match(`${search}.*`) || user.name.last.match(`${search}.*`)
+    }) : users;
 
 </script>
 
