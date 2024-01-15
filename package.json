@@ -11,6 +11,7 @@
     "tauri": "tauri"
   },
   "dependencies": {
+    "@melt-ui/svelte": "^0.70.0",
     "@tauri-apps/api": "^1.4.0",
     "tippy.js": "^6.3.7"
   },
