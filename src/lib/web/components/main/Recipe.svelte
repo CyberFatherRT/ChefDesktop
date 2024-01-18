@@ -1,5 +1,6 @@
 <script lang="ts">
     import Title from "../title/Title.svelte";
+    import OperationPreview from "./OperationPreview.svelte";
 
     let icons = {
       "save": "Save recipe",
@@ -10,15 +11,16 @@
     let dragged: boolean = false;
     let dragged_name: string;
 
-    function handleDrop(event) {
+    function handleDrop(event: DragEvent) {
         event.preventDefault();
-        console.log(`Dropped data: ${event.dataTransfer.getData("text/plain")}`);
+        dragged = false;
+        console.log(`Dropped data: ${event.dataTransfer?.getData("text/plain")}`);
     }
 
-    function handleDragOver(event) {
+    function handleDragOver(event: DragEvent) {
         event.preventDefault();
         dragged = true;
-        dragged_name = event.dataTransfer.getData("text/plain");
+        dragged_name = event.dataTransfer?.getData("text/plain") ?? "";
         console.log(`Dragged over: ${dragged_name}`);
     }
 
@@ -28,7 +30,7 @@
   <Title title="Recipe" id="recipe" {icons}/>
   <ul class="recipe-list" on:drop={handleDrop} on:dragleave={() => dragged = false} on:dragover={handleDragOver}>
     {#if dragged}
-       <li>{dragged_name}</li> 
+        <OperationPreview name={dragged_name}/>
     {/if}
   </ul>
 </div>

@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { setContext } from "svelte";
 
     export let name: string;
     
@@ -7,14 +6,9 @@
         e.dataTransfer.setData("text/plain", name);
     }
 
-    function handleDrop(e) {
-        e.preventDefault();
-        setContext("recipe", e.dataTransfer.getData("text/plain"));
-    }
-
 </script>
 
-<li on:dragstart={handleDragStart} on:drop={handleDrop} draggable="true" class="operation">
+<li on:dragstart={handleDragStart} draggable="true" class="operation">
     {name}
 </li>
 
