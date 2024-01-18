@@ -43,7 +43,10 @@
         "resizable": true,
         "title": "ChefDesktop",
         "width": 1920,
-        "height": 1080
+        "height": 1080,
+        "minWidth": 800,
+        "minHeight": 600,
+        "fileDropEnabled": false
       }
     ]
   }

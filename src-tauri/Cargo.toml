@@ -42,5 +42,8 @@ tauri = { version = "1.4", features = [ "clipboard-write-text", "clipboard-read-
 custom-protocol = ["tauri/custom-protocol"]
 
 [profile.release]
+panic = "abort"
+codegen-units = 1
+opt-level = "z"
 lto = true
 strip = true

@@ -5,13 +5,13 @@
 	let search: string;
     
     let operations: string[] = ["To Base64", "From Base64", "To Hex", "From Hex", "To Hexdump", "From Hexdump"];
-
+    
 </script>
 
 <div class="operations">
     <Title title="Operations"/>
     <div class="SearchBar">
-        <input bind:value={search} type="text" placeholder="Search..." />
+        <input bind:value={search} on:drop={(e) => e.preventDefault()} type="text" placeholder="Search..." />
     </div>
     <div class="operations-list">
         {#each operations as operation_name}

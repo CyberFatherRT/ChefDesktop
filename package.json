@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@tauri-apps/api": "^1.4.0",
+    "fuse.js": "^7.0.0",
     "tippy.js": "^6.3.7"
   },
   "devDependencies": {

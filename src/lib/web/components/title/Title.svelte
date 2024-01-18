@@ -1,6 +1,5 @@
 <script lang="ts">
     import {tooltip} from "./title";
-    import {writeText} from "@tauri-apps/api/clipboard";
 
     export let title: string;
     export let icons: Object = {};
@@ -11,10 +10,15 @@
 <div class="title no-select">
     <p>{title}</p>
     <span>
-    {#each Object.entries(icons) as [icon, description]}
-      <button use:tooltip={{ content: description }} id="{id}_{icon}" tabindex="-1" on:click={async () => await writeText("Hello, World!")}>
-        <i class="material-icons">{icon}</i>
-      </button>
+    {#each Object.entries(icons) as [icon, values]}
+        <button
+            use:tooltip={{ content: values.description }}
+            on:click={values.func}
+            id="{id}_{icon}"
+            tabindex="-1"
+        >
+            <i class="material-icons">{icon}</i>
+        </button>
     {/each}
   </span>
 </div>

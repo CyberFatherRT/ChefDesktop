@@ -1,11 +1,19 @@
 <script lang="ts">
+    import { createEventDispatcher } from "svelte";
 
     export let name: string | undefined;
     export let id: string = "";
 
+    const dispatch = createEventDispatcher();
+
+    function on_leave() {
+        dispatch('onleave')
+    }
+    
+
 </script>
 
-<li {id} draggable="true" class="preview">{name}</li>
+<li {id} on:dragleave={on_leave} draggable="true" class="preview">{name}</li>
 
 <style>
 

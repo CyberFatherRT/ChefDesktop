@@ -1,19 +1,16 @@
 <script lang="ts">
     import Title from "../title/Title.svelte";
-    import ToBase64 from "../../../core/operations/tobase64";
+    import { writeText } from "@tauri-apps/api/clipboard";
+
+    let output: string;
+
 
     let icons = {
-        "save": "Save output to file",
-        "content_copy": "Copy raw output- to the clipboard",
-        "open_in_browser": "Replace input with output-",
-        "fullscreen": "Maximase output- pane"
+        "save": { description: "Save output to file" },
+        "content_copy": { description: "Copy raw output- to the clipboard", func: () => writeText(output)},
+        "open_in_browser": { description: "Replace input with output" },
+        "fullscreen": { description: "Maximase output- pane" }
     };
-
-    let operation = new ToBase64();
-    (async function foo() {
-        let res = await operation.run({input: "flag", params: {}});
-        console.log(res);
-    })()
 
 </script>
 
@@ -23,7 +20,7 @@
     <div class="output-wrapper">
         <div class="output-tabs"></div>
         <div class="output-text">
-            <textarea id="output-textarea" readonly/>
+            <textarea bind:value={output} id="output-textarea" readonly/>
         </div>
         <div class="output-status-bar"></div>
     </div>

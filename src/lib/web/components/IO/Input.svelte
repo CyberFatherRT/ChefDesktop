@@ -1,27 +1,15 @@
 <script lang="ts">
-    import {invoke} from "@tauri-apps/api";
     import Title from "../title/Title.svelte";
 
-
     let icons = {
-        "add": "Add a new input tab",
-        "folder_open": "Open folder as input",
-        "input": "Open file as input",
-        "delete": "Clear input and output",
-        "view_compact": "Reset pane layout"
+        "add": { description: "Add a new input tab"},
+        "folder_open": { description: "Open folder as input"},
+        "input": { description: "Open file as input"},
+        "delete": { description: "Clear input and output"},
+        "view_compact": { description: "Reset pane layout"}
     }
 
     let inputValue: string;
-
-    async function foo() {
-        let output = document.getElementById("output-textarea");
-        let request = JSON.stringify({
-            input: inputValue,
-            params: {
-            }
-        });
-        output.innerText = await invoke("to_base64", {request});
-    }
 
 </script>
 
@@ -30,7 +18,7 @@
     <div class="input-wrapper">
         <div class="input-tabs"></div>
         <div class="input-text">
-            <textarea bind:value={inputValue} on:input={foo}/>
+            <textarea id="input-textarea" bind:value={inputValue} on:drop={(e) => e.preventDefault()}/>
         </div>
         <div class="input-status-bar"></div>
     </div>

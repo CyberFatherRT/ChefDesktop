@@ -2,8 +2,8 @@
 
     export let name: string;
     
-    function handleDragStart(e) {
-        e.dataTransfer.setData("text/plain", name);
+    function handleDragStart(e: DragEvent) {
+        e.dataTransfer?.setData("text", name);
     }
 
 </script>
@@ -16,7 +16,6 @@
 <style>
     
     .operation {
-        cursor: -webkit-grub;
         cursor: grub;
         padding: 10px;
         position: relative;
