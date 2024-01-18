@@ -24,6 +24,7 @@
         </div>
         <div class="output-status-bar"></div>
     </div>
+
 </div>
 
 <style>
@@ -46,4 +47,5 @@
         background-color: transparent;
         color: white;
     }
+
 </style>
