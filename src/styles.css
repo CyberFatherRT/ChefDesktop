@@ -19,7 +19,7 @@
 
     --title-color: #fff;
     --title-weight: bold;
-    --title-background-color: #333;
+    --title-background-color: #333333;
 
     --banner-font-color: #c5c5c5;
     --banner-bg-color: #252525;
@@ -130,6 +130,14 @@
 
 html, body, main, #app {
     height: 100%;
+}
+
+body {
+    font-weight: 400;
+
+    font-family: var(--primary-font-family);
+    font-size: var(--primary-font-size);
+    line-height: var(--primary-line-height);
 }
 
 .tippy-box[data-theme~='custom'] {

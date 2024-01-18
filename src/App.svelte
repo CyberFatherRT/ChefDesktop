@@ -6,7 +6,7 @@
 </script>
 
 
-<main>
+<main class="no-select">
     <div class="content-wrapper">
         <Operations/>
         <VGutter/>
