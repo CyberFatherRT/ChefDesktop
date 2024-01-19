@@ -40,7 +40,8 @@
 
     --rec-list-operation-bg-color: #252525;
     --rec-list-operation-border-color: #444;
-    --rec-list-operation-font-color: #468847;
+    --rec-list-operation-font-color: #c5c5c5;
+    --rec-list-operation-font-weight: bold;
 
     --selected-operation-font-color: #c5c5c5;
     --selected-operation-bg-color: #3f3f3f;

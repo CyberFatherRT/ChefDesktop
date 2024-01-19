@@ -7,19 +7,22 @@
     const dispatch = createEventDispatcher();
 
     function on_leave() {
-        dispatch('onleave')
+        dispatch('onleave', {id: id})
     }
-    
+
+    function on_drop() {
+        dispatch('ondrop', {id: id})
+    }
 
 </script>
 
-<li {id} on:dragleave={on_leave} draggable="true" class="preview">{name}</li>
+<li {id} on:dragleave={on_leave} on:dragend={on_drop} draggable="true" class="preview">{name}</li>
 
 <style>
 
     .preview {
-        color: var(--op-list-operation-font-color);
-        font-weight: var(--op-list-operation-font-weight);
+        color: var(--rec-list-operation-font-color);
+        font-weight: var(--rec-list-operation-font-weight);
 
         font-family: var(--primary-font-family);
         font-size: var(--primary-font-size);

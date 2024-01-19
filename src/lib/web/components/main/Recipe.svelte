@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { invoke } from "@tauri-apps/api";
     import Title from "../title/Title.svelte";
     import OperationPreview from "./OperationPreview.svelte";
     import RecipeOperation from "./RecipeOperation.svelte";
@@ -10,43 +9,21 @@
       "delete": { description: "Delete recipe", func: () => baked_operations = []}
     }
     
-
     let baked_operations: string[] = [];
-    let dragged: boolean = false;
+    let dragged_over: boolean = false;
+    let dragged_leave: boolean = false;
     let dragged_name: string | undefined;
 
-    async function run_me_daddy(operation_list: string[]) {
-        let output = document.getElementById("output-textarea");
-        let input = document.getElementById("input-textarea")?.value;
-
-        console.log(operation_list)
-        console.log(input)
-
-        for (let i = 0; i < operation_list.length; i++) {
-            if (operation_list[i] === "To Base64") {
-                let request = {
-                    input: input,
-                    params: {}
-                }
-                console.log(`params: `, request)
-                input = await invoke('to_base64', {request: JSON.stringify(request)})
-            }
-        }
-
-        output.value = input;
-
-    }
-
-    $: run_me_daddy(baked_operations)
 
     function handleDragLeave(event: DragEvent) {
         event.preventDefault();
-        dragged = false;
+        dragged_over = false;
+        dragged_leave = true;
     }
 
     function handleDrop(event: DragEvent) {
         event.preventDefault();
-        dragged = false;
+        dragged_over = false;
         let new_operation = event.dataTransfer?.getData("text");
         if (new_operation?.length !== 0) {
             baked_operations = [...baked_operations, new_operation || ""]
@@ -56,8 +33,15 @@
     function handleDragOver(event: DragEvent) {
         event.preventDefault();
         dragged_name = event.dataTransfer?.getData('text');
-        if (dragged_name?.length !== 0) {
-            dragged = true;
+        dragged_over = true;
+        dragged_leave = false;
+    }
+
+    function handleDragEnd(event: DragEvent) {
+        event.preventDefault();
+        let id = parseInt(event.explicitOriginalTarget.id);
+        if (dragged_leave) {
+            baked_operations = baked_operations.filter((_, idx) => idx !== id);
         }
     }
 
@@ -69,14 +53,15 @@
     on:drop={handleDrop}
     on:dragleave={handleDragLeave}
     on:dragover={handleDragOver}
+    on:dragend={handleDragEnd}
     class="recipe-list"
     >
 
-    {#each baked_operations as name, id}
-        <RecipeOperation {id} {name}/>        
+    {#each baked_operations as name, idx}
+        <RecipeOperation id={idx.toString()} {name}/>        
     {/each}
 
-    {#if dragged}
+    {#if dragged_over && dragged_name !== ""}
         <OperationPreview name={dragged_name}/>
     {/if}
 
