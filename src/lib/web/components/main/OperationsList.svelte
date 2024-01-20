@@ -4,7 +4,24 @@
 
 	let search: string;
     
-    let operations: string[] = ["To Base64", "From Base64", "To Hex", "From Hex", "To Hexdump", "From Hexdump"];
+    type RecipeOperation = {
+        name: string
+        disabled: boolean,
+        breakpoint: boolean
+    }
+
+    let operations: RecipeOperation[] = [
+        {
+            name: "To Base64",
+            disabled: false,
+            breakpoint: false,
+        },
+        {
+            name: "From Base64",
+            disabled: false,
+            breakpoint: false
+        }
+    ];
     
 </script>
 
@@ -13,11 +30,11 @@
     <div class="SearchBar">
         <input bind:value={search} on:drop={(e) => e.preventDefault()} type="text" placeholder="Search..." />
     </div>
-    <div class="operations-list">
+    <section class="operations-list">
         {#each operations as operation_name}
-            <Operation name={operation_name} />
+            <Operation name={operation_name.name} />
         {/each}
-    </div>
+    </section>
 </div>
 
 <style>

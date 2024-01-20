@@ -1,11 +1,10 @@
 <script lang="ts">
 
     export let name: string | undefined;
-    export let id: string = "";
 
 </script>
 
-<li {id} draggable="true" class="preview">{name}</li>
+<li draggable="true" class="preview">{name}</li>
 
 <style>
 

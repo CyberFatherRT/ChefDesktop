@@ -10,9 +10,12 @@ use serde::{Deserialize, Serialize};
 
 create_tauri_wrapper!(argon2, Argon2, String, String);
 
+type Foo = Result<String, String>;
+
 impl Operation<'_, DeserializeMeDaddy, String> for Argon2 {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
+
 
         let (params, input) = (request.params, request.input);
         let (salt, variant, mem_cost, time_cost, lanes, hash_length) = (
