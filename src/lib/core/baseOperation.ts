@@ -17,8 +17,8 @@ export class Operation {
     }
 }
 
-export interface Run<R, O> {
-    run(request: R): O
+export interface Run {
+    run(request: object): string
 }
 
 export type Arg = {

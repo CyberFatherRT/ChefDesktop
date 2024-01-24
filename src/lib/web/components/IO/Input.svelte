@@ -1,5 +1,6 @@
 <script lang="ts">
     import Title from "../title/Title.svelte";
+    import { invoke } from '@tauri-apps/api/tauri'
 
     let icons = {
         "add": { description: "Add a new input tab"},
