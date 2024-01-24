@@ -2,7 +2,6 @@
     import Title from "../title/Title.svelte";
     import OperationPreview from "./OperationPreview.svelte";
     import RecipeOperation from "./RecipeOperation.svelte";
-    import { foo } from "../../../core/runOperations";
 
     let icons = {
       "save": { description: "Save recipe" },
@@ -20,8 +19,6 @@
     let dragged_over: boolean = false;
     let dragged_leave: boolean = false;
     let dragged_name: string | undefined;
-
-    $: foo(baked_operations)
 
     function handleDragLeave(event: DragEvent) {
         event.preventDefault();

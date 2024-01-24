@@ -13,6 +13,7 @@ dist-ssr
 *.local
 bun.lockb
 src-tauri/target
+.xwin-cache
 
 # Editor directories and files
 .vscode/*
