@@ -24,6 +24,7 @@
         event.preventDefault();
         dragged_over = false;
         dragged_leave = true;
+        console.log(`dragged leave: ${dragged_leave}`);
     }
 
     function handleDrop(event: DragEvent) {
@@ -33,6 +34,7 @@
         if (new_operation?.length !== 0) {
             baked_operations = [...baked_operations,  {name: new_operation || "", disabled: false, breakpoint: false}]
         }
+        console.log(`dragged drop: ${dragged_leave}`);
     }
 
     function handleDragOver(event: DragEvent) {
@@ -40,7 +42,13 @@
         dragged_name = event.dataTransfer?.getData('text');
         dragged_over = true;
         dragged_leave = false;
+        console.log(`dragged over: ${dragged_over}`);
     }
+
+    window.addEventListener("dragover", (event: DragEvent) => {
+        event.preventDefault();
+        console.log("dragover");
+    });
 
     function handleDragEnd(event: DragEvent) {
         event.preventDefault();
@@ -48,6 +56,7 @@
         if (dragged_leave) {
             baked_operations = baked_operations.filter((_, idx) => idx !== id);
         }
+        console.log(`dragged end: ${dragged_leave}`);
     }
 
 </script>
