@@ -13,13 +13,13 @@ use crate::{
     libs::base64::to_base64,
     traits::StringTrait,
     utils::{convert_to_byte_array, to_hex, SupportedFormats},
-    Operation, OutputFormat, DOCS_URL, create_tauri_wrapper, run_operations
+    Operation, DOCS_URL, create_tauri_wrapper, run_operations
 };
 
-create_tauri_wrapper!(hmac, Hmac, OutputFormat, String);
+create_tauri_wrapper!(hmac, Hmac, String, String);
 
-impl Operation<'_, DeserializeMeDaddy, OutputFormat> for Hmac {
-    fn do_black_magic(&self, request: &str) -> Result<OutputFormat, String> {
+impl Operation<'_, DeserializeMeDaddy, String> for Hmac {
+    fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
 
         let (input, key, key_format, hash_function, output_format) = (
@@ -31,6 +31,7 @@ impl Operation<'_, DeserializeMeDaddy, OutputFormat> for Hmac {
         );
 
         let key = convert_to_byte_array(&key, &key_format)?;
+        println!("{key:?}");
         let res: Vec<u8> = match hash_function {
             SupportedHashFunctions::MD2 => {
                 let mut hasher =
@@ -125,9 +126,9 @@ impl Operation<'_, DeserializeMeDaddy, OutputFormat> for Hmac {
         };
 
         Ok(match output_format {
-            SupportedOutputFormat::Hex => OutputFormat::Hex(to_hex(&res)),
-            SupportedOutputFormat::Base64 => OutputFormat::Base64(to_base64(&res, None)?),
-            SupportedOutputFormat::Uint8Array => OutputFormat::Uint8Array(res),
+            SupportedOutputFormat::Hex => to_hex(&res),
+            SupportedOutputFormat::Base64 => to_base64(&res, None)?,
+            SupportedOutputFormat::Raw => String::from_utf8_lossy(&res).to_string()
         })
     }
 }
@@ -173,7 +174,7 @@ enum SupportedHashFunctions {
 enum SupportedOutputFormat {
     Hex,
     Base64,
-    Uint8Array,
+    Raw
 }
 
 #[derive(Deserialize)]
@@ -208,7 +209,7 @@ create_me_daddy!();
 /// #### where
 ///     - SupportedFormat is enum of "binary", "utf8", "hex", "base64", "latin1"
 ///     - SupportedHashFunctions is enum of "md2", "md4", "md5", "sha1", "sha224", "sha256", "sha384", "sha512", "sha512_224", "sha512_256", "ripemd128", "ripemd160", "ripemd256", "ripemd320", "whirlpool"
-///     - SupportedOutputFormat is enum of "hex", "base64", "uint8array"
+///     - SupportedOutputFormat is enum of "hex", "base64", "raw"
 /// <br/><br/>
 ///
 /// ### Server response have two possible formats

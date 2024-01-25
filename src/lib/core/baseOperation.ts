@@ -1,5 +1,6 @@
-export class Operation {
+export abstract class Operation {
     name: string;
+    op_name: string;
     module: Modules;
     englishDescription: string;
     russianDescription: string;
@@ -8,6 +9,7 @@ export class Operation {
 
     constructor() {
         this.name = "";
+        this.op_name = "";
         this.module = Modules.Other;
         this.englishDescription = "";
         this.russianDescription = "";
@@ -23,6 +25,7 @@ export interface Run {
 
 export type Arg = {
     name: string,
+    op_name: string;
     type: UserInputOptions,
     value: any,
     default_value: string | number | boolean,
