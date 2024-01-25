@@ -1,30 +1,29 @@
 <script lang="ts">
     import Title from "../title/Title.svelte";
     import { writeText } from "@tauri-apps/api/clipboard";
-
-    let output: string;
-
+    import { output } from "../../../core/runOperations";
 
     let icons = {
         "save": { description: "Save output to file" },
-        "content_copy": { description: "Copy raw output- to the clipboard", func: () => writeText(output)},
+        "content_copy": { description: "Copy raw output- to the clipboard", func: () => writeText(outputValue)},
         "open_in_browser": { description: "Replace input with output" },
         "fullscreen": { description: "Maximase output- pane" }
     };
+
+    let outputValue: string;
+    output.subscribe((value) => outputValue = value);
 
 </script>
 
 <div class="output">
     <Title title="Output" id="output" {icons}/>
-
     <div class="output-wrapper">
         <div class="output-tabs"></div>
         <div class="output-text">
-            <textarea bind:value={output} id="output-textarea" readonly/>
+            <textarea bind:value={outputValue} id="output-textarea" readonly/>
         </div>
         <div class="output-status-bar"></div>
     </div>
-
 </div>
 
 <style>

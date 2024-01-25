@@ -3,15 +3,9 @@
     export let name: string | undefined;
     export let id: string = "";
 
-    window.addEventListener("dragover", (event: DragEvent) => {
-        event.preventDefault();
-        console.log("dragover");
-    });
-
-
 </script>
 
-<li {id} on:dragleave={() => console.log('leave')}  draggable="true" class="preview">
+<li {id} draggable="true" class="preview">
     <div>{name}</div>
     <slot/>
 </li>

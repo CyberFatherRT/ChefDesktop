@@ -9,11 +9,12 @@ use sha2::*;
 use whirlpool::*;
 
 use crate::{
-    create_info_struct, create_me_daddy,
+    create_info_struct, create_me_daddy, create_tauri_wrapper,
     libs::base64::to_base64,
+    run_operations,
     traits::StringTrait,
     utils::{convert_to_byte_array, to_hex, SupportedFormats},
-    Operation, DOCS_URL, create_tauri_wrapper, run_operations
+    Operation, DOCS_URL,
 };
 
 create_tauri_wrapper!(hmac, Hmac, String, String);
@@ -31,7 +32,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for Hmac {
         );
 
         let key = convert_to_byte_array(&key, &key_format)?;
-        println!("{key:?}");
+
         let res: Vec<u8> = match hash_function {
             SupportedHashFunctions::MD2 => {
                 let mut hasher =
@@ -128,7 +129,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for Hmac {
         Ok(match output_format {
             SupportedOutputFormat::Hex => to_hex(&res),
             SupportedOutputFormat::Base64 => to_base64(&res, None)?,
-            SupportedOutputFormat::Raw => String::from_utf8_lossy(&res).to_string()
+            SupportedOutputFormat::Raw => String::from_utf8_lossy(&res).to_string(),
         })
     }
 }
@@ -174,7 +175,7 @@ enum SupportedHashFunctions {
 enum SupportedOutputFormat {
     Hex,
     Base64,
-    Raw
+    Raw,
 }
 
 #[derive(Deserialize)]

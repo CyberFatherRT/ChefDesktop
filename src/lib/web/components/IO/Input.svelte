@@ -1,6 +1,6 @@
 <script lang="ts">
     import Title from "../title/Title.svelte";
-    
+    import { input } from "../../../core/runOperations";
 
     let icons = {
         "add": { description: "Add a new input tab"},
@@ -11,6 +11,7 @@
     }
 
     let inputValue: string;
+    $: input.set(inputValue)
 
 </script>
 

@@ -14,7 +14,6 @@ impl Operation<'_, DeserializeMeDaddy, String> for Argon2 {
     fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
 
-
         let (params, input) = (request.params, request.input);
         let (salt, variant, mem_cost, time_cost, lanes, hash_length) = (
             params.salt,

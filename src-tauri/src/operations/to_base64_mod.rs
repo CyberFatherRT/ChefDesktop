@@ -1,6 +1,9 @@
 use serde::{Deserialize, Serialize};
 
-use crate::{create_info_struct, create_me_daddy, libs::base64::to_base64 as to_base64_lib, Operation, DOCS_URL, create_tauri_wrapper, run_operations};
+use crate::{
+    create_info_struct, create_me_daddy, create_tauri_wrapper,
+    libs::base64::to_base64 as to_base64_lib, run_operations, Operation, DOCS_URL,
+};
 
 create_tauri_wrapper!(to_base64, ToBase64, String, String);
 

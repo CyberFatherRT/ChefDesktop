@@ -1,7 +1,10 @@
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha224, Sha256, Sha384, Sha512, Sha512_224, Sha512_256};
 
-use crate::{create_info_struct, create_me_daddy, utils::to_hex, Operation, DOCS_URL, create_tauri_wrapper, run_operations};
+use crate::{
+    create_info_struct, create_me_daddy, create_tauri_wrapper, run_operations, utils::to_hex,
+    Operation, DOCS_URL,
+};
 
 create_tauri_wrapper!(sha2, SHA2, String, String);
 

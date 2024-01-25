@@ -2,6 +2,7 @@
     import Title from "../title/Title.svelte";
     import OperationPreview from "./OperationPreview.svelte";
     import RecipeOperation from "./RecipeOperation.svelte";
+    import { operations } from "../../../core/runOperations";
 
     let icons = {
       "save": { description: "Save recipe" },
@@ -16,6 +17,7 @@
     }
     
     let baked_operations: RecipeOperation[] = [];
+    $: operations.set(baked_operations)
     let dragged_over: boolean = false;
     let dragged_leave: boolean = false;
     let dragged_name: string | undefined;
@@ -24,7 +26,7 @@
         event.preventDefault();
         dragged_over = false;
         dragged_leave = true;
-        console.log(`dragged leave: ${dragged_leave}`);
+        
     }
 
     function handleDrop(event: DragEvent) {
@@ -34,7 +36,7 @@
         if (new_operation?.length !== 0) {
             baked_operations = [...baked_operations,  {name: new_operation || "", disabled: false, breakpoint: false}]
         }
-        console.log(`dragged drop: ${dragged_leave}`);
+        
     }
 
     function handleDragOver(event: DragEvent) {
@@ -42,13 +44,7 @@
         dragged_name = event.dataTransfer?.getData('text');
         dragged_over = true;
         dragged_leave = false;
-        console.log(`dragged over: ${dragged_over}`);
     }
-
-    window.addEventListener("dragover", (event: DragEvent) => {
-        event.preventDefault();
-        console.log("dragover");
-    });
 
     function handleDragEnd(event: DragEvent) {
         event.preventDefault();
@@ -56,7 +52,6 @@
         if (dragged_leave) {
             baked_operations = baked_operations.filter((_, idx) => idx !== id);
         }
-        console.log(`dragged end: ${dragged_leave}`);
     }
 
 </script>

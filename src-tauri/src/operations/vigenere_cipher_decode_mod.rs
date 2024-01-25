@@ -1,10 +1,11 @@
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    create_info_struct, create_me_daddy,
+    create_info_struct, create_me_daddy, create_tauri_wrapper,
     libs::vigenere_trait::VigenereCipher,
+    run_operations,
     utils::{sub, SupportedLanguages},
-    Operation, DOCS_URL, create_tauri_wrapper, run_operations
+    Operation, DOCS_URL,
 };
 
 create_tauri_wrapper!(vigenere_cipher_decode, VigenereCipherDecode, String, String);

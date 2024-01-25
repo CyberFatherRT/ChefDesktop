@@ -1,4 +1,7 @@
-use crate::{create_info_struct, create_me_daddy, utils::to_hex, Operation, DOCS_URL, create_tauri_wrapper, run_operations};
+use crate::{
+    create_info_struct, create_me_daddy, create_tauri_wrapper, run_operations, utils::to_hex,
+    Operation, DOCS_URL,
+};
 use serde::{Deserialize, Serialize};
 use sha3::{Digest, Sha3_224, Sha3_256, Sha3_384, Sha3_512};
 

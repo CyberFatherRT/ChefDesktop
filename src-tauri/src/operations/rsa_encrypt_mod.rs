@@ -5,14 +5,14 @@ use sha2::{Sha224, Sha256, Sha384, Sha512};
 use sha3::{Sha3_224, Sha3_256, Sha3_384, Sha3_512};
 
 use crate::{
-    create_info_struct, create_me_daddy, libs::base64::to_base64, utils::to_hex, Operation,
-    OutputFormat, DOCS_URL, create_tauri_wrapper, run_operations
+    create_info_struct, create_me_daddy, create_tauri_wrapper, libs::base64::to_base64,
+    run_operations, utils::to_hex, Operation, DOCS_URL,
 };
 
-create_tauri_wrapper!(rsa_encrypt, RSAEncrypt, OutputFormat, String);
+create_tauri_wrapper!(rsa_encrypt, RSAEncrypt, String, String);
 
-impl Operation<'_, DeserializeMeDaddy, OutputFormat> for RSAEncrypt {
-    fn do_black_magic(&self, request: &str) -> Result<OutputFormat, String> {
+impl Operation<'_, DeserializeMeDaddy, String> for RSAEncrypt {
+    fn do_black_magic(&self, request: &str) -> Result<String, String> {
         let request = self.validate(request)?;
         let (input, public_key, encrypted_scheme, message_digest_algorithm, output_format) = (
             request.input,
@@ -51,12 +51,11 @@ impl Operation<'_, DeserializeMeDaddy, OutputFormat> for RSAEncrypt {
             }
         }
         .map_err(|err| err.to_string())?;
+
         Ok(match output_format {
-            SupportedOutputFormat::Hex => OutputFormat::Hex(to_hex(&encrypted_text)),
-            SupportedOutputFormat::Base64 => {
-                OutputFormat::Base64(to_base64(&encrypted_text, None)?)
-            }
-            SupportedOutputFormat::Uint8Array => OutputFormat::Uint8Array(encrypted_text),
+            SupportedOutputFormat::Hex => to_hex(&encrypted_text),
+            SupportedOutputFormat::Base64 => to_base64(&encrypted_text, None)?,
+            SupportedOutputFormat::Raw => String::from_utf8_lossy(&encrypted_text).to_string(),
         })
     }
 }
@@ -90,8 +89,9 @@ enum SupportedMessageDigestAlgorithm {
 enum SupportedOutputFormat {
     Hex,
     Base64,
-    Uint8Array,
+    Raw,
 }
+
 #[derive(Deserialize)]
 struct Params {
     #[serde(rename = "pub_key")]

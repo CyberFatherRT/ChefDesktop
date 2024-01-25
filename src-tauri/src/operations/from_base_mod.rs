@@ -2,7 +2,10 @@ use num::{BigInt, Num};
 use serde::{Deserialize, Serialize};
 use serde_valid::Validate;
 
-use crate::{create_info_struct, create_me_daddy, traits::StringTrait, Operation, DOCS_URL, create_tauri_wrapper, run_operations};
+use crate::{
+    create_info_struct, create_me_daddy, create_tauri_wrapper, run_operations, traits::StringTrait,
+    Operation, DOCS_URL,
+};
 
 create_tauri_wrapper!(from_base, FromBase, String, String);
 

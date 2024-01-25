@@ -1,4 +1,6 @@
-use crate::{create_me_daddy, utils::SupportedDelimiter, Operation, create_tauri_wrapper, run_operations};
+use crate::{
+    create_me_daddy, create_tauri_wrapper, run_operations, utils::SupportedDelimiter, Operation,
+};
 use serde::Deserialize;
 
 create_tauri_wrapper!(filter, Filter, String, String);

@@ -1,7 +1,9 @@
 use md5::{Digest, Md5};
 use serde::{Deserialize, Serialize};
 
-use crate::{create_info_struct, utils::to_hex, Operation, DOCS_URL, create_tauri_wrapper, run_operations};
+use crate::{
+    create_info_struct, create_tauri_wrapper, run_operations, utils::to_hex, Operation, DOCS_URL,
+};
 
 create_tauri_wrapper!(md5, MD5, String, String);
 

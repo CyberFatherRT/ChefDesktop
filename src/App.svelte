@@ -3,12 +3,6 @@
     import Operations from "./lib/web/components/main/OperationsList.svelte";
     import Recipe from "./lib/web/components/main/Recipe.svelte";
     import IO from "./lib/web/components/IO/IO.svelte";
-    import { onMount } from "svelte";
-    import { foo } from "./lib/core/runOperations"
-
-    onMount(async () => {
-        document.getElementById("output-textarea").value = await foo("xuy")
-    })
 </script>
 
 
