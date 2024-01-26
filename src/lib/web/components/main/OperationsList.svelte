@@ -17,7 +17,7 @@
             breakpoint: false,
         },
         {
-            name: "From Base64",
+            name: "HMAC",
             disabled: false,
             breakpoint: false
         }

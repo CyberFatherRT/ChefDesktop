@@ -2,6 +2,7 @@
     import Title from "../title/Title.svelte";
     import OperationPreview from "./OperationPreview.svelte";
     import RecipeOperation from "./RecipeOperation.svelte";
+    import HMAC from "../../operations/Hmac.svelte";
     import { operations } from "../../../core/runOperations";
 
     let icons = {

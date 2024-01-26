@@ -1,16 +1,44 @@
 <script lang="ts">
-
     export let name: string | undefined;
     export let id: string = "";
-
 </script>
 
 <li {id} draggable="true" class="preview">
-    <div>{name}</div>
+    <title>
+        <p>{name}</p>
+        <div class="recipe-icons">
+            <button> <i class="material-icons">pause</i> </button>
+            <button> <i class="material-icons">not_interested</i> </button>
+        </div>
+    </title>
     <slot/>
 </li>
 
 <style>
+
+    title {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    button {
+        margin-right: 10px;
+
+        background: transparent;
+        border: none;
+        color: var(--breakpoint-icon-color);
+
+        float: right;
+        cursor: pointer;
+        font-size: 10px;
+
+        line-height: var(--primary-line-height);
+    }
+
+    .recipe-icons {
+        top: 13px;
+        right: 10px;
+    }
 
     .preview {
         color: var(--rec-list-operation-font-color);

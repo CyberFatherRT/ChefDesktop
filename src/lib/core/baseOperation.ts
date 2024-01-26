@@ -5,7 +5,8 @@ export abstract class Operation {
     englishDescription: string;
     russianDescription: string;
     infoURL: string | null;
-    args: Arg[]
+    args: Arg[];
+    params: Map<string, string>
 
     constructor() {
         this.name = "";
@@ -15,17 +16,18 @@ export abstract class Operation {
         this.russianDescription = "";
         this.infoURL = null;
 
+        this.params = new Map();
         this.args = [];
     }
 }
 
 export interface Run {
-    run(request: object): string
+    run(input: string): Promise<string>
 }
 
 export type Arg = {
     name: string,
-    op_name: string;
+    op_name: string,
     type: UserInputOptions,
     value: any,
     default_value: string | number | boolean,
