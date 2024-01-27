@@ -2,12 +2,13 @@ use crate::{
     create_info_struct, create_me_daddy, create_tauri_wrapper, operations::Delimiters,
     run_operations, utils::char_repr, Operation, DOCS_URL,
 };
+use anyhow::Result;
 use serde::{Deserialize, Serialize};
 
-create_tauri_wrapper!(a1z26_cipher_encode, A1Z26CipherEncode, String, String);
+create_tauri_wrapper!(a1z26_cipher_encode, A1Z26CipherEncode);
 
-impl Operation<'_, DeserializeMeDaddy, String> for A1Z26CipherEncode {
-    fn do_black_magic(&self, request: &str) -> Result<String, String> {
+impl Operation<'_, DeserializeMeDaddy> for A1Z26CipherEncode {
+    fn do_black_magic(&self, request: &str) -> Result<String> {
         let request = self.validate(request)?;
         let (input, delimiter) = (request.input, format!("{:?}", request.params.delimiter));
 

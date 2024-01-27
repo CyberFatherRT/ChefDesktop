@@ -1,10 +1,11 @@
 use crate::{create_info_struct, create_tauri_wrapper, run_operations, Operation, DOCS_URL};
+use anyhow::Result;
 use serde::{Deserialize, Serialize};
 
-create_tauri_wrapper!(analyse_hash, AnalyseHash, SerializeMeDaddy, String);
+create_tauri_wrapper!(analyse_hash, AnalyseHash);
 
-impl Operation<'_, DeserializeMeDaddy, SerializeMeDaddy> for AnalyseHash {
-    fn do_black_magic(&self, request: &str) -> Result<SerializeMeDaddy, String> {
+impl Operation<'_, DeserializeMeDaddy> for AnalyseHash {
+    fn do_black_magic(&self, request: &str) -> Result<String> {
         let request = self.validate(request)?;
         let input = request
             .input
@@ -79,12 +80,15 @@ impl Operation<'_, DeserializeMeDaddy, SerializeMeDaddy> for AnalyseHash {
             }
         };
 
-        Ok(SerializeMeDaddy {
+        let result = format!(
+            "{} {} {} {}",
             hash_length,
             byte_length,
             bit_length,
-            possible_hash_functions,
-        })
+            possible_hash_functions.join(" ")
+        );
+
+        Ok(result)
     }
 }
 

@@ -1,3 +1,4 @@
+use anyhow::{bail, Result};
 use rsa::{pkcs1::DecodeRsaPrivateKey, Oaep, Pkcs1v15Encrypt, RsaPrivateKey};
 use serde::{Deserialize, Serialize};
 use sha1::Sha1;
@@ -9,13 +10,13 @@ use crate::{
     libs::base64::{from_base64, to_base64},
     run_operations,
     utils::{to_hex, DataRepresentation, DataRepresentationInput},
-    Operation, OutputFormat, DOCS_URL,
+    Operation, DOCS_URL,
 };
 
-create_tauri_wrapper!(rsa_decrypt, RSADecrypt, OutputFormat, String);
+create_tauri_wrapper!(rsa_decrypt, RSADecrypt);
 
-impl Operation<'_, DeserializeMeDaddy, OutputFormat> for RSADecrypt {
-    fn do_black_magic(&self, request: &str) -> Result<OutputFormat, String> {
+impl Operation<'_, DeserializeMeDaddy> for RSADecrypt {
+    fn do_black_magic(&self, request: &str) -> Result<String> {
         let request = self.validate(request)?;
         let (input, pem_key, encrypted_scheme, message_digest_algorithm, output_format) = (
             request.input,
@@ -28,7 +29,7 @@ impl Operation<'_, DeserializeMeDaddy, OutputFormat> for RSADecrypt {
         if matches!(encrypted_scheme, SupportedEncryptionSchemes::RSA_OAEP)
             && message_digest_algorithm.is_none()
         {
-            return Err("RSA_OAEP must have message digest algorithm".to_string());
+            bail!("RSA_OAEP must have message digest algorithm");
         }
 
         let DataRepresentation::ByteArray(input) =
@@ -37,8 +38,7 @@ impl Operation<'_, DeserializeMeDaddy, OutputFormat> for RSADecrypt {
             unreachable!()
         };
 
-        let pem_key: RsaPrivateKey =
-            DecodeRsaPrivateKey::from_pkcs1_pem(&pem_key).map_err(|err| err.to_string())?;
+        let pem_key: RsaPrivateKey = DecodeRsaPrivateKey::from_pkcs1_pem(&pem_key)?;
 
         let encrypted_text = match encrypted_scheme {
             SupportedEncryptionSchemes::RSA_OAEP => {
@@ -58,15 +58,14 @@ impl Operation<'_, DeserializeMeDaddy, OutputFormat> for RSADecrypt {
             SupportedEncryptionSchemes::RSA_AES_PKCS1_V1_5 => {
                 pem_key.decrypt(Pkcs1v15Encrypt, &input)
             }
-        }
-        .map_err(|err| err.to_string())?;
+        }?;
 
         Ok(match output_format {
-            SupportedOutputFormat::Hex => OutputFormat::Hex(to_hex(&encrypted_text)),
-            SupportedOutputFormat::Base64 => {
-                OutputFormat::Base64(to_base64(&encrypted_text, None)?)
+            SupportedOutputFormat::Hex => to_hex(&encrypted_text),
+            SupportedOutputFormat::Base64 => to_base64(&encrypted_text, None)?,
+            SupportedOutputFormat::Uint8Array => {
+                String::from_utf8_lossy(&encrypted_text).to_string()
             }
-            SupportedOutputFormat::Uint8Array => OutputFormat::Uint8Array(encrypted_text),
         })
     }
 }

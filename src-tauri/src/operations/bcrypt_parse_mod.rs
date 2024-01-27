@@ -1,12 +1,13 @@
 use crate::{create_info_struct, create_tauri_wrapper, run_operations, Operation, DOCS_URL};
+use anyhow::{bail, Result};
 use bcrypt::BcryptError;
 use serde::{Deserialize, Serialize};
 use serde_valid::Validate;
 
-create_tauri_wrapper!(bcrypt_parse, BcryptParse, HashParts, String);
+create_tauri_wrapper!(bcrypt_parse, BcryptParse);
 
-impl Operation<'_, DeserializeMeDaddy, HashParts> for BcryptParse {
-    fn do_black_magic(&self, request: &str) -> Result<HashParts, String> {
+impl Operation<'_, DeserializeMeDaddy> for BcryptParse {
+    fn do_black_magic(&self, request: &str) -> Result<String> {
         let request = self.validate(request)?;
         let hash = request.hash;
 
@@ -19,7 +20,7 @@ impl Operation<'_, DeserializeMeDaddy, HashParts> for BcryptParse {
         let raw_parts: Vec<_> = hash.split('$').filter(|s| !s.is_empty()).collect();
 
         if raw_parts.len() != 3 {
-            return Err(BcryptError::InvalidHash(hash.to_string()).to_string());
+            bail!(BcryptError::InvalidHash(hash));
         }
 
         if raw_parts[0] != "2y"
@@ -27,23 +28,24 @@ impl Operation<'_, DeserializeMeDaddy, HashParts> for BcryptParse {
             && raw_parts[0] != "2a"
             && raw_parts[0] != "2x"
         {
-            return Err(BcryptError::InvalidPrefix(raw_parts[0].to_string()).to_string());
+            bail!(BcryptError::InvalidPrefix(raw_parts[0].to_string()));
         }
 
         if let Ok(c) = raw_parts[1].parse::<u32>() {
             parts.cost = c;
         } else {
-            return Err(BcryptError::InvalidCost(raw_parts[1].to_string()).to_string());
+            bail!(BcryptError::InvalidCost(raw_parts[1].to_string()));
         }
 
         if raw_parts[2].len() == 53 && raw_parts[2].is_char_boundary(22) {
             parts.salt = raw_parts[2][..22].chars().collect();
             parts.hash = raw_parts[2][22..].chars().collect();
         } else {
-            return Err(BcryptError::InvalidHash(hash.to_string()).to_string());
+            bail!(BcryptError::InvalidHash(hash));
         }
 
-        Ok(parts)
+        let result = format!("{} {} {}", parts.cost, parts.salt, parts.hash);
+        Ok(result)
     }
 }
 

@@ -1,3 +1,5 @@
+use anyhow::Result;
+
 use hmac::{Hmac as m_hmac, Mac};
 use md2::*;
 use md4::*;
@@ -12,15 +14,14 @@ use crate::{
     create_info_struct, create_me_daddy, create_tauri_wrapper,
     libs::base64::to_base64,
     run_operations,
-    traits::StringTrait,
     utils::{convert_to_byte_array, to_hex, SupportedFormats},
     Operation, DOCS_URL,
 };
 
-create_tauri_wrapper!(hmac, Hmac, String, String);
+create_tauri_wrapper!(hmac, Hmac);
 
-impl Operation<'_, DeserializeMeDaddy, String> for Hmac {
-    fn do_black_magic(&self, request: &str) -> Result<String, String> {
+impl Operation<'_, DeserializeMeDaddy> for Hmac {
+    fn do_black_magic(&self, request: &str) -> Result<String> {
         let request = self.validate(request)?;
 
         let (input, key, key_format, hash_function, output_format) = (
@@ -33,94 +34,79 @@ impl Operation<'_, DeserializeMeDaddy, String> for Hmac {
 
         let key = convert_to_byte_array(&key, &key_format)?;
 
-        let res: Vec<u8> = match hash_function {
+        let res = match hash_function {
             SupportedHashFunctions::MD2 => {
-                let mut hasher =
-                    HmacMD2::new_from_slice(&key).map_err(|e| e.to_string().capitalize() + ".")?;
+                let mut hasher = HmacMD2::new_from_slice(&key)?;
                 hasher.update(input.as_bytes());
                 hasher.finalize().into_bytes().to_vec()
             }
             SupportedHashFunctions::MD4 => {
-                let mut hasher =
-                    HmacMD4::new_from_slice(&key).map_err(|e| e.to_string().capitalize() + ".")?;
+                let mut hasher = HmacMD4::new_from_slice(&key)?;
                 hasher.update(input.as_bytes());
                 hasher.finalize().into_bytes().to_vec()
             }
             SupportedHashFunctions::MD5 => {
-                let mut hasher =
-                    HmacMD5::new_from_slice(&key).map_err(|e| e.to_string().capitalize() + ".")?;
+                let mut hasher = HmacMD5::new_from_slice(&key)?;
                 hasher.update(input.as_bytes());
                 hasher.finalize().into_bytes().to_vec()
             }
             SupportedHashFunctions::SHA1 => {
-                let mut hasher =
-                    HmacSha1::new_from_slice(&key).map_err(|e| e.to_string().capitalize() + ".")?;
+                let mut hasher = HmacSha1::new_from_slice(&key)?;
                 hasher.update(input.as_bytes());
                 hasher.finalize().into_bytes().to_vec()
             }
             SupportedHashFunctions::SHA224 => {
-                let mut hasher = HmacSha224::new_from_slice(&key)
-                    .map_err(|e| e.to_string().capitalize() + ".")?;
+                let mut hasher = HmacSha224::new_from_slice(&key)?;
                 hasher.update(input.as_bytes());
                 hasher.finalize().into_bytes().to_vec()
             }
             SupportedHashFunctions::SHA256 => {
-                let mut hasher = HmacSha256::new_from_slice(&key)
-                    .map_err(|e| e.to_string().capitalize() + ".")?;
+                let mut hasher = HmacSha256::new_from_slice(&key)?;
                 hasher.update(input.as_bytes());
                 hasher.finalize().into_bytes().to_vec()
             }
             SupportedHashFunctions::SHA384 => {
-                let mut hasher = HmacSha384::new_from_slice(&key)
-                    .map_err(|e| e.to_string().capitalize() + ".")?;
+                let mut hasher = HmacSha384::new_from_slice(&key)?;
                 hasher.update(input.as_bytes());
                 hasher.finalize().into_bytes().to_vec()
             }
             SupportedHashFunctions::SHA512 => {
-                let mut hasher = HmacSha512::new_from_slice(&key)
-                    .map_err(|e| e.to_string().capitalize() + ".")?;
+                let mut hasher = HmacSha512::new_from_slice(&key)?;
                 hasher.update(input.as_bytes());
                 hasher.finalize().into_bytes().to_vec()
             }
             SupportedHashFunctions::SHA512_224 => {
-                let mut hasher = HmacSha512_224::new_from_slice(&key)
-                    .map_err(|e| e.to_string().capitalize() + ".")?;
+                let mut hasher = HmacSha512_224::new_from_slice(&key)?;
                 hasher.update(input.as_bytes());
                 hasher.finalize().into_bytes().to_vec()
             }
             SupportedHashFunctions::SHA512_256 => {
-                let mut hasher = HmacSha512_256::new_from_slice(&key)
-                    .map_err(|e| e.to_string().capitalize() + ".")?;
+                let mut hasher = HmacSha512_256::new_from_slice(&key)?;
                 hasher.update(input.as_bytes());
                 hasher.finalize().into_bytes().to_vec()
             }
             SupportedHashFunctions::Ripemd128 => {
-                let mut hasher = HmacRipemd128::new_from_slice(&key)
-                    .map_err(|e| e.to_string().capitalize() + ".")?;
+                let mut hasher = HmacRipemd128::new_from_slice(&key)?;
                 hasher.update(input.as_bytes());
                 hasher.finalize().into_bytes().to_vec()
             }
             SupportedHashFunctions::Ripemd160 => {
-                let mut hasher = HmacRipemd160::new_from_slice(&key)
-                    .map_err(|e| e.to_string().capitalize() + ".")?;
+                let mut hasher = HmacRipemd160::new_from_slice(&key)?;
                 hasher.update(input.as_bytes());
                 hasher.finalize().into_bytes().to_vec()
             }
             SupportedHashFunctions::Ripemd256 => {
-                let mut hasher = HmacRipemd256::new_from_slice(&key)
-                    .map_err(|e| e.to_string().capitalize() + ".")?;
+                let mut hasher = HmacRipemd256::new_from_slice(&key)?;
                 hasher.update(input.as_bytes());
                 hasher.finalize().into_bytes().to_vec()
             }
             SupportedHashFunctions::Ripemd320 => {
-                let mut hasher = HmacRipemd320::new_from_slice(&key)
-                    .map_err(|e| e.to_string().capitalize() + ".")?;
+                let mut hasher = HmacRipemd320::new_from_slice(&key)?;
                 hasher.update(input.as_bytes());
                 hasher.finalize().into_bytes().to_vec()
             }
             SupportedHashFunctions::WhirlPool => {
-                let mut hasher = HmacWhirlPool::new_from_slice(&key)
-                    .map_err(|e| e.to_string().capitalize() + ".")?;
+                let mut hasher = HmacWhirlPool::new_from_slice(&key)?;
                 hasher.update(input.as_bytes());
                 hasher.finalize().into_bytes().to_vec()
             }

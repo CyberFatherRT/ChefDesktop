@@ -1,12 +1,13 @@
 use crate::{
     create_info_struct, create_tauri_wrapper, run_operations, utils::hex, Operation, DOCS_URL,
 };
+use anyhow::Result;
 use serde::{Deserialize, Serialize};
 
-create_tauri_wrapper!(adler32_checksum, Adler32CheckSum, String, String);
+create_tauri_wrapper!(adler32_checksum, Adler32CheckSum);
 
-impl Operation<'_, DeserializeMeDaddy, String> for Adler32CheckSum {
-    fn do_black_magic(&self, request: &str) -> Result<String, String> {
+impl Operation<'_, DeserializeMeDaddy> for Adler32CheckSum {
+    fn do_black_magic(&self, request: &str) -> Result<String> {
         let request = self.validate(request)?;
         let input: Vec<u8> = request.input.into();
 

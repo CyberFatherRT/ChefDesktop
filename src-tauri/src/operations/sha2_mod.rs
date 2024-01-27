@@ -1,3 +1,4 @@
+use anyhow::Result;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha224, Sha256, Sha384, Sha512, Sha512_224, Sha512_256};
 
@@ -6,10 +7,10 @@ use crate::{
     Operation, DOCS_URL,
 };
 
-create_tauri_wrapper!(sha2, SHA2, String, String);
+create_tauri_wrapper!(sha2, SHA2);
 
-impl Operation<'_, DeserializeMeDaddy, String> for SHA2 {
-    fn do_black_magic(&self, request: &str) -> Result<String, String> {
+impl Operation<'_, DeserializeMeDaddy> for SHA2 {
+    fn do_black_magic(&self, request: &str) -> Result<String> {
         let request = self.validate(request)?;
         let (input, size) = (request.input, request.params.size);
 

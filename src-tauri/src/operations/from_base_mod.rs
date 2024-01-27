@@ -3,20 +3,18 @@ use serde::{Deserialize, Serialize};
 use serde_valid::Validate;
 
 use crate::{
-    create_info_struct, create_me_daddy, create_tauri_wrapper, run_operations, traits::StringTrait,
-    Operation, DOCS_URL,
+    create_info_struct, create_me_daddy, create_tauri_wrapper, run_operations, Operation, DOCS_URL,
 };
+use anyhow::Result;
+create_tauri_wrapper!(from_base, FromBase);
 
-create_tauri_wrapper!(from_base, FromBase, String, String);
-
-impl Operation<'_, DeserializeMeDaddy, String> for FromBase {
-    fn do_black_magic(&self, request: &str) -> Result<String, String> {
+impl Operation<'_, DeserializeMeDaddy> for FromBase {
+    fn do_black_magic(&self, request: &str) -> Result<String> {
         let request = self.validate(request)?;
         let (input, radix) = (request.input, request.params.radix);
 
         #[allow(non_snake_case)]
-        let big_D_number =
-            BigInt::from_str_radix(&input, radix).map_err(|e| e.to_string().capitalize() + ".")?;
+        let big_D_number = BigInt::from_str_radix(&input, radix)?;
         Ok(big_D_number.to_string())
     }
 }

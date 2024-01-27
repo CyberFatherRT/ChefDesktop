@@ -10,11 +10,12 @@ use crate::{
     utils::{get_alphabet, SupportedLanguages},
     Operation, DOCS_URL,
 };
+use anyhow::{bail, Result};
 
-create_tauri_wrapper!(bifid_cipher_encode, BifidCipherEncode, String, String);
+create_tauri_wrapper!(bifid_cipher_encode, BifidCipherEncode);
 
-impl Operation<'_, DeserializeMeDaddy, String> for BifidCipherEncode {
-    fn do_black_magic(&self, request: &str) -> Result<String, String> {
+impl Operation<'_, DeserializeMeDaddy> for BifidCipherEncode {
+    fn do_black_magic(&self, request: &str) -> Result<String> {
         let request = self.validate(request)?;
         let (input, lang, keyword) = (request.input, request.params.lang, request.params.keyword);
         let keyword_str = match lang {
@@ -24,7 +25,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for BifidCipherEncode {
         let keyword: String = keyword_str.chars().dedup().collect();
         let (_, _, _, _, _, reg) = get_alphabet(&lang);
         if !regex_check!(reg => &keyword_str) && keyword.is_empty() {
-            return Err("The key must consist only of your alphabets characters".to_string());
+            bail!("The key must consist only of your alphabets characters");
         }
 
         let (input, size) = match lang {

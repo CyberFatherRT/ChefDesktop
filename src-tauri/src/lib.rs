@@ -4,45 +4,43 @@ mod operations;
 mod traits;
 mod utils;
 
+use anyhow::{Error, Result};
 pub use operations::*;
 use serde::{Deserialize, Serialize};
 use traits::StringTrait;
 
-pub fn run_operations<'a, I, O>(
-    operations: impl Operation<'a, I, O>,
-    request: &str,
-) -> Result<O, String>
+pub fn run_operations<'a, I>(operations: impl Operation<'a, I>, request: &str) -> Result<String>
 where
     I: Deserialize<'a>,
-    O: Serialize,
 {
     operations.do_black_magic(request)
 }
 
-pub trait Operation<'a, I, O>
+pub trait Operation<'a, I>
 where
     I: Deserialize<'a>,
-    O: Serialize,
 {
-    fn do_black_magic(&self, request: &str) -> Result<O, String>;
-    fn validate(&self, request: &'a str) -> Result<I, String> {
-        self.deserialize(request)
+    fn do_black_magic(&self, request: &str) -> Result<String>;
+    fn validate(&self, request: &'a str) -> Result<I> {
+        Ok(self.deserialize(request)?)
     }
 
-    fn deserialize(&self, request: &'a str) -> Result<I, String> {
-        serde_json::from_str(request).map_err(|err| match err.to_string() {
-            err if err.starts_with("unknown")
-                || err.starts_with("missing")
-                || err.starts_with("invalid") =>
-            {
-                err.split(" at line ")
-                    .next()
-                    .unwrap()
-                    .to_string()
-                    .capitalize()
-                    + "."
-            }
-            err => err.capitalize() + ".",
+    fn deserialize(&self, request: &'a str) -> Result<I> {
+        serde_json::from_str(request).map_err(|err| {
+            Error::msg(match err.to_string() {
+                err if err.starts_with("unknown")
+                    || err.starts_with("missing")
+                    || err.starts_with("invalid") =>
+                {
+                    err.split(" at line ")
+                        .next()
+                        .unwrap()
+                        .to_string()
+                        .capitalize()
+                        + "."
+                }
+                err => err.capitalize() + ".",
+            })
         })
     }
 }

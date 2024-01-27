@@ -1,3 +1,4 @@
+use anyhow::Result;
 use num::{BigInt, Num};
 use serde::{Deserialize, Serialize};
 use serde_valid::Validate;
@@ -6,16 +7,16 @@ use crate::{
     create_info_struct, create_me_daddy, create_tauri_wrapper, run_operations, Operation, DOCS_URL,
 };
 
-create_tauri_wrapper!(to_base, ToBase, String, String);
+create_tauri_wrapper!(to_base, ToBase);
 
-impl Operation<'_, DeserializeMeDaddy, String> for ToBase {
-    fn do_black_magic(&self, request: &str) -> Result<String, String> {
+impl Operation<'_, DeserializeMeDaddy> for ToBase {
+    fn do_black_magic(&self, request: &str) -> Result<String> {
         let request = self.validate(request)?;
         let (input, radix) = (request.input, request.params.radix);
 
         #[allow(non_snake_case)]
         let big_D_number = BigInt::from_str_radix(&input, 10)
-            .map_err(|_| "Invalid symbols found in string".to_string())?;
+            .map_err(|_| anyhow::Error::msg("Invalid symbols found in string"))?;
         Ok(big_D_number.to_str_radix(radix))
     }
 }

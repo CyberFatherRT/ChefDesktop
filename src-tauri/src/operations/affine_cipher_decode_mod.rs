@@ -7,24 +7,25 @@ use crate::{
     },
     Operation, DOCS_URL,
 };
+use anyhow::{anyhow, bail, Result};
 use serde::{Deserialize, Serialize};
 
-create_tauri_wrapper!(affine_cipher_decode, AffineCipherDecode, String, String);
+create_tauri_wrapper!(affine_cipher_decode, AffineCipherDecode);
 
-impl Operation<'_, DeserializeMeDaddy, String> for AffineCipherDecode {
-    fn do_black_magic(&self, request: &str) -> Result<String, String> {
+impl Operation<'_, DeserializeMeDaddy> for AffineCipherDecode {
+    fn do_black_magic(&self, request: &str) -> Result<String> {
         let request = self.validate(request)?;
 
         let (input, params) = (request.input, request.params);
         if !validate_lang(&input, &params.lang) {
-            return Err("Wrong language.".to_string());
+            bail!("Wrong language.");
         };
 
         let (a, b) = (params.a as i16, params.b as i16);
 
         let (alp_lower, alp_upper, _, _, alp_length, _) = get_alphabet(&params.lang);
         if a.gcd(&(alp_length as i16)) != 1 {
-            return Err(format!(
+            return Err(anyhow!(
                 "The value of `a` must be coprime to alphabet length({}).",
                 alp_length
             ));

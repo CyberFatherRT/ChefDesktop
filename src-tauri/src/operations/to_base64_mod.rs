@@ -1,3 +1,4 @@
+use anyhow::Result;
 use serde::{Deserialize, Serialize};
 
 use crate::{
@@ -5,13 +6,13 @@ use crate::{
     libs::base64::to_base64 as to_base64_lib, run_operations, Operation, DOCS_URL,
 };
 
-create_tauri_wrapper!(to_base64, ToBase64, String, String);
+create_tauri_wrapper!(to_base64, ToBase64);
 
-impl Operation<'_, DeserializeMeDaddy, String> for ToBase64 {
-    fn do_black_magic(&self, request: &str) -> Result<String, String> {
+impl Operation<'_, DeserializeMeDaddy> for ToBase64 {
+    fn do_black_magic(&self, request: &str) -> Result<String> {
         let request = self.validate(request)?;
         let (input, alphabet) = (request.input, request.params.alphabet);
-        to_base64_lib(input.as_bytes(), alphabet)
+        Ok(to_base64_lib(input.as_bytes(), alphabet)?)
     }
 }
 

@@ -67,10 +67,10 @@ macro_rules! create_info_struct {
 
 #[macro_export]
 macro_rules! create_tauri_wrapper {
-    ($wrapper_name:ident, $struct_name:ident, $ok_output_format:ident, $err_output_format:ident) => {
+    ($wrapper_name:ident, $struct_name:ident) => {
         #[tauri::command]
-        pub fn $wrapper_name(request: &str) -> Result<$ok_output_format, $err_output_format> {
-            run_operations($struct_name, request)
+        pub fn $wrapper_name(request: &str) -> Result<String, String> {
+            run_operations($struct_name, request).map_err(|e| e.to_string())
         }
     };
 }

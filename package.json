@@ -11,7 +11,9 @@
     "tauri": "tauri"
   },
   "dependencies": {
+    "@sveltejs/adapter-static": "^3.0.1",
     "@tauri-apps/api": "^1.4.0",
+    "@types/node": "^20.11.7",
     "fuse.js": "^7.0.0",
     "svelte-dnd-action": "^0.9.38",
     "tippy.js": "^6.3.7"

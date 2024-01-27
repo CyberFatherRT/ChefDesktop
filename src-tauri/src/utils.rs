@@ -1,6 +1,7 @@
-use crate::{libs::base64::from_base64, map, regex_check, traits::StringTrait};
+use crate::{libs::base64::from_base64, map, regex_check};
+use anyhow::{anyhow, bail, Result};
 use num::{Integer, ToPrimitive};
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use std::fmt::{Debug, LowerHex};
 
 #[derive(Deserialize)]
@@ -13,7 +14,7 @@ pub enum SupportedLanguages {
 }
 
 #[allow(clippy::upper_case_acronyms)]
-#[derive(Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "lowercase")]
 pub enum SupportedFormats {
     BINARY,
@@ -140,46 +141,37 @@ pub fn str_to_array_buffer_by_alphabet(string: &str, alphabet: &str) -> Vec<usiz
     result
 }
 
-pub fn _byte_array_to_string(byte_array: Vec<u8>) -> Result<String, String> {
-    String::from_utf8(byte_array).map_err(|err| err.to_string().capitalize() + ".")
+pub fn _byte_array_to_string(byte_array: Vec<u8>) -> Result<String> {
+    Ok(String::from_utf8(byte_array)?)
 }
 
-pub fn convert_to_byte_array(
-    string: &str,
-    convert_type: &SupportedFormats,
-) -> Result<Vec<u8>, String> {
+pub fn convert_to_byte_array(string: &str, convert_type: &SupportedFormats) -> Result<Vec<u8>> {
     match convert_type {
-        SupportedFormats::BINARY => from_binary(string, None, None).map_err(|err| err.to_string()),
-        SupportedFormats::HEX => from_hex(string, None, None).map_err(|err| err.to_string()),
+        SupportedFormats::BINARY => from_binary(string, None, None),
+        SupportedFormats::HEX => from_hex(string, None, None),
         SupportedFormats::BASE64 => match from_base64(
             string.to_string(),
             "",
             DataRepresentationInput::ByteArray,
             true,
             false,
-        )
-        .map_err(|err| err.to_string())
-        {
+        ) {
             Ok(data) => {
                 let DataRepresentation::ByteArray(data) = data else {
                     unreachable!()
                 };
                 Ok(data)
             }
-            Err(e) => Err(e),
+            Err(e) => Err(anyhow!(e)),
         },
         SupportedFormats::UTF8 => Ok(string.as_bytes().to_vec()),
         SupportedFormats::LATIN1 => Ok(Vec::new()),
     }
 }
 
-pub fn from_binary(
-    data: &str,
-    delim: Option<&str>,
-    byte_len: Option<usize>,
-) -> Result<Vec<u8>, String> {
+pub fn from_binary(data: &str, delim: Option<&str>, byte_len: Option<usize>) -> Result<Vec<u8>> {
     if byte_len.unwrap_or(8) < 1 {
-        return Err("Byte length must be a positive integer".to_string());
+        bail!("Byte length must be a positive integer");
     };
 
     let delim = char_repr(delim.unwrap_or("Space"));
@@ -189,7 +181,7 @@ pub fn from_binary(
     for i in data.split_whitespace() {
         match u8::from_str_radix(i, 2) {
             Ok(data) => output.push(data),
-            Err(e) => return Err(e.to_string()),
+            Err(e) => bail!(e),
         }
     }
 
@@ -201,13 +193,9 @@ pub fn to_hex(data: &[u8]) -> String {
         .fold(String::new(), |out, x| format!("{out}{x:02x}"))
 }
 
-pub fn from_hex(
-    data: &str,
-    delim: Option<&str>,
-    byte_len: Option<usize>,
-) -> Result<Vec<u8>, String> {
+pub fn from_hex(data: &str, delim: Option<&str>, byte_len: Option<usize>) -> Result<Vec<u8>> {
     if byte_len.unwrap_or(8) < 1 {
-        return Err("Byte length must be a positive integer".to_string());
+        bail!("Byte length must be a positive integer");
     }
 
     let mut output: Vec<u8> = Vec::new();
@@ -217,7 +205,7 @@ pub fn from_hex(
     for i in data.split(&delim) {
         match u8::from_str_radix(i, 16) {
             Ok(data) => output.push(data),
-            Err(e) => return Err(e.to_string()),
+            Err(e) => bail!(e),
         }
     }
 

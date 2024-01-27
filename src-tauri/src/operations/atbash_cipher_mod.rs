@@ -4,11 +4,12 @@ use crate::{
     create_info_struct, create_me_daddy, create_tauri_wrapper, libs::ciphers::affine_cipher_encode,
     run_operations, utils::SupportedLanguages, Operation, DOCS_URL,
 };
+use anyhow::Result;
 
-create_tauri_wrapper!(atbash_cipher, AtbashCipher, String, String);
+create_tauri_wrapper!(atbash_cipher, AtbashCipher);
 
-impl Operation<'_, DeserializeMeDaddy, String> for AtbashCipher {
-    fn do_black_magic(&self, request: &str) -> Result<String, String> {
+impl Operation<'_, DeserializeMeDaddy> for AtbashCipher {
+    fn do_black_magic(&self, request: &str) -> Result<String> {
         let request = self.validate(request)?;
 
         let (input, lang) = (request.input, request.params.lang);

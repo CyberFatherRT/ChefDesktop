@@ -5,9 +5,10 @@ use crate::{
         DataRepresentation, DataRepresentationInput,
     },
 };
+use anyhow::{anyhow, bail, Result};
 use itertools::Itertools;
 
-pub fn to_base64(data: &[u8], alphabet: Option<String>) -> Result<String, String> {
+pub fn to_base64(data: &[u8], alphabet: Option<String>) -> Result<String> {
     if data.is_empty() {
         return Ok(String::new());
     }
@@ -19,9 +20,9 @@ pub fn to_base64(data: &[u8], alphabet: Option<String>) -> Result<String, String
     let alphabet_length = alphabet.chars().count();
 
     if alphabet_length != 64 && alphabet_length != 65 {
-        return Err(format!(
+        return Err(anyhow!(
             "Invalid base64 alphabet length. ({alphabet_length}):\n{alphabet}"
-        ));
+        ))?;
     }
 
     let mut output = String::new();
@@ -58,7 +59,7 @@ pub fn from_base64(
     return_type: DataRepresentationInput,
     remove_non_alphabetic_chars: bool,
     strict_mode: bool,
-) -> Result<DataRepresentation, String> {
+) -> Result<DataRepresentation> {
     if data.is_empty() {
         return match return_type {
             DataRepresentationInput::String => Ok(DataRepresentation::String(String::new())),
@@ -73,7 +74,7 @@ pub fn from_base64(
     if !remove_non_alphabetic_chars {
         let regex = regex::Regex::new(&format!("[^{}]", alphabet)).unwrap();
         if regex.is_match(&data) {
-            return Err("Input string isn't correspond to used base64 alphabet.".to_string());
+            bail!("Input string isn't correspond to used base64 alphabet.");
         }
     }
 
@@ -81,7 +82,7 @@ pub fn from_base64(
     let alphabet_length = alphabet.chars().count();
 
     if alphabet_length != 64 && alphabet_length != 65 {
-        return Err("Invalid base64 alphabet length.".to_string());
+        bail!("Invalid base64 alphabet length.");
     }
 
     if remove_non_alphabetic_chars {
@@ -90,7 +91,7 @@ pub fn from_base64(
 
     if strict_mode {
         if data.len() % 4 == 1 {
-            return Err(format!(
+            return Err(anyhow!(
                 "Invalid Base64 input length ({}) cannot be 4n+1, even without padding chars.",
                 data.len()
             ));
@@ -102,14 +103,11 @@ pub fn from_base64(
 
             if let Some(pad_pos) = pad_pos {
                 if pad_pos < data.len() - 2 || get_char_by_index(&data, data.len() - 1) != pad {
-                    return Err(
-                        "Base64 padding character ({pad}) not used in the correct place."
-                            .to_string(),
-                    );
+                    bail!("Base64 padding character ({pad}) not used in the correct place.");
                 }
 
                 if data.len() % 4 != 0 {
-                    return Err("Base64 not padded to a multiple of 4.".to_string());
+                    bail!("Base64 not padded to a multiple of 4.");
                 }
             }
         }

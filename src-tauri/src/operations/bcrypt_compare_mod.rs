@@ -1,20 +1,21 @@
 use crate::{
     create_info_struct, create_me_daddy, create_tauri_wrapper, run_operations, Operation, DOCS_URL,
 };
+use anyhow::{anyhow, Result};
 use serde::{Deserialize, Serialize};
 
-create_tauri_wrapper!(bcrypt_compare, BcryptCompare, String, String);
+create_tauri_wrapper!(bcrypt_compare, BcryptCompare);
 
-impl Operation<'_, DeserializeMeDaddy, String> for BcryptCompare {
-    fn do_black_magic(&self, request: &str) -> Result<String, String> {
+impl Operation<'_, DeserializeMeDaddy> for BcryptCompare {
+    fn do_black_magic(&self, request: &str) -> Result<String> {
         let request = self.validate(request)?;
         let (input, encoded_hash) = (request.input, request.params.encoded_hash);
 
-        let res = bcrypt::verify(input.as_bytes(), &encoded_hash).map_err(|err| err.to_string())?;
+        let res = bcrypt::verify(input.as_bytes(), &encoded_hash)?;
 
         match res {
             true => Ok(format!("Match `{}`.", input)),
-            false => Err("No match.".to_string()),
+            false => Err(anyhow!("No match.")),
         }
     }
 }

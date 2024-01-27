@@ -5,11 +5,12 @@ use crate::{
     libs::ciphers::affine_cipher_encode as ace, run_operations, utils::SupportedLanguages,
     Operation, DOCS_URL,
 };
+use anyhow::Result;
 
-create_tauri_wrapper!(affine_cipher_encode, AffineCipherEncode, String, String);
+create_tauri_wrapper!(affine_cipher_encode, AffineCipherEncode);
 
-impl Operation<'_, DeserializeMeDaddy, String> for AffineCipherEncode {
-    fn do_black_magic(&self, request: &str) -> Result<String, String> {
+impl Operation<'_, DeserializeMeDaddy> for AffineCipherEncode {
+    fn do_black_magic(&self, request: &str) -> Result<String> {
         let request = self.validate(request)?;
 
         let (input, lang, a, b) = (
@@ -19,7 +20,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for AffineCipherEncode {
             request.params.b as i16,
         );
 
-        ace(&input, lang, a, b)
+        Ok(ace(&input, lang, a, b)?)
     }
 }
 

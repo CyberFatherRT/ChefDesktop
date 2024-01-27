@@ -1,12 +1,13 @@
 use crate::{
     create_me_daddy, create_tauri_wrapper, run_operations, utils::SupportedDelimiter, Operation,
 };
+use anyhow::Result;
 use serde::Deserialize;
 
-create_tauri_wrapper!(filter, Filter, String, String);
+create_tauri_wrapper!(filter, Filter);
 
-impl Operation<'_, DeserializeMeDaddy, String> for Filter {
-    fn do_black_magic(&self, request: &str) -> Result<String, String> {
+impl Operation<'_, DeserializeMeDaddy> for Filter {
+    fn do_black_magic(&self, request: &str) -> Result<String> {
         let request = self.validate(request)?;
         let (
             input,
@@ -17,7 +18,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for Filter {
             },
         ) = (request.input, request.params);
 
-        let regex = regex::Regex::new(&regex).map_err(|err| err.to_string())?;
+        let regex = regex::Regex::new(&regex)?;
 
         let output: String = input
             .split(&delimiter.to_string())

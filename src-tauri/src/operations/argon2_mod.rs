@@ -5,13 +5,14 @@ use crate::{
     utils::{to_hex, DataRepresentation, DataRepresentationInput},
     Operation, DOCS_URL,
 };
+use anyhow::{Error, Result};
 use argon2::{Config, ThreadMode, Variant, Version};
 use serde::{Deserialize, Serialize};
 
-create_tauri_wrapper!(argon2, Argon2, String, String);
+create_tauri_wrapper!(argon2, Argon2);
 
-impl Operation<'_, DeserializeMeDaddy, String> for Argon2 {
-    fn do_black_magic(&self, request: &str) -> Result<String, String> {
+impl Operation<'_, DeserializeMeDaddy> for Argon2 {
+    fn do_black_magic(&self, request: &str) -> Result<String> {
         let request = self.validate(request)?;
 
         let (params, input) = (request.params, request.input);
@@ -36,13 +37,15 @@ impl Operation<'_, DeserializeMeDaddy, String> for Argon2 {
             hash_length,
         };
 
-        let hash = argon2::hash_encoded(input.as_bytes(), salt.as_bytes(), &config)
-            .map_err(|err| format!("{}.", err))?;
+        let hash = argon2::hash_encoded(input.as_bytes(), salt.as_bytes(), &config)?;
 
         let output = match params.output_format {
             OutputFormat::Encoded => hash,
             format @ (OutputFormat::Hex | OutputFormat::Raw) => {
-                let raw_hash = hash.split('$').nth(5).unwrap();
+                let raw_hash = hash
+                    .split('$')
+                    .nth(5)
+                    .ok_or(Error::msg("Not valid argon2 hash"))?;
 
                 let data = match from_base64(
                     raw_hash.to_string(),

@@ -7,11 +7,11 @@ use crate::{
     utils::{DataRepresentation, DataRepresentationInput},
     Operation, DOCS_URL,
 };
+use anyhow::{bail, Result};
+create_tauri_wrapper!(from_base64, FromBase64);
 
-create_tauri_wrapper!(from_base64, FromBase64, String, String);
-
-impl Operation<'_, DeserializeMeDaddy, String> for FromBase64 {
-    fn do_black_magic(&self, request: &str) -> Result<String, String> {
+impl Operation<'_, DeserializeMeDaddy> for FromBase64 {
+    fn do_black_magic(&self, request: &str) -> Result<String> {
         let request = self.validate(request)?;
 
         let (input, alphabet, remove_non_alphabetic_chars, strict_mode) = (
@@ -39,7 +39,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for FromBase64 {
                 };
                 Ok(output.trim_end_matches('\0').to_string())
             }
-            Err(e) => Err(e),
+            Err(e) => bail!(e),
         }
     }
 }

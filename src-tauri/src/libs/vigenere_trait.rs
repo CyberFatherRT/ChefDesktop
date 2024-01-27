@@ -1,3 +1,4 @@
+use anyhow::{bail, Result};
 use regex::Regex;
 use std::collections::HashMap;
 
@@ -7,7 +8,7 @@ use crate::{
 };
 
 pub trait VigenereCipher {
-    fn cipher<F>(lang: SupportedLanguages, key: &str, input: &str, f: F) -> Result<String, String>
+    fn cipher<F>(lang: SupportedLanguages, key: &str, input: &str, f: F) -> Result<String>
     where
         F: Fn(i16, i16) -> i16,
     {
@@ -56,13 +57,13 @@ pub trait VigenereCipher {
         Ok(cipher_text)
     }
 
-    fn validate_language(lang: &SupportedLanguages, key: &str, input: &str) -> Result<(), String> {
+    fn validate_language(lang: &SupportedLanguages, key: &str, input: &str) -> Result<()> {
         if input.is_empty() {
-            return Err("Input is empty".to_string());
+            bail!("Input is empty");
         };
 
         if !validate_lang(key, lang) {
-            return Err("Invalid key".to_string());
+            bail!("Invalid key");
         };
 
         Ok(())

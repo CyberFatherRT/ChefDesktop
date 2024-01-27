@@ -2,12 +2,13 @@ use crate::{
     create_info_struct, create_me_daddy, create_tauri_wrapper, run_operations, utils::char_repr,
     Operation, DOCS_URL,
 };
+use anyhow::{bail, Result};
 use serde::{Deserialize, Serialize};
 
-create_tauri_wrapper!(a1z26_cipher_decode, A1Z26CipherDecode, String, String);
+create_tauri_wrapper!(a1z26_cipher_decode, A1Z26CipherDecode);
 
-impl Operation<'_, DeserializeMeDaddy, String> for A1Z26CipherDecode {
-    fn do_black_magic(&self, request: &str) -> Result<String, String> {
+impl Operation<'_, DeserializeMeDaddy> for A1Z26CipherDecode {
+    fn do_black_magic(&self, request: &str) -> Result<String> {
         let request = self.validate(request)?;
         let (input, delimiter) = (request.input, format!("{:?}", request.params.delimiter));
 
@@ -22,7 +23,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for A1Z26CipherDecode {
                 Err(_) => continue,
             };
             if !(1..=26).contains(&c) {
-                return Err("All numbers must be between 1 and 26.".to_string());
+                bail!("All numbers must be between 1 and 26.");
             }
             plain_text.push((c + 96) as char);
         }

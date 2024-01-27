@@ -5,13 +5,14 @@ use crate::{
     utils::SupportedLanguages,
     Operation, DOCS_URL,
 };
+use anyhow::Result;
 use serde::{Deserialize, Serialize};
 use std::mem::swap;
 
-create_tauri_wrapper!(bacon_cipher_decode, BaconCipherDecode, String, String);
+create_tauri_wrapper!(bacon_cipher_decode, BaconCipherDecode);
 
-impl Operation<'_, DeserializeMeDaddy, String> for BaconCipherDecode {
-    fn do_black_magic(&self, request: &str) -> Result<String, String> {
+impl Operation<'_, DeserializeMeDaddy> for BaconCipherDecode {
+    fn do_black_magic(&self, request: &str) -> Result<String> {
         let request = self.validate(request)?;
         let (
             input,

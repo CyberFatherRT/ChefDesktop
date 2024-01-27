@@ -1,3 +1,4 @@
+use anyhow::{bail, Result};
 use rsa::{pkcs1::DecodeRsaPublicKey, Oaep, Pkcs1v15Encrypt, RsaPublicKey};
 use serde::{Deserialize, Serialize};
 use sha1::Sha1;
@@ -9,10 +10,10 @@ use crate::{
     run_operations, utils::to_hex, Operation, DOCS_URL,
 };
 
-create_tauri_wrapper!(rsa_encrypt, RSAEncrypt, String, String);
+create_tauri_wrapper!(rsa_encrypt, RSAEncrypt);
 
-impl Operation<'_, DeserializeMeDaddy, String> for RSAEncrypt {
-    fn do_black_magic(&self, request: &str) -> Result<String, String> {
+impl Operation<'_, DeserializeMeDaddy> for RSAEncrypt {
+    fn do_black_magic(&self, request: &str) -> Result<String> {
         let request = self.validate(request)?;
         let (input, public_key, encrypted_scheme, message_digest_algorithm, output_format) = (
             request.input,
@@ -25,10 +26,10 @@ impl Operation<'_, DeserializeMeDaddy, String> for RSAEncrypt {
         if matches!(encrypted_scheme, SupportedEncryptionSchemes::RSA_OAEP)
             && message_digest_algorithm.is_none()
         {
-            return Err("RSA_OAEP must have message digest algorithm".to_string());
+            bail!("RSA_OAEP must have message digest algorithm");
         }
 
-        let pub_key = RsaPublicKey::from_pkcs1_pem(&public_key).map_err(|err| err.to_string())?;
+        let pub_key = RsaPublicKey::from_pkcs1_pem(&public_key)?;
         let mut rng = rand::thread_rng();
 
         let encrypted_text = match encrypted_scheme {
@@ -49,8 +50,7 @@ impl Operation<'_, DeserializeMeDaddy, String> for RSAEncrypt {
             SupportedEncryptionSchemes::RSA_AES_PKCS1_V1_5 => {
                 pub_key.encrypt(&mut rng, Pkcs1v15Encrypt, input.as_bytes())
             }
-        }
-        .map_err(|err| err.to_string())?;
+        }?;
 
         Ok(match output_format {
             SupportedOutputFormat::Hex => to_hex(&encrypted_text),

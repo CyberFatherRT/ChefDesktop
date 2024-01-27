@@ -1,21 +1,19 @@
 use crate::{
     create_info_struct, create_me_daddy, create_tauri_wrapper, run_operations, Operation, DOCS_URL,
 };
+use anyhow::Result;
 use bcrypt::Version;
 use serde::{Deserialize, Serialize};
 use serde_valid::Validate;
 
-create_tauri_wrapper!(bcrypt, Bcrypt, String, String);
+create_tauri_wrapper!(bcrypt, Bcrypt);
 
-impl Operation<'_, DeserializeMeDaddy, String> for Bcrypt {
-    fn do_black_magic(&self, request: &str) -> Result<String, String> {
+impl Operation<'_, DeserializeMeDaddy> for Bcrypt {
+    fn do_black_magic(&self, request: &str) -> Result<String> {
         let request = self.validate(request)?;
-        let (input, rounds, version) =
-            (request.input, request.params.rounds, request.params.version);
-
-        let res =
-            bcrypt::hash_with_result(input.as_bytes(), rounds).map_err(|err| err.to_string())?;
-        Ok(res.format_for_version(version).to_string())
+        let (input, Params { rounds, version }) = (request.input, request.params);
+        let res = bcrypt::hash_with_result(input.as_bytes(), rounds)?;
+        Ok(res.format_for_version(version))
     }
 }
 

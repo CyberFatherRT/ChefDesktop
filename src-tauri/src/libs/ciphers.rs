@@ -5,6 +5,7 @@ use crate::{
         SupportedLanguages,
     },
 };
+use anyhow::{anyhow, bail, Result};
 use itertools::Itertools;
 use num::Integer;
 
@@ -13,14 +14,14 @@ pub fn affine_cipher_encode(
     lang: SupportedLanguages,
     a: i16,
     b: i16,
-) -> Result<String, String> {
+) -> Result<String> {
     if !validate_lang(input, &lang) {
-        return Err("Wrong language.".to_string());
+        bail!("Wrong language.");
     };
 
     let (alp_lower, alp_upper, _, _, alp_length, _) = get_alphabet(&lang);
     if a.gcd(&(alp_length as i16)) != 1 {
-        return Err(format!(
+        return Err(anyhow!(
             "The value of `a` must be coprime to alphabet length({}).",
             alp_length
         ));

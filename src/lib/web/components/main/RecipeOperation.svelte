@@ -1,12 +1,12 @@
 <script lang="ts">
-    export let name: string | undefined;
+    export let name: string;
     export let id: string = "";
 </script>
 
 <li {id} draggable="true" class="preview">
     <title>
         <p>{name}</p>
-        <div class="recipe-icons">
+        <div>
             <button> <i class="material-icons">pause</i> </button>
             <button> <i class="material-icons">not_interested</i> </button>
         </div>
@@ -19,6 +19,17 @@
     title {
         display: flex;
         justify-content: space-between;
+        height: 39px;
+    }
+
+    i {
+        font-size: 18px;
+    }
+
+    p {
+        font-size: 14px;
+        color: var(--rec-list-operation-font-color);
+        font-weight: var(--rec-list-operation-font-weight);
     }
 
     button {
@@ -30,30 +41,17 @@
 
         float: right;
         cursor: pointer;
-        font-size: 10px;
 
         line-height: var(--primary-line-height);
-    }
-
-    .recipe-icons {
-        top: 13px;
-        right: 10px;
     }
 
     .preview {
-        color: var(--rec-list-operation-font-color);
-        font-weight: var(--rec-list-operation-font-weight);
 
-        font-family: var(--primary-font-family);
-        font-size: var(--primary-font-size);
-        line-height: var(--primary-line-height);
-        
         padding: 14px;
         cursor: grab;
         position: relative;
 
         width: 100%;
-        height: 49px;
 
         background-color: var(--rec-list-operation-bg-color);
         border-bottom: 1px solid var(--rec-list-operation-border-color);

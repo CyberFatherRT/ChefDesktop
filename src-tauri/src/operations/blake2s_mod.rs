@@ -1,21 +1,21 @@
 use crate::{
-    create_info_struct, create_me_daddy,
+    create_info_struct, create_me_daddy, create_tauri_wrapper,
     libs::base64::to_base64,
     run_operations,
     utils::{convert_to_byte_array, to_hex, SupportedFormats},
     Operation, DOCS_URL,
 };
-use crate::{create_tauri_wrapper, OutputFormat};
+use anyhow::{bail, Result};
 use blake2::{
     digest::{Update, VariableOutput},
     VarBlake2s,
 };
 use serde::{Deserialize, Serialize};
 
-create_tauri_wrapper!(blake2s, Blake2s, OutputFormat, String);
+create_tauri_wrapper!(blake2s, Blake2s);
 
-impl Operation<'_, DeserializeMeDaddy, OutputFormat> for Blake2s {
-    fn do_black_magic(&self, request: &str) -> Result<OutputFormat, String> {
+impl Operation<'_, DeserializeMeDaddy> for Blake2s {
+    fn do_black_magic(&self, request: &str) -> Result<String> {
         let request = self.validate(request)?;
         let (input, size, key, key_format, output_format) = (
             request.input,
@@ -28,9 +28,7 @@ impl Operation<'_, DeserializeMeDaddy, OutputFormat> for Blake2s {
         let key = match key {
             None => Vec::new(),
             Some(key) => match key_format {
-                None => {
-                    return Err("Key format argument must be set.".to_string());
-                }
+                None => bail!("Key format argument must be set."),
                 Some(key_format) => convert_to_byte_array(&key, &key_format)?,
             },
         };
@@ -51,9 +49,9 @@ impl Operation<'_, DeserializeMeDaddy, OutputFormat> for Blake2s {
         let res = hasher.finalize_boxed();
 
         Ok(match output_format {
-            SupportedOutputFormat::Hex => OutputFormat::Hex(to_hex(&res)),
-            SupportedOutputFormat::Base64 => OutputFormat::Base64(to_base64(&res, None)?),
-            SupportedOutputFormat::Uint8Array => OutputFormat::Uint8Array(res.to_vec()),
+            SupportedOutputFormat::Hex => to_hex(&res),
+            SupportedOutputFormat::Base64 => to_base64(&res, None)?,
+            SupportedOutputFormat::Uint8Array => String::from_utf8_lossy(&res).to_string(),
         })
     }
 }

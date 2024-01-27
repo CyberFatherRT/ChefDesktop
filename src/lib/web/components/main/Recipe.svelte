@@ -2,7 +2,7 @@
     import Title from "../title/Title.svelte";
     import OperationPreview from "./OperationPreview.svelte";
     import RecipeOperation from "./RecipeOperation.svelte";
-    import HMAC from "../../operations/Hmac.svelte";
+    import Hmac from "../../operations/Hmac.svelte";
     import { operations } from "../../../core/runOperations";
 
     let icons = {
@@ -18,10 +18,9 @@
     }
     
     let baked_operations: RecipeOperation[] = [];
-    $: operations.set(baked_operations)
     let dragged_over: boolean = false;
     let dragged_leave: boolean = false;
-    let dragged_name: string | undefined;
+    let dragged_name: string;
 
     function handleDragLeave(event: DragEvent) {
         event.preventDefault();
@@ -67,13 +66,17 @@
     class="recipe-list"
     >
 
-    {#each baked_operations as name, idx}
-        <RecipeOperation id={idx.toString()} name={name.name}/>
-    {/each}
+    <!-- {#each baked_operations as name, idx} -->
+    <!--     <RecipeOperation id={idx.toString()} name={name.name}/> -->
+    <!-- {/each} -->
+    <!--  -->
+    <!-- {#if dragged_over &#38;&#38; dragged_name !== ""} -->
+    <!--     <OperationPreview name={dragged_name}/> -->
+    <!-- {/if} -->
 
-    {#if dragged_over && dragged_name !== ""}
-        <OperationPreview name={dragged_name}/>
-    {/if}
+    <RecipeOperation name="HMAC">
+        <Hmac/>
+    </RecipeOperation>
 
   </ul>
 </div>

@@ -1,3 +1,4 @@
+use anyhow::Result;
 use serde::{Deserialize, Serialize};
 
 use crate::{
@@ -8,14 +9,14 @@ use crate::{
     Operation, DOCS_URL,
 };
 
-create_tauri_wrapper!(vigenere_cipher_decode, VigenereCipherDecode, String, String);
+create_tauri_wrapper!(vigenere_cipher_decode, VigenereCipherDecode);
 
 impl VigenereCipher for VigenereCipherDecode {}
 
-impl Operation<'_, DeserializeMeDaddy, String> for VigenereCipherDecode {
-    fn do_black_magic(&self, request: &str) -> Result<String, String> {
+impl Operation<'_, DeserializeMeDaddy> for VigenereCipherDecode {
+    fn do_black_magic(&self, request: &str) -> Result<String> {
         let request = self.validate(request)?;
-        let (input, lang, key) = (request.input, request.params.lang, request.params.key);
+        let (input, Params { lang, key }) = (request.input, request.params);
         <Self as VigenereCipher>::cipher(lang, &key, &input, sub)
     }
 }

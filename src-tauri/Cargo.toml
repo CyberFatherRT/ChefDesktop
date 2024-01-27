@@ -37,6 +37,8 @@ serde_valid = "0.16.3"
 tauri = { version = "1.5.4", features = [ "clipboard-write-text", "clipboard-read-text", "shell-open", "windows7-compat" ] }
 fix-path-env = { git = "https://github.com/tauri-apps/fix-path-env-rs" }
 lazy_static = "1.4.0"
+scrypt = "0.11.0"
+anyhow = "1.0.79"
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem

@@ -5,19 +5,19 @@ use crate::{
     utils::{convert_to_byte_array, SupportedFormats},
     Operation, DOCS_URL,
 };
+use anyhow::Result;
 use serde::{Deserialize, Serialize};
 
-create_tauri_wrapper!(and, AND, String, String);
+create_tauri_wrapper!(and, AND);
 
-impl Operation<'_, DeserializeMeDaddy, String> for AND {
-    fn do_black_magic(&self, request: &str) -> Result<String, String> {
+impl Operation<'_, DeserializeMeDaddy> for AND {
+    fn do_black_magic(&self, request: &str) -> Result<String> {
         let request = self.validate(request)?;
         let (input, Params { key, key_format }) = (request.input, request.params);
 
         let key = convert_to_byte_array(&key, &key_format)?;
 
-        let output = String::from_utf8(bit_op(&key, input.as_bytes(), and_fun))
-            .map_err(|err| err.to_string())?;
+        let output = String::from_utf8(bit_op(&key, input.as_bytes(), and_fun))?;
 
         Ok(output)
     }
