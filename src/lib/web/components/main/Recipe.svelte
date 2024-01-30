@@ -1,9 +1,9 @@
 <script lang="ts">
+    import { Hmac } from "../../../core/operations/Hmac";
     import Title from "../title/Title.svelte";
-    import OperationPreview from "./OperationPreview.svelte";
     import RecipeOperation from "./RecipeOperation.svelte";
-    import Hmac from "../../operations/Hmac.svelte";
-    import { operations } from "../../../core/runOperations";
+
+    let operation = new Hmac();
 
     let icons = {
       "save": { description: "Save recipe" },
@@ -48,9 +48,9 @@
 
     function handleDragEnd(event: DragEvent) {
         event.preventDefault();
-        let id = parseInt(event.target.id);
+        let id = 
         if (dragged_leave) {
-            baked_operations = baked_operations.filter((_, idx) => idx !== id);
+            baked_operations = baked_operations.filter((_, idx) => idx !== parseInt(event.target.id));
         }
     }
 
@@ -74,10 +74,7 @@
     <!--     <OperationPreview name={dragged_name}/> -->
     <!-- {/if} -->
 
-    <RecipeOperation name="HMAC">
-        <Hmac/>
-    </RecipeOperation>
-
+    <RecipeOperation {operation}/>
   </ul>
 </div>
 
@@ -87,4 +84,5 @@
         width: 100%;
         height: 100%;
     }
+
 </style>

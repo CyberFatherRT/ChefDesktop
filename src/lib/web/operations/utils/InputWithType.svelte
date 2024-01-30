@@ -1,19 +1,36 @@
 <script lang="ts">
+    import { createEventDispatcher } from "svelte";
+
     export let placeholder: string;
     export let type_enum: any;
     export let id: string;
+
+    let input: string = "";
+    let selected_enum_value: string = "";
+
+    const dispatch = createEventDispatcher();
     
-    console.log(Object.keys(type_enum))
-    
+    function getInput() {
+        dispatch('getInput', {
+            value: input
+        })
+    }
+
+    function getEnumValue() {
+        dispatch('getEnumValue', {
+            value: selected_enum_value
+        })
+    }
+
 </script>
 
 <div class="container">
     <div class="input-field">
         <label for={id}>{placeholder}</label>
-        <input {id} type="text">
+        <input bind:value={input} on:input={getInput} {id} type="text">
     </div>
     <div class="enum-feild">
-       <select>
+       <select bind:value={selected_enum_value} on:change={getEnumValue}>
             {#each Object.keys(type_enum) as name}
                 <option value={name}>{name}</option>
             {/each}

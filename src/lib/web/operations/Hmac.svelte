@@ -8,6 +8,12 @@
 
 {#each operation.args as arg}
     {#if arg.type === UserInputOptions.inputWithType}
-        <InputWithType id="4" type_enum={arg.value} placeholder={arg.name} />
+        <InputWithType 
+            id="4"
+            on:getInput={arg.functions.input}
+            on:getEnumValue={arg.functions.enum}
+            type_enum={arg.value}
+            placeholder={arg.name}
+        />
     {/if}
 {/each}

@@ -31,6 +31,9 @@ export type Arg = {
     type: UserInputOptions,
     value: any,
     default_value: string | number | boolean,
+    functions: {
+        [key: string]: (input: CustomEvent) => void
+    },
 }
 
 export enum Modules {
