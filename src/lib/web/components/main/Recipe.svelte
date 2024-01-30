@@ -26,7 +26,6 @@
         event.preventDefault();
         dragged_over = false;
         dragged_leave = true;
-        
     }
 
     function handleDrop(event: DragEvent) {
@@ -36,7 +35,6 @@
         if (new_operation?.length !== 0) {
             baked_operations = [...baked_operations,  {name: new_operation || "", disabled: false, breakpoint: false}]
         }
-        
     }
 
     function handleDragOver(event: DragEvent) {
@@ -48,7 +46,6 @@
 
     function handleDragEnd(event: DragEvent) {
         event.preventDefault();
-        let id = 
         if (dragged_leave) {
             baked_operations = baked_operations.filter((_, idx) => idx !== parseInt(event.target.id));
         }

@@ -3,6 +3,7 @@
 
     export let placeholder: string;
     export let type_enum: any;
+    export let enum_default: string;
     export let id: string;
 
     let input: string = "";
@@ -10,7 +11,7 @@
 
     const dispatch = createEventDispatcher();
     
-    function getInput() {
+    const getInput = () => {
         dispatch('getInput', {
             value: input
         })
@@ -25,17 +26,24 @@
 </script>
 
 <div class="container">
+
     <div class="input-field">
         <label for={id}>{placeholder}</label>
         <input bind:value={input} on:input={getInput} {id} type="text">
     </div>
+    
     <div class="enum-feild">
        <select bind:value={selected_enum_value} on:change={getEnumValue}>
             {#each Object.keys(type_enum) as name}
-                <option value={name}>{name}</option>
+                {#if name == enum_default}
+                    <option value={name} selected>{name}</option>
+                {:else}
+                    <option value={name}>{name}</option>
+                {/if}
             {/each}
        </select> 
     </div>
+
 </div>
 
 <style>

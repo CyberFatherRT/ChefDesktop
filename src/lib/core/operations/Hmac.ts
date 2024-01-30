@@ -55,7 +55,7 @@ export class Hmac extends Operation implements Run {
             input: input,
             params: {
                 key: this.params.get('key') ?? "",
-                key_format: this.params.get('key_format') ?? "",
+                key_format: this.params.get('key_format')?.toLowerCase(),
                 hash_function: this.params.get('hash_function') ?? "",
                 output_format: this.params.get('output_format') ?? "",
             }
@@ -90,10 +90,10 @@ enum HashFunctions {
 }
 
 enum KeyFormat {
-    UTF8 = "utf8",
-    Base64 = "base64",
-    Hex = "hex",
-    Binary = "binary",
-    Latin1 = "latin1"
+    UTF8 = "UTF8",
+    Base64 = "BASE64",
+    Hex = "Hex",
+    Binary = "BINARY",
+    Latin1 = "LATIN1"
 }
 

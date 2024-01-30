@@ -1,9 +1,11 @@
 <script lang="ts">
+
     import { UserInputOptions, Operation } from "../../../core/baseOperation";
     import InputWithType from "../../operations/utils/InputWithType.svelte";
 
-    export let id: string = "";
     export let operation: Operation;
+    export let id: string = "";
+
 </script>
 
 <li {id} draggable="true" class="preview">
@@ -14,6 +16,7 @@
             <button> <i class="material-icons">not_interested</i> </button>
         </div>
     </title>
+
     {#each operation.args as arg}
         {#if arg.type === UserInputOptions.inputWithType}
             <InputWithType 
@@ -21,10 +24,12 @@
                 on:getInput={arg.functions.input}
                 on:getEnumValue={arg.functions.enum}
                 type_enum={arg.value}
+                enum_default={arg.default_value}
                 placeholder={arg.name}
             />
         {/if}
     {/each}
+
 </li>
 
 <style>
