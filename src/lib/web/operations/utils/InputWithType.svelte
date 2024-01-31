@@ -11,7 +11,7 @@
 
     const dispatch = createEventDispatcher();
     
-    const getInput = () => {
+    function getInput() {
         dispatch('getInput', {
             value: input
         })
@@ -19,7 +19,7 @@
 
     function getEnumValue() {
         dispatch('getEnumValue', {
-            value: selected_enum_value
+            value: type_enum[selected_enum_value]
         })
     }
 
@@ -31,17 +31,13 @@
         <label for={id}>{placeholder}</label>
         <input bind:value={input} on:input={getInput} {id} type="text">
     </div>
-    
+
     <div class="enum-feild">
        <select bind:value={selected_enum_value} on:change={getEnumValue}>
             {#each Object.keys(type_enum) as name}
-                {#if name == enum_default}
-                    <option value={name} selected>{name}</option>
-                {:else}
-                    <option value={name}>{name}</option>
-                {/if}
+                <option value={name}>{name}</option>
             {/each}
-       </select> 
+        </select> 
     </div>
 
 </div>

@@ -1,5 +1,4 @@
 <script lang="ts">
-
     import { UserInputOptions, Operation } from "../../../core/baseOperation";
     import InputWithType from "../../operations/utils/InputWithType.svelte";
 
@@ -9,6 +8,7 @@
 </script>
 
 <li {id} draggable="true" class="preview">
+
     <title>
         <p>{operation.name}</p>
         <div>
@@ -19,7 +19,7 @@
 
     {#each operation.args as arg}
         {#if arg.type === UserInputOptions.inputWithType}
-            <InputWithType 
+        <InputWithType 
                 id="4"
                 on:getInput={arg.functions.input}
                 on:getEnumValue={arg.functions.enum}

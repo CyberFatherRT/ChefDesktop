@@ -27,8 +27,12 @@ export class Hmac extends Operation implements Run {
                 value: KeyFormat,
                 default_value: KeyFormat.UTF8,
                 functions: {
-                    "input": (input) => this.params.set('key', input.detail.value),
-                    "enum": (input) => this.params.set('key_format', input.detail.value),
+                    input: (input) => { 
+                        this.params.set('key', input.detail.value)
+                    },
+                    enum: (input) => { 
+                        this.params.set('enum', input.detail.value)
+                    },
                 },
             },
             {
@@ -37,7 +41,9 @@ export class Hmac extends Operation implements Run {
                 type: UserInputOptions.enum,
                 value: HashFunctions,
                 default_value: HashFunctions.SHA256,
-                functions: {}
+                functions: {
+                    "enum": (input) => this.params.set('hash_function', input.detail.value),
+                }
             },
             {
                 name: "Output format",
@@ -45,17 +51,22 @@ export class Hmac extends Operation implements Run {
                 type: UserInputOptions.enum,
                 value: OutputFormats,
                 default_value: OutputFormats.Hex,
-                functions: {}
+                functions: {
+                    "enum": (input) => this.params.set('hash_function', input.detail.value),
+                }
             }
         ]
     }    
 
     async run(input: string): Promise<string> {
+        
+        let foo = this.args[0].functions['enum'];
+
         let request = {
             input: input,
             params: {
                 key: this.params.get('key') ?? "",
-                key_format: this.params.get('key_format')?.toLowerCase(),
+                key_format: this.params.get('key_format') ?? "",
                 hash_function: this.params.get('hash_function') ?? "",
                 output_format: this.params.get('output_format') ?? "",
             }
@@ -90,10 +101,10 @@ enum HashFunctions {
 }
 
 enum KeyFormat {
-    UTF8 = "UTF8",
-    Base64 = "BASE64",
-    Hex = "Hex",
-    Binary = "BINARY",
-    Latin1 = "LATIN1"
+    UTF8 = "utf8",
+    Base64 = "base64",
+    Hex = "hex",
+    Binary = "binary",
+    Latin1 = "latin1"
 }
 

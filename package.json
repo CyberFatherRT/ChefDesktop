@@ -16,7 +16,8 @@
     "@types/node": "^20.11.7",
     "fuse.js": "^7.0.0",
     "svelte-dnd-action": "^0.9.38",
-    "tippy.js": "^6.3.7"
+    "tippy.js": "^6.3.7",
+    "ts-macros": "^2.6.0"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^3.0.1",

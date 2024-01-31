@@ -258,8 +258,7 @@ pub fn get_index_by_char(text: &str, ch: char) -> usize {
 }
 
 pub fn char_repr(token: &str) -> &str {
-    map!(
-        "Space" => " ",
+    map!("Space" => " ",
         "Percent" => "%",
         "Comma" => ",",
         "Semi-colon" => ";",
@@ -272,8 +271,8 @@ pub fn char_repr(token: &str) -> &str {
         "0x" => "0x",
         "\\x" => "\\x",
         "Nothing (separate chars)" => "",
-        "None" => "",
-    )
+        "None" => ""
+        )
     .get(token)
     .unwrap_or(&" ")
 }
