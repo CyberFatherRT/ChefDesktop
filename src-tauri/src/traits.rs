@@ -52,6 +52,7 @@ impl StringTrait for String {
         let output: String = re.replace(regex_str, replacement).to_string();
         Ok(output)
     }
+
     fn capitalize(&self) -> String {
         let mut c = self.chars();
         match c.next() {

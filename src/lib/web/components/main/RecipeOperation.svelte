@@ -1,10 +1,9 @@
 <script lang="ts">
-    import { UserInputOptions, Operation } from "../../../core/baseOperation";
+    import { UserInputOptions, type Run } from "../../../core/baseOperation";
     import InputWithType from "../../operations/utils/InputWithType.svelte";
 
-    export let operation: Operation;
+    export let operation: Run;
     export let id: string = "";
-
 </script>
 
 <li {id} draggable="true" class="preview">
@@ -19,7 +18,7 @@
 
     {#each operation.args as arg}
         {#if arg.type === UserInputOptions.inputWithType}
-        <InputWithType 
+        <InputWithType
                 id="4"
                 on:getInput={arg.functions.input}
                 on:getEnumValue={arg.functions.enum}
@@ -76,5 +75,5 @@
 
         filter: brightness(93%);
     }
-    
+
 </style>

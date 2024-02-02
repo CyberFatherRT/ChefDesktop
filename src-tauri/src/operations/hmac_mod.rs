@@ -32,6 +32,7 @@ impl Operation<'_, DeserializeMeDaddy> for Hmac {
             request.params.output_format,
         );
 
+
         let key = convert_to_byte_array(&key, &key_format)?;
 
         let res = match hash_function {

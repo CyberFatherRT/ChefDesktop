@@ -10,7 +10,7 @@
         "view_compact": { description: "Reset pane layout"}
     }
 
-    let inputValue: string;
+    let inputValue: string = "";
     $: input.set(inputValue)
 
 </script>

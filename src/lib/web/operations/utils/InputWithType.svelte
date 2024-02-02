@@ -7,10 +7,10 @@
     export let id: string;
 
     let input: string = "";
-    let selected_enum_value: string = "";
+    let selected_enum_value: string = enum_default;
 
     const dispatch = createEventDispatcher();
-    
+
     function getInput() {
         dispatch('getInput', {
             value: input
@@ -35,9 +35,9 @@
     <div class="enum-feild">
        <select bind:value={selected_enum_value} on:change={getEnumValue}>
             {#each Object.keys(type_enum) as name}
-                <option value={name}>{name}</option>
+                <option value={name} selected={name == selected_enum_value || true}>{name}</option>
             {/each}
-        </select> 
+        </select>
     </div>
 
 </div>
@@ -79,7 +79,7 @@
         border: none;
         border-top-right-radius: 0 !important;
         height: 42px !important;
-        
+
         text-align: center;
     }
 

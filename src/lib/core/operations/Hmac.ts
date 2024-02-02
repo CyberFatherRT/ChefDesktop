@@ -1,79 +1,82 @@
-import { Modules, Operation, UserInputOptions, type Run } from "../baseOperation";
-import { invoke } from "@tauri-apps/api"; 
+import { invoke } from "@tauri-apps/api";
+import { Modules, UserInputOptions, type Run } from "../baseOperation";
+import { gsd } from "../runOperations";
 
-export class Hmac extends Operation implements Run {
-    constructor() {
-        super();
+export class Hmac implements Run {
 
-        this.name = "HMAC";
-        this.op_name = "hmac";
-        this.module = Modules.Hashing;
-        this.englishDescription = "Keyed-Hash Message Authentication Codes (HMAC) are a mechanism for message authentication using cryptographic hash functions.";
-        this.russianDescription = "Keyed-Hash Message Authentication Codes (HMAC) — это механизм аутентификации сообщений с использованием криптографических хеш-функций.";
-        this.infoURL = "https://wikipedia.org/wiki/HMAC";
-        
-        this.params = new Map([
-            ["key", ""],
-            ["key_format", ""],
-            ["hash_function", ""],
-            ["output_format", ""]
-        ])
+    name = "HMAC";
+    op_name = "hmac";
+    module = Modules.Hashing;
+    englishDescription = "Keyed-Hash Message Authentication Codes (HMAC) are a mechanism for message authentication using cryptographic hash functions.";
+    russianDescription = "Keyed-Hash Message Authentication Codes (HMAC) — это механизм аутентификации сообщений с использованием криптографических хеш-функций.";
+    infoURL = "https://wikipedia.org/wiki/HMAC";
 
-        this.args = [
-            {
-                name: "Key",
-                op_name: "key",
-                type: UserInputOptions.inputWithType,
-                value: KeyFormat,
-                default_value: KeyFormat.UTF8,
-                functions: {
-                    input: (input) => { 
-                        this.params.set('key', input.detail.value)
-                    },
-                    enum: (input) => { 
-                        this.params.set('enum', input.detail.value)
-                    },
+    params = new Map([
+        ["key", ""],
+        ["key_format", KeyFormat.UTF8],
+        ["hash_function", HashFunctions.SHA512_224],
+        ["output_format", OutputFormats.Base64]
+    ]);
+
+
+    // @ts-ignore
+    args = [
+        {
+            name: "Key",
+            op_name: "key",
+            type: UserInputOptions.inputWithType,
+            value: KeyFormat,
+            default_value: KeyFormat.UTF8,
+            functions: {
+                input: (input: CustomEvent) => {
+                    this.params.set('key', input.detail.value)
+                    gsd()
+                },
+                enum: (input: CustomEvent) => {
+                    this.params.set('key_format', input.detail.value)
+                    gsd()
                 },
             },
-            {
-                name: "Hash function",
-                op_name: "hash_function",
-                type: UserInputOptions.enum,
-                value: HashFunctions,
-                default_value: HashFunctions.SHA256,
-                functions: {
-                    "enum": (input) => this.params.set('hash_function', input.detail.value),
-                }
-            },
-            {
-                name: "Output format",
-                op_name: "output_format",
-                type: UserInputOptions.enum,
-                value: OutputFormats,
-                default_value: OutputFormats.Hex,
-                functions: {
-                    "enum": (input) => this.params.set('hash_function', input.detail.value),
-                }
+        },
+        {
+            name: "Hash function",
+            op_name: "hash_function",
+            type: UserInputOptions.enum,
+            value: HashFunctions,
+            default_value: HashFunctions.SHA256,
+            functions: {
+                enum: (input: CustomEvent) => {
+                    this.params.set('hash_function', input.detail.value)
+                    gsd()
+                },
             }
-        ]
-    }    
-
-    async run(input: string): Promise<string> {
-        
-        let foo = this.args[0].functions['enum'];
-
-        let request = {
-            input: input,
-            params: {
-                key: this.params.get('key') ?? "",
-                key_format: this.params.get('key_format') ?? "",
-                hash_function: this.params.get('hash_function') ?? "",
-                output_format: this.params.get('output_format') ?? "",
+        },
+        {
+            name: "Output format",
+            op_name: "output_format",
+            type: UserInputOptions.enum,
+            value: OutputFormats,
+            default_value: OutputFormats.Hex,
+            functions: {
+                enum: (input: CustomEvent) => {
+                    this.params.set('output_format', input.detail.value)
+                    gsd()
+                },
             }
         }
-        return await invoke(this.op_name, { request: JSON.stringify(request) }) as string
+    ]
+    async run(input: string): Promise<string> {
+        let request = {
+            input,
+            params: {
+                key: this.params.get('key'),
+                key_format: this.params.get('key_format'),
+                hash_function: this.params.get('hash_function'),
+                output_format: this.params.get('output_format'),
+            }
+        }
+        return await invoke(this.op_name, { request: JSON.stringify(request) })
     }
-
 }
 
 enum OutputFormats {

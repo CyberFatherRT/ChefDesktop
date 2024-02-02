@@ -1,9 +1,16 @@
 <script lang="ts">
     import { Hmac } from "../../../core/operations/Hmac";
+    import { operations } from "../../../core/runOperations";
     import Title from "../title/Title.svelte";
     import RecipeOperation from "./RecipeOperation.svelte";
 
     let operation = new Hmac();
+
+    operations.update(map => map.set('1', {
+        is_disable: false,
+        is_breakpoint: false,
+        operation
+    }))
 
     let icons = {
       "save": { description: "Save recipe" },

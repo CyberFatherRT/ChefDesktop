@@ -1,4 +1,4 @@
-export abstract class Operation {
+export interface Run {
     name: string;
     op_name: string;
     module: Modules;
@@ -7,21 +7,6 @@ export abstract class Operation {
     infoURL: string | null;
     args: Arg[];
     params: Map<string, string>
-
-    constructor() {
-        this.name = "";
-        this.op_name = "";
-        this.module = Modules.Other;
-        this.englishDescription = "";
-        this.russianDescription = "";
-        this.infoURL = null;
-
-        this.params = new Map();
-        this.args = [];
-    }
-}
-
-export interface Run {
     run(input: string): Promise<string>
 }
 
@@ -32,7 +17,7 @@ export type Arg = {
     value: any,
     default_value: string | number | boolean,
     functions: {
-        [key: string]: (input: CustomEvent) => void
+        [key: string]: (input: CustomEvent) => void,
     },
 }
 
