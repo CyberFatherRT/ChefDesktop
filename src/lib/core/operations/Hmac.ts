@@ -28,14 +28,8 @@ export class Hmac implements Run {
             value: KeyFormat,
             default_value: KeyFormat.UTF8,
             functions: {
-                input: (input: CustomEvent) => {
-                    this.params.set('key', input.detail.value)
-                    gsd()
-                },
-                enum: (input: CustomEvent) => {
-                    this.params.set('key_format', input.detail.value)
-                    gsd()
-                },
+                input: (input: CustomEvent) => this.event_function(input, 'key'),
+                enum: (input: CustomEvent) => this.event_function(input, 'key_format'),
             },
         },
         {
@@ -45,10 +39,7 @@ export class Hmac implements Run {
             value: HashFunctions,
             default_value: HashFunctions.SHA256,
             functions: {
-                enum: (input: CustomEvent) => {
-                    this.params.set('hash_function', input.detail.value)
-                    gsd()
-                },
+                enum: (input: CustomEvent) => this.event_function(input, 'hash_function'),
             }
         },
         {
@@ -58,13 +49,16 @@ export class Hmac implements Run {
             value: OutputFormats,
             default_value: OutputFormats.Hex,
             functions: {
-                enum: (input: CustomEvent) => {
-                    this.params.set('output_format', input.detail.value)
-                    gsd()
-                },
+                enum: (input: CustomEvent) => this.event_function(input, 'output_format'),
             }
         }
     ]
+
+    event_function(input: CustomEvent, key: string) {
+        this.params.set(key, input.detail.value)
+        gsd()
+    }
+
     async run(input: string): Promise<string> {
         let request = {
             input,
@@ -107,7 +101,6 @@ enum KeyFormat {
     UTF8 = "utf8",
     Base64 = "base64",
     Hex = "hex",
-    Binary = "binary",
     Latin1 = "latin1"
 }
 
