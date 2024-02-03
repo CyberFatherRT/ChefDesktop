@@ -196,7 +196,7 @@ pub fn to_hex(data: &[u8]) -> String {
 
 pub fn from_hex(data: &str) -> Result<Vec<u8>> {
     Ok(data.chars()
-        .filter(|&x| x.is_contained_in("0123456789abcdefABCDEF"))
+        .filter(|&x| "0123456789abcdefABCDEF".contains(x))
         .chunks(2)
         .into_iter()
         .map(|x| u8::from_str_radix(&x.collect::<String>(), 2).unwrap())

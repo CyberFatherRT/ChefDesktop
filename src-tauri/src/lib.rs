@@ -1,5 +1,3 @@
-#![feature(pattern)]
-
 mod libs;
 mod macros;
 mod operations;
