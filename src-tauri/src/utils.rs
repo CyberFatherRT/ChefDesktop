@@ -2,7 +2,8 @@ use crate::{libs::base64::from_base64, map, regex_check};
 use anyhow::{anyhow, bail, Result};
 use num::{Integer, ToPrimitive};
 use serde::{Deserialize, Serialize};
-use std::fmt::{Debug, LowerHex};
+use std::{fmt::{Debug, LowerHex}, str::pattern::Pattern};
+use itertools::Itertools;
 
 #[derive(Deserialize)]
 #[serde(rename_all = "lowercase")]
@@ -148,7 +149,7 @@ pub fn _byte_array_to_string(byte_array: Vec<u8>) -> Result<String> {
 pub fn convert_to_byte_array(string: &str, convert_type: &SupportedFormats) -> Result<Vec<u8>> {
     match convert_type {
         SupportedFormats::BINARY => from_binary(string, None, None),
-        SupportedFormats::HEX => from_hex(string, None, None),
+        SupportedFormats::HEX => from_hex(string),
         SupportedFormats::BASE64 => match from_base64(
             string.to_string(),
             "",
@@ -193,23 +194,13 @@ pub fn to_hex(data: &[u8]) -> String {
         .fold(String::new(), |out, x| format!("{out}{x:02x}"))
 }
 
-pub fn from_hex(data: &str, delim: Option<&str>, byte_len: Option<usize>) -> Result<Vec<u8>> {
-    if byte_len.unwrap_or(8) < 1 {
-        bail!("Byte length must be a positive integer");
-    }
-
-    let mut output: Vec<u8> = Vec::new();
-
-    let delim = char_repr(delim.unwrap_or("Space"));
-
-    for i in data.split(&delim) {
-        match u8::from_str_radix(i, 16) {
-            Ok(data) => output.push(data),
-            Err(e) => bail!(e),
-        }
-    }
-
-    Ok(output)
+pub fn from_hex(data: &str) -> Result<Vec<u8>> {
+    Ok(data.chars()
+        .filter(|&x| x.is_contained_in("0123456789abcdefABCDEF"))
+        .chunks(2)
+        .into_iter()
+        .map(|x| u8::from_str_radix(&x.collect::<String>(), 2).unwrap())
+        .collect())
 }
 
 pub fn _from_decimal(data: &str, delim: Option<&str>) -> Result<Vec<usize>, String> {

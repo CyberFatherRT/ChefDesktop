@@ -1,9 +1,10 @@
 use anyhow::Result;
+use base64::{alphabet, engine, Engine};
 use serde::{Deserialize, Serialize};
 
 use crate::{
     create_info_struct, create_me_daddy, create_tauri_wrapper,
-    libs::base64::to_base64 as to_base64_lib, run_operations, Operation, DOCS_URL,
+    run_operations, Operation, DOCS_URL,
 };
 
 create_tauri_wrapper!(to_base64, ToBase64);
@@ -12,7 +13,15 @@ impl Operation<'_, DeserializeMeDaddy> for ToBase64 {
     fn do_black_magic(&self, request: &str) -> Result<String> {
         let request = self.validate(request)?;
         let (input, alphabet) = (request.input, request.params.alphabet);
-        Ok(to_base64_lib(input.as_bytes(), alphabet)?)
+
+        let alphabet = alphabet.unwrap_or("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".to_string());
+        let alphabet = alphabet::Alphabet::new(&alphabet)?;
+
+        let config = engine::GeneralPurposeConfig::new()
+            .with_decode_padding_mode(engine::DecodePaddingMode::RequireCanonical);
+        let engine = engine::GeneralPurpose::new(&alphabet, config);
+
+        Ok(engine.encode(input))
     }
 }
 

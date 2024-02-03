@@ -1,6 +1,6 @@
 use crate::{
     create_info_struct, create_me_daddy, create_tauri_wrapper,
-    libs::base64::to_base64,
+    libs::base64::bytes_to_base64,
     run_operations,
     utils::{convert_to_byte_array, to_hex, SupportedFormats},
     Operation, DOCS_URL,
@@ -50,7 +50,7 @@ impl Operation<'_, DeserializeMeDaddy> for Blake2b {
 
         Ok(match output_format {
             SupportedOutputFormat::Hex => to_hex(&res),
-            SupportedOutputFormat::Base64 => to_base64(&res, None)?,
+            SupportedOutputFormat::Base64 => bytes_to_base64(&res),
             SupportedOutputFormat::Uint8Array => String::from_utf8_lossy(&res).to_string(),
         })
     }

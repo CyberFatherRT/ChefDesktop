@@ -7,7 +7,7 @@ use sha3::{Sha3_224, Sha3_256, Sha3_384, Sha3_512};
 
 use crate::{
     create_info_struct, create_me_daddy, create_tauri_wrapper,
-    libs::base64::{from_base64, to_base64},
+    libs::base64::{bytes_to_base64, from_base64},
     run_operations,
     utils::{to_hex, DataRepresentation, DataRepresentationInput},
     Operation, DOCS_URL,
@@ -62,7 +62,7 @@ impl Operation<'_, DeserializeMeDaddy> for RSADecrypt {
 
         Ok(match output_format {
             SupportedOutputFormat::Hex => to_hex(&encrypted_text),
-            SupportedOutputFormat::Base64 => to_base64(&encrypted_text, None)?,
+            SupportedOutputFormat::Base64 => bytes_to_base64(&encrypted_text),
             SupportedOutputFormat::Uint8Array => {
                 String::from_utf8_lossy(&encrypted_text).to_string()
             }

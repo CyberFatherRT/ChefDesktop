@@ -1,54 +1,39 @@
+use base64::{alphabet, engine, Engine};
 use serde::{Deserialize, Serialize};
 
 use crate::{
     create_info_struct, create_me_daddy, create_tauri_wrapper,
-    libs::base64::from_base64 as from_base64_lib,
-    run_operations,
-    utils::{DataRepresentation, DataRepresentationInput},
-    Operation, DOCS_URL,
+    run_operations, Operation, DOCS_URL,
 };
-use anyhow::{bail, Result};
+use anyhow::Result;
 create_tauri_wrapper!(from_base64, FromBase64);
 
 impl Operation<'_, DeserializeMeDaddy> for FromBase64 {
     fn do_black_magic(&self, request: &str) -> Result<String> {
         let request = self.validate(request)?;
+        let (mut input, Params { alphabet, remove_non_alphabetic_chars, strict_mode } ) = (request.input, request.params);
 
-        let (input, alphabet, remove_non_alphabetic_chars, strict_mode) = (
-            request.input,
-            request.params.alphabet,
-            request
-                .params
-                .remove_non_alphabetic_chars
-                .unwrap_or_default(),
-            request.params.strict_mode.unwrap_or_default(),
-        );
+        let alphabet = alphabet::Alphabet::new(&alphabet)?;
 
-        let alphabet = alphabet.unwrap_or_default();
-
-        match from_base64_lib(
-            input,
-            &alphabet,
-            DataRepresentationInput::String,
-            remove_non_alphabetic_chars,
-            strict_mode,
-        ) {
-            Ok(output) => {
-                let DataRepresentation::String(output) = output else {
-                    unreachable!()
-                };
-                Ok(output.trim_end_matches('\0').to_string())
-            }
-            Err(e) => bail!(e),
+        if remove_non_alphabetic_chars {
+            input = input.chars().filter(|&x| alphabet.as_str().contains(x)).collect();
         }
+
+        let config = engine::GeneralPurposeConfig::new()
+            .with_decode_allow_trailing_bits(!strict_mode)
+            .with_decode_padding_mode(engine::DecodePaddingMode::RequireCanonical);
+
+        let engine = engine::GeneralPurpose::new(&alphabet, config);
+
+        todo!()
     }
 }
 
 #[derive(Deserialize)]
 struct Params {
-    alphabet: Option<String>,
-    remove_non_alphabetic_chars: Option<bool>,
-    strict_mode: Option<bool>,
+    alphabet: String,
+    remove_non_alphabetic_chars: bool,
+    strict_mode: bool,
 }
 
 create_me_daddy!();

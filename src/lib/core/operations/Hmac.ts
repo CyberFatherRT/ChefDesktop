@@ -55,6 +55,7 @@ export class Hmac implements Run {
     ]
 
     event_function(input: CustomEvent, key: string) {
+        console.log(key, input.detail.value)
         this.params.set(key, input.detail.value)
         gsd()
     }

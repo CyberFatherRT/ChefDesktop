@@ -1,3 +1,7 @@
+use anyhow::{anyhow, bail, Result};
+use base64::Engine;
+use itertools::Itertools;
+
 use crate::{
     traits::StringTrait,
     utils::{
@@ -5,54 +9,11 @@ use crate::{
         DataRepresentation, DataRepresentationInput,
     },
 };
-use anyhow::{anyhow, bail, Result};
-use itertools::Itertools;
 
-pub fn to_base64(data: &[u8], alphabet: Option<String>) -> Result<String> {
-    if data.is_empty() {
-        return Ok(String::new());
-    }
-
-    let alphabet = alphabet.unwrap_or("A-Za-z0-9+/=".to_string());
-
-    let alphabet = String::from_iter(expand_alphabet_range(&alphabet));
-
-    let alphabet_length = alphabet.chars().count();
-
-    if alphabet_length != 64 && alphabet_length != 65 {
-        return Err(anyhow!(
-            "Invalid base64 alphabet length. ({alphabet_length}):\n{alphabet}"
-        ))?;
-    }
-
-    let mut output = String::new();
-    let mut padding = 0;
-
-    data.iter()
-        .fold(String::new(), |acc, x| acc + &format!("{:08b}", x))
-        .chars()
-        .chunks(6)
-        .into_iter()
-        .map(|x| {
-            let sextet = x.collect::<String>();
-            match sextet.len() {
-                6 => u8::from_str_radix(&sextet, 2),
-                _ => {
-                    padding += 1;
-                    u8::from_str_radix(&format!("{:0<6}", sextet), 2)
-                }
-            }
-            .unwrap()
-        })
-        .for_each(|x| output.push(get_char_by_index(&alphabet, x)));
-
-    output.push_str(&match alphabet_length {
-        65 => get_char_by_index(&alphabet, 64).to_string().repeat(padding),
-        _ => "".to_string(),
-    });
-
-    Ok(output)
+pub fn bytes_to_base64(data: &[u8]) -> String {
+    base64::prelude::BASE64_STANDARD.encode(data)
 }
+
 pub fn from_base64(
     mut data: String,
     mut alphabet: &str,
@@ -111,6 +72,7 @@ pub fn from_base64(
                 }
             }
         }
+
     }
 
     if alphabet_length == 65 {
@@ -157,76 +119,3 @@ pub fn from_base64(
         }
     };
 }
-
-#[allow(dead_code)]
-pub struct AlphabetOptions {
-    name: &'static str,
-    value: &'static str,
-}
-
-pub const _ALPHABET_OPTIONS: &[AlphabetOptions] = &[
-    AlphabetOptions {
-        name: "Standard (RFC 4648): A-Za-z0-9+/=",
-        value: "A-Za-z0-9+/=",
-    },
-    AlphabetOptions {
-        name: "URL safe (RFC 4648 §5): A-Za-z0-9-_",
-        value: "A-Za-z0-9-_",
-    },
-    AlphabetOptions {
-        name: "Filename safe: A-Za-z0-9+-=",
-        value: "A-Za-z0-9+\\-=",
-    },
-    AlphabetOptions {
-        name: "itoa64: ./0-9A-Za-z=",
-        value: "./0-9A-Za-z=",
-    },
-    AlphabetOptions {
-        name: "y64: A-Za-z0-9._-",
-        value: "A-Za-z0-9._-",
-    },
-    AlphabetOptions {
-        name: "z64: 0-9a-zA-Z+/=",
-        value: "0-9a-zA-Z+/=",
-    },
-    AlphabetOptions {
-        name: "Radix-64 (RFC 4880): 0-9A-Za-z+/=",
-        value: "0-9A-Za-z+/=",
-    },
-    AlphabetOptions {
-        name: "Uuencoding: [space]-_",
-        value: " -_",
-    },
-    AlphabetOptions {
-        name: "Xxencoding: +-0-9A-Za-z",
-        value: "+\\-0-9A-Za-z",
-    },
-    AlphabetOptions {
-        name: "BinHex: !-,-0-689@A-NP-VX-Z[`a-fh-mp-r",
-        value: "!-,-0-689@A-NP-VX-Z[`a-fh-mp-r",
-    },
-    AlphabetOptions {
-        name: "ROT13: N-ZA-Mn-za-m0-9+/=",
-        value: "N-ZA-Mn-za-m0-9+/=",
-    },
-    AlphabetOptions {
-        name: "UNIX crypt: ./0-9A-Za-z",
-        value: "./0-9A-Za-z",
-    },
-    AlphabetOptions {
-        name: "Atom128: /128GhIoPQROSTeUbADfgHijKLM+n0pFWXY456xyzB7=39VaqrstJklmNuZvwcdEC",
-        value: "/128GhIoPQROSTeUbADfgHijKLM+n0pFWXY456xyzB7=39VaqrstJklmNuZvwcdEC",
-    },
-    AlphabetOptions {
-        name: "Megan35: 3GHIJKLMNOPQRSTUb=cdefghijklmnopWXYZ/12+406789VaqrstuvwxyzABCDEF5",
-        value: "3GHIJKLMNOPQRSTUb=cdefghijklmnopWXYZ/12+406789VaqrstuvwxyzABCDEF5",
-    },
-    AlphabetOptions {
-        name: "Zong22: ZKj9n+yf0wDVX1s/5YbdxSo=ILaUpPBCHg8uvNO4klm6iJGhQ7eFrWczAMEq3RTt2",
-        value: "ZKj9n+yf0wDVX1s/5YbdxSo=ILaUpPBCHg8uvNO4klm6iJGhQ7eFrWczAMEq3RTt2",
-    },
-    AlphabetOptions {
-        name: "Hazz15: HNO4klm6ij9n+J2hyf0gzA8uvwDEq3X1Q7ZKeFrWcVTts/MRGYbdxSo=ILaUpPBC5",
-        value: "HNO4klm6ij9n+J2hyf0gzA8uvwDEq3X1Q7ZKeFrWcVTts/MRGYbdxSo=ILaUpPBC5",
-    },
-];

@@ -35,7 +35,7 @@
     <div class="enum-feild">
        <select bind:value={selected_enum_value} on:change={getEnumValue}>
             {#each Object.keys(type_enum) as name}
-                <option value={name} selected={name == selected_enum_value || true}>{name}</option>
+                <option value={name} selected={name.toLowerCase() == selected_enum_value}>{name}</option>
             {/each}
         </select>
     </div>
