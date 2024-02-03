@@ -43,3 +43,10 @@ jobs:
           releaseBody: 'See the assets to download this version and install.'
           releaseDraft: true
           prerelease: false
+
+      - name: Archive code coverage results
+        if: matrix.platform == 'macos-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: finally
+          path: /Users/runner/work/ChefDesktop/ChefDesktop/src-tauri/target/release/bundle/dmg/ChefDesktop_0.0.0_x64.dmg
