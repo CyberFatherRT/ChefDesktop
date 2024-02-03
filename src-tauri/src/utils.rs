@@ -2,7 +2,7 @@ use crate::{libs::base64::from_base64, map, regex_check};
 use anyhow::{anyhow, bail, Result};
 use num::{Integer, ToPrimitive};
 use serde::{Deserialize, Serialize};
-use std::{fmt::{Debug, LowerHex}, str::pattern::Pattern};
+use std::fmt::{Debug, LowerHex};
 use itertools::Itertools;
 
 #[derive(Deserialize)]
