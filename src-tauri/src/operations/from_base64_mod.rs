@@ -25,7 +25,7 @@ impl Operation<'_, DeserializeMeDaddy> for FromBase64 {
 
         let engine = engine::GeneralPurpose::new(&alphabet, config);
 
-        todo!()
+        Ok(String::from_utf8(engine.decode(input)?)?)
     }
 }
 

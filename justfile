@@ -12,6 +12,10 @@
     cargo update --manifest-path src-tauri/Cargo.toml
     bun update
 
+@check:
+    cargo check --manifest-path src-tauri/Cargo.toml
+    bun check
+
 @install:
     bun install
 
