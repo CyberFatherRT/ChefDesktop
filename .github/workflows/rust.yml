@@ -26,7 +26,7 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: nightly
-          target: universal-apple-darwin
+          target: aarch64-apple-darwin
 
       - name: install dependencies (ubuntu only)
         if: matrix.platform == 'ubuntu-20.04'
