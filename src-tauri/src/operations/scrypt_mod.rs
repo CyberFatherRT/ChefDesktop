@@ -28,7 +28,6 @@ impl Operation<'_, DeserializeMeDaddy> for Scrypt {
         let params = scrypt::Params::new(memory, iterations, parallelism, key_length)?;
         let password_hash =
             MScrypt.hash_password_customized(input.as_bytes(), None, None, params, &salt)?;
-        println!("{}", password_hash);
 
         Ok(password_hash.to_string())
     }
