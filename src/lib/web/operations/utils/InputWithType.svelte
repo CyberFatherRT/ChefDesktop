@@ -35,7 +35,7 @@
     <div class="enum-feild">
        <select bind:value={selected_enum_value} on:change={getEnumValue}>
             {#each Object.keys(type_enum) as name}
-                <option value={name} selected={name.toLowerCase() == selected_enum_value}>{name}</option>
+                <option value={name} selected={name.toLowerCase() === selected_enum_value}>{name}</option>
             {/each}
         </select>
     </div>
@@ -68,7 +68,6 @@
     }
 
     input {
-        height: 100%;
         border-top-left-radius: 4px;
 
         padding: 20px 12px 6px 12px !important;
@@ -78,7 +77,7 @@
         color: var(--arg-font-color);
         border: none;
         border-top-right-radius: 0 !important;
-        height: 42px !important;
+        height: 42px;
 
         text-align: center;
     }
