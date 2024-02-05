@@ -7,8 +7,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-!libakrypt/build/*.a
-libakrypt
+libakrypt/build
 node_modules
 dist
 dist-ssr
