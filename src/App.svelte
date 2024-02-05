@@ -6,7 +6,6 @@
     import { onMount } from "svelte";
     import { gsd } from "./lib/core/runOperations";
     import { invoke } from "@tauri-apps/api";
-
 </script>
 
 
