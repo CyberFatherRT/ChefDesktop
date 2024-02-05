@@ -8,8 +8,6 @@ pnpm-debug.log*
 lerna-debug.log*
 
 libakrypt
-libakrypt/build
-libakrypt/cmake-build-debug
 node_modules
 dist
 dist-ssr
