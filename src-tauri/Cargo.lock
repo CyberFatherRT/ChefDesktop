@@ -382,6 +382,7 @@ dependencies = [
  "hmac",
  "itertools 0.11.0",
  "lazy_static",
+ "libc",
  "md-5",
  "md2",
  "md4",

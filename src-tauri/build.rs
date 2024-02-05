@@ -1,7 +1,5 @@
 fn main() {
-    println!("cargo:rustc-link-search=.");
-    println!("cargo:rustc-link-lib=main");
-    println!("cargo:rustc-link-lib=akrypt");
-    println!("cargo:rustc-link-lib=akrypt-base");
+    println!("cargo:rustc-link-search={}/../libakrypt/build", std::env::var("CARGO_MANIFEST_DIR").unwrap());
+    println!("cargo:rustc-link-lib=static=akrypt");
     tauri_build::build()
 }

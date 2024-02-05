@@ -41,6 +41,7 @@ scrypt = "0.11.0"
 anyhow = "1.0.79"
 base64 = "0.21.7"
 hex = "0.4.3"
+libc = "0.2.153"
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem
@@ -48,8 +49,6 @@ hex = "0.4.3"
 custom-protocol = ["tauri/custom-protocol"]
 
 [profile.release]
-panic = "abort"
 codegen-units = 1
 opt-level = "z"
 lto = true
-strip = true
