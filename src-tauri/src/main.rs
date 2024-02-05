@@ -3,29 +3,11 @@
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 
-extern crate libc;
 use chef_desktop::*;
-
-use std::ffi::{c_char, CStr};
-
-#[link(name="akrypt", kind="static")]
-#[link(name="akrypt-base", kind="static")]
-extern "C" {
-    pub fn foo() -> *const c_char;
-}
-
-#[tauri::command]
-fn rust_foo() -> Result<String, String> {
-    let output = unsafe { foo() };
-    let c_str = unsafe { CStr::from_ptr(output) };
-    let string = c_str.to_str().map_err(|err| err.to_string())?;
-    Ok(string.to_string())
-}
 
 fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
-            rust_foo,
             a1z26_cipher_decode,
             a1z26_cipher_encode,
             add_line_number,
