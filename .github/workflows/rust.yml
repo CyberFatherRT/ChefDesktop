@@ -1,5 +1,8 @@
 name: 'publish'
 
+on:
+  publish:
+
 jobs:
   publish-tauri:
     permissions:
