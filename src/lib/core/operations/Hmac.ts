@@ -14,8 +14,8 @@ export class Hmac implements Run {
     params = new Map([
         ["key", ""],
         ["key_format", KeyFormat.UTF8],
-        ["hash_function", HashFunctions.SHA512_224],
-        ["output_format", OutputFormats.Base64]
+        ["hash_function", HashFunctions.WhirlPool],
+        ["output_format", OutputFormats.Hex]
     ]);
 
 
@@ -55,7 +55,6 @@ export class Hmac implements Run {
     ]
 
     event_function(input: CustomEvent, key: string) {
-        console.log(key, input.detail.value)
         this.params.set(key, input.detail.value)
         gsd()
     }
@@ -102,6 +101,5 @@ enum KeyFormat {
     UTF8 = "utf8",
     Base64 = "base64",
     Hex = "hex",
-    Latin1 = "latin1"
 }
 

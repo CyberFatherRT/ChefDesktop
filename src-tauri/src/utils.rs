@@ -3,7 +3,6 @@ use anyhow::{anyhow, bail, Result};
 use num::{Integer, ToPrimitive};
 use serde::{Deserialize, Serialize};
 use std::fmt::{Debug, LowerHex};
-use itertools::Itertools;
 
 #[derive(Deserialize)]
 #[serde(rename_all = "lowercase")]
@@ -195,12 +194,7 @@ pub fn to_hex(data: &[u8]) -> String {
 }
 
 pub fn from_hex(data: &str) -> Result<Vec<u8>> {
-    Ok(data.chars()
-        .filter(|&x| "0123456789abcdefABCDEF".contains(x))
-        .chunks(2)
-        .into_iter()
-        .map(|x| u8::from_str_radix(&x.collect::<String>(), 2).unwrap())
-        .collect())
+    Ok(hex::decode(&format!("{data:0>fill$}", fill = data.len() + data.len() % 2))?)
 }
 
 pub fn _from_decimal(data: &str, delim: Option<&str>) -> Result<Vec<usize>, String> {

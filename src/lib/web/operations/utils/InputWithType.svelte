@@ -7,7 +7,7 @@
     export let id: string;
 
     let input: string = "";
-    let selected_enum_value: string = enum_default;
+    let selected_enum_value: string = enum_default.toUpperCase();
 
     const dispatch = createEventDispatcher();
 

@@ -378,6 +378,7 @@ dependencies = [
  "blake2",
  "digest 0.10.7",
  "fix-path-env",
+ "hex",
  "hmac",
  "itertools 0.11.0",
  "lazy_static",

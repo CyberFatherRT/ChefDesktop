@@ -5,8 +5,12 @@
     import IO from "./lib/web/components/IO/IO.svelte";
     import { onMount } from "svelte";
     import { gsd } from "./lib/core/runOperations";
+    import { invoke } from "@tauri-apps/api";
 
-    onMount(() => gsd())
+    onMount(async () => {
+        console.log(await invoke("rust_foo"))
+        gsd()
+    })
 
 </script>
 

@@ -5,9 +5,27 @@
 
 use chef_desktop::*;
 
+
+mod test {
+    #[link(name="main", kind="static")]
+    #[link(name="akrypt", kind="static")]
+    #[link(name="akrypt-base", kind="static")]
+    extern "C" {
+        fn foo();
+    }
+
+    #[tauri::command]
+    pub fn rust_foo() {
+        unsafe { foo(); }
+    }
+}
+
+use test::*;
+
 fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
+            rust_foo,
             a1z26_cipher_decode,
             a1z26_cipher_encode,
             add_line_number,
