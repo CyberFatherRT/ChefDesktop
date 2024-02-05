@@ -1,9 +1,5 @@
 name: 'publish'
 
-on:
-  push:
-    branches: ["master"]
-
 jobs:
   publish-tauri:
     permissions:

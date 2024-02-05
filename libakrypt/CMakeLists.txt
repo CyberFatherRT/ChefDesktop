@@ -45,13 +45,13 @@ set( AKBASE_SOURCES
    source/ak_file.c
    source/ak_base64.c
    source/ak_buffer.c
-   source/cf_operations.c
   )
 
 # -------------------------------------------------------------------------------------------------- #
 # Добавляем исходные тексты для криптобиблиотеки
 set( AKRYPT_SOURCES
    source/libakrypt-internal.h
+   source/cf_operations.c
    source/ak_options.c
    source/ak_libakrypt.c
    source/ak_oid.c
