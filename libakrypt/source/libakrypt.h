@@ -198,7 +198,7 @@ extern "C" {
 /*! \brief Тестирование алгоритма TLSTREE, регламентируемого Р 1323565.1.030-2016 (раздел 10.1.2.1) */
  dll_export bool_t ak_libakrypt_test_tlstree( void );
 /*! \brief Функция тестирует корректность реализации блочных шифров и режимов их использования. */
- dll_export bool_t ak_libakrypt_test_block_ciphers( void ); 
+ dll_export bool_t ak_libakrypt_test_block_ciphers( void );
 /*! \brief Тестирование корректной работы алгоритма блочного шифрования Магма (ГОСТ Р 34.12-2015). */
  dll_export bool_t ak_libakrypt_test_magma( void );
 /*! \brief Тестирование корректной работы алгоритма блочного шифрования Кузнечик (ГОСТ Р 34.12-2015). */
@@ -1767,7 +1767,7 @@ extern "C" {
  dll_export int ak_asn1_get_length_from_der( ak_uint8** , size_t * );
 /*! \brief Установка функции вывода (печать), используемой при выводе ASN1 деревьев. */
  dll_export int ak_asn1_set_print_function( ak_function_log * );
-/*! \brief Установка функции вывода ASN.1 по умолчанию (используется стандартный файловый вывод) */   
+/*! \brief Установка функции вывода ASN.1 по умолчанию (используется стандартный файловый вывод) */
  dll_export int ak_asn1_unset_print_function( void );
 
 /* ----------------------------------------------------------------------------------------------- */
@@ -1976,7 +1976,7 @@ extern "C" {
 /* ----------------------------------------------------------------------------------------------- */
 /*! \brief Инициализация контекста секретного ключа алгоритма ГОСТ Р 34.10-2012. */
  dll_export int ak_signkey_create( ak_signkey , const ak_wcurve );
-/*! \brief Инициализация контекста секретного ключа алгоритма ГОСТ Р 34.10-2012 с указанием имени 
+/*! \brief Инициализация контекста секретного ключа алгоритма ГОСТ Р 34.10-2012 с указанием имени
    эллиптической кривой. */
  dll_export int ak_signkey_create_str( ak_signkey , const char * );
 /*! \brief Инициализация контекста секретного ключа алгоритма ГОСТ Р 34.10-2012
@@ -2284,7 +2284,7 @@ extern "C" {
  dll_export int ak_certificate_set_repository( const char * );
 /*! \brief Функция возвращает указатель на установленный каталог с расположением
     хранилища сертификатов */
- dll_export const char *ak_certificate_get_repository( void ); 
+ dll_export const char *ak_certificate_get_repository( void );
 /*! \brief Функция освобождает контекст сертификата открытого ключа. */
  dll_export int ak_certificate_destroy( ak_certificate );
 
@@ -2477,7 +2477,7 @@ extern "C" {
  dll_export int ak_decrypt_file( const char * , const char * , const size_t ,
                                                              const char * , char * , const size_t );
 /*! \brief Расшифрование указанного файла */
- dll_export int ak_decrypt_file_with_key( const char * , ak_skey , 
+ dll_export int ak_decrypt_file_with_key( const char * , ak_skey ,
                                                             const char * , char * , const size_t  );
 /** @}*/
 

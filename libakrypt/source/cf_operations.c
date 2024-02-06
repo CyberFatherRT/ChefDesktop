@@ -1,5 +1,6 @@
 #include <libakrypt-base.h>
 #include <libakrypt.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -16,21 +17,9 @@ typedef enum {
     m_cfb,
 } Mode;
 
-typedef struct {
-    char* algorithm;
-    Mode mode;
-    ak_uint8* key;
-    ak_uint8* iv;
-} Config;
-
-
-int akrypt_encrypt(const Config* config, char* input, char* output) {
+int akrypt_encrypt(char* algorithm, char* input, char* output, ak_uint8 *key, ak_uint8 *iv, Mode mode) {
 
     struct bckey ctx;
-    ak_uint8* key = config->key;
-    ak_uint8* iv = config->iv;
-    char* algorithm = config->algorithm;
-    Mode mode = config->mode;
 
     int error = ak_error_ok;
     int exitstatus = EXIT_FAILURE;
@@ -39,11 +28,9 @@ int akrypt_encrypt(const Config* config, char* input, char* output) {
         return ak_libakrypt_destroy();
     }
 
-    ak_libakrypt_set_openssl_compability(ak_false);
-
-    if (strcmp(algorithm, "kuznechik")) {
+    if (strcmp(algorithm, "kuznechik") == 0) {
         ak_bckey_create_kuznechik(&ctx);
-    } else if (strcmp(algorithm, "magma")) {
+    } else if (strcmp(algorithm, "magma") == 0) {
         ak_bckey_create_magma(&ctx);
     } else {
         char* err_msg = (char *)malloc((20 + strlen(algorithm)) * sizeof(char));
@@ -53,27 +40,29 @@ int akrypt_encrypt(const Config* config, char* input, char* output) {
         return -1;
     }
 
-    ak_bckey_set_key(&ctx, key, sizeof(key));
+    ak_bckey_set_key(&ctx, key, 32);
 
     switch (mode) {
 
         case m_cbc:
-            error = ak_bckey_encrypt_cbc(&ctx, input, output, sizeof(input), iv, sizeof(iv));
+            error = ak_bckey_encrypt_cbc(&ctx, input, output, strlen(input), iv, sizeof(iv));
             if (error != ak_error_ok) goto exlab;
             break;
         case m_ctr:
-            error = ak_bckey_ctr(&ctx, input, output, sizeof(input), iv, sizeof(iv));
+            error = ak_bckey_ctr(&ctx, input, output, strlen(input), iv, sizeof(iv));
             if (error != ak_error_ok) goto exlab;
             break;
         case m_ofb:
-            error = ak_bckey_ofb(&ctx, input, output, sizeof(input), iv, sizeof(iv));
+            error = ak_bckey_ofb(&ctx, input, output, 13, iv, sizeof(iv));
             if (error != ak_error_ok) goto exlab;
             break;
         case m_cfb:
-            error = ak_bckey_encrypt_cfb(&ctx, input, output, sizeof(input), iv, sizeof(iv));
+            error = ak_bckey_encrypt_cfb(&ctx, input, output, strlen(input), iv, sizeof(iv));
             if (error != ak_error_ok) goto exlab;
             break;
     }
+
+    sprintf(output, "%s", ak_ptr_to_hexstr(output, 13, ak_false));
 
 exlab: ak_bckey_destroy(&ctx);
 
