@@ -15,16 +15,37 @@ typedef enum {
     m_ctr,
     m_ofb,
     m_cfb,
+    m_ecb,
 } Mode;
 
-int akrypt_encrypt(char* algorithm, char* input, char* output, ak_uint8 *key, ak_uint8 *iv, Mode mode) {
+typedef struct {
+    char* algorithm;
+    char* input;
+    char* output;
+    ak_uint8 *key;
+    size_t key_size;
+    ak_uint8 *iv;
+    size_t iv_size;
+    Mode mode;
+} Config;
+
+int akrypt_encrypt(Config* config) {
 
     struct bckey ctx;
+
+    char* algorithm = config->algorithm;
+    char* output = config->output;
+    char* input = config->input;
+    ak_uint8 *key = config->key;
+    size_t key_size = config->key_size;
+    ak_uint8 *iv = config->iv;
+    size_t iv_size = config->iv_size;
+    Mode mode = config->mode;
 
     int error = ak_error_ok;
     int exitstatus = EXIT_FAILURE;
 
-    if (!ak_libakrypt_create(ak_function_log_syslog)) {
+    if (!ak_libakrypt_create(ak_function_log_stderr)) {
         return ak_libakrypt_destroy();
     }
 
@@ -40,29 +61,32 @@ int akrypt_encrypt(char* algorithm, char* input, char* output, ak_uint8 *key, ak
         return -1;
     }
 
-    ak_bckey_set_key(&ctx, key, 32);
+    ak_bckey_set_key(&ctx, key, key_size);
 
     switch (mode) {
-
         case m_cbc:
-            error = ak_bckey_encrypt_cbc(&ctx, input, output, strlen(input), iv, sizeof(iv));
+            error = ak_bckey_encrypt_cbc(&ctx, input, output, strlen(input), iv, iv_size);
             if (error != ak_error_ok) goto exlab;
             break;
         case m_ctr:
-            error = ak_bckey_ctr(&ctx, input, output, strlen(input), iv, sizeof(iv));
+            error = ak_bckey_ctr(&ctx, input, output, strlen(input), iv, iv_size);
             if (error != ak_error_ok) goto exlab;
             break;
         case m_ofb:
-            error = ak_bckey_ofb(&ctx, input, output, 13, iv, sizeof(iv));
+            error = ak_bckey_ofb(&ctx, input, input, strlen(input), iv, iv_size);
             if (error != ak_error_ok) goto exlab;
             break;
         case m_cfb:
-            error = ak_bckey_encrypt_cfb(&ctx, input, output, strlen(input), iv, sizeof(iv));
+            error = ak_bckey_encrypt_cfb(&ctx, input, output, strlen(input), iv, iv_size);
+            if (error != ak_error_ok) goto exlab;
+            break;
+        case m_ecb:
+            error = ak_bckey_encrypt_ecb(&ctx, input, output, strlen(input));
             if (error != ak_error_ok) goto exlab;
             break;
     }
 
-    sprintf(output, "%s", ak_ptr_to_hexstr(output, 13, ak_false));
+    sprintf(output, "%s", ak_ptr_to_hexstr(input, strlen(input), ak_false));
 
 exlab: ak_bckey_destroy(&ctx);
 

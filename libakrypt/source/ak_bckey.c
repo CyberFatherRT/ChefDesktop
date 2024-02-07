@@ -556,7 +556,7 @@
                                                        выделенной под переменную ivector */
      memcpy( bkey->ivector + halfsize*((unsigned int)(1-oc)), iv, ak_min( halfsize, iv_size ));
 
-    /* поднимаем значение флага: синхропосылка установлена */ 
+    /* поднимаем значение флага: синхропосылка установлена */
      bkey->key.flags = ( bkey->key.flags&( ~key_flag_not_ctr ));
     }
 
