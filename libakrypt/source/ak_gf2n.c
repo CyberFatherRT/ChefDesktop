@@ -313,9 +313,9 @@
 
   __m128i cm = _mm_clmulepi64_si128( xm, ym, 0x00 );
   __m128i cx = _mm_set_epi64x( 0, cm[1] );
-  
+
   xm = _mm_clmulepi64_si128( cx, gm, 0x00 ); xm[1] ^= cx[0];
-  ym = _mm_set_epi64x( 0, xm[1] );  
+  ym = _mm_set_epi64x( 0, xm[1] );
   xm = _mm_clmulepi64_si128( ym, gm, 0x00 );
 
   ((ak_uint64 *)z)[0] = cm[0]^xm[0];

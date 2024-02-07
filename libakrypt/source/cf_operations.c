@@ -29,7 +29,7 @@ typedef struct {
     Mode mode;
 } Config;
 
-int akrypt_encrypt(Config* config) {
+int akrypt_encrypt(const Config* config) {
 
     struct bckey ctx;
 
@@ -45,16 +45,22 @@ int akrypt_encrypt(Config* config) {
     int error = ak_error_ok;
     int exitstatus = EXIT_FAILURE;
 
+    printf("algorithm: %s\n", algorithm);
+    printf("input: %s\n", input);
+    printf("key: %s\n", ak_ptr_to_hexstr(key, key_size, ak_false));
+    printf("iv: %s\n", ak_ptr_to_hexstr(iv, iv_size, ak_false));
+
+
     if (!ak_libakrypt_create(ak_function_log_stderr)) {
         return ak_libakrypt_destroy();
     }
 
-    if (strcmp(algorithm, "kuznechik") == 0) {
+    if (strcmp(algorithm, "kuznyechik") == 0) {
         ak_bckey_create_kuznechik(&ctx);
     } else if (strcmp(algorithm, "magma") == 0) {
         ak_bckey_create_magma(&ctx);
     } else {
-        char* err_msg = (char *)malloc((20 + strlen(algorithm)) * sizeof(char));
+        char* err_msg = malloc((20 + strlen(algorithm)) * sizeof(char));
         sprintf(err_msg, "Unknown algorithm: %s", algorithm);
         ak_log_set_message(err_msg);
         free(err_msg);
@@ -86,6 +92,7 @@ int akrypt_encrypt(Config* config) {
             break;
     }
 
+
     sprintf(output, "%s", ak_ptr_to_hexstr(output, strlen(input), ak_false));
 
 exlab: ak_bckey_destroy(&ctx);
@@ -97,7 +104,8 @@ exlab: ak_bckey_destroy(&ctx);
     return exitstatus;
 }
 
-int akrypt_decrypt(Config* config) {
+
+int akrypt_decrypt(const Config* config) {
 
     struct bckey ctx;
 
@@ -117,12 +125,12 @@ int akrypt_decrypt(Config* config) {
         return ak_libakrypt_destroy();
     }
 
-    if (strcmp(algorithm, "kuznechik") == 0) {
+    if (strcmp(algorithm, "kuznyechik") == 0) {
         ak_bckey_create_kuznechik(&ctx);
     } else if (strcmp(algorithm, "magma") == 0) {
         ak_bckey_create_magma(&ctx);
     } else {
-        char* err_msg = (char *)malloc((20 + strlen(algorithm)) * sizeof(char));
+        char* err_msg = malloc((20 + strlen(algorithm)) * sizeof(char));
         sprintf(err_msg, "Unknown algorithm: %s", algorithm);
         ak_log_set_message(err_msg);
         free(err_msg);
@@ -134,27 +142,22 @@ int akrypt_decrypt(Config* config) {
     switch (mode) {
         case m_cbc:
             error = ak_bckey_decrypt_cbc(&ctx, input, output, strlen(input), iv, iv_size);
-            if (error != ak_error_ok) goto exlab;
             break;
         case m_ctr:
             error = ak_bckey_ctr(&ctx, input, output, strlen(input), iv, iv_size);
-            if (error != ak_error_ok) goto exlab;
             break;
         case m_ofb:
             error = ak_bckey_ofb(&ctx, input, output, strlen(input), iv, iv_size);
-            if (error != ak_error_ok) goto exlab;
             break;
         case m_cfb:
             error = ak_bckey_decrypt_cfb(&ctx, input, output, strlen(input), iv, iv_size);
-            if (error != ak_error_ok) goto exlab;
             break;
         case m_ecb:
             error = ak_bckey_decrypt_ecb(&ctx, input, output, strlen(input));
-            if (error != ak_error_ok) goto exlab;
             break;
     }
 
-exlab: ak_bckey_destroy(&ctx);
+    ak_bckey_destroy(&ctx);
 
     if (error == ak_error_ok) exitstatus = EXIT_SUCCESS;
 
