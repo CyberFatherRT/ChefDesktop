@@ -3,8 +3,7 @@ use base64::{alphabet, engine, Engine};
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    create_info_struct, create_me_daddy, create_tauri_wrapper,
-    run_operations, Operation, DOCS_URL,
+    create_info_struct, create_me_daddy, create_tauri_wrapper, run_operations, Operation, DOCS_URL,
 };
 
 create_tauri_wrapper!(to_base64, ToBase64);
@@ -14,7 +13,9 @@ impl Operation<'_, DeserializeMeDaddy> for ToBase64 {
         let request = self.validate(request)?;
         let (input, alphabet) = (request.input, request.params.alphabet);
 
-        let alphabet = alphabet.unwrap_or("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".to_string());
+        let alphabet = alphabet.unwrap_or(
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".to_string(),
+        );
         let alphabet = alphabet::Alphabet::new(&alphabet)?;
 
         let config = engine::GeneralPurposeConfig::new()

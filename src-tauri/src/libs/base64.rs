@@ -72,7 +72,6 @@ pub fn from_base64(
                 }
             }
         }
-
     }
 
     if alphabet_length == 65 {

@@ -22,6 +22,7 @@ pub mod filter_mod;
 pub mod from_base64_mod;
 pub mod from_base_mod;
 pub mod hmac_mod;
+pub mod kuznechik_decrypt_mod;
 pub mod kuznechik_encrypt_mod;
 pub mod md2_mod;
 pub mod md4_mod;

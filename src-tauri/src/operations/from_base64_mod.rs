@@ -2,8 +2,7 @@ use base64::{alphabet, engine, Engine};
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    create_info_struct, create_me_daddy, create_tauri_wrapper,
-    run_operations, Operation, DOCS_URL,
+    create_info_struct, create_me_daddy, create_tauri_wrapper, run_operations, Operation, DOCS_URL,
 };
 use anyhow::Result;
 create_tauri_wrapper!(from_base64, FromBase64);
@@ -11,12 +10,22 @@ create_tauri_wrapper!(from_base64, FromBase64);
 impl Operation<'_, DeserializeMeDaddy> for FromBase64 {
     fn do_black_magic(&self, request: &str) -> Result<String> {
         let request = self.validate(request)?;
-        let (mut input, Params { alphabet, remove_non_alphabetic_chars, strict_mode } ) = (request.input, request.params);
+        let (
+            mut input,
+            Params {
+                alphabet,
+                remove_non_alphabetic_chars,
+                strict_mode,
+            },
+        ) = (request.input, request.params);
 
         let alphabet = alphabet::Alphabet::new(&alphabet)?;
 
         if remove_non_alphabetic_chars {
-            input = input.chars().filter(|&x| alphabet.as_str().contains(x)).collect();
+            input = input
+                .chars()
+                .filter(|&x| alphabet.as_str().contains(x))
+                .collect();
         }
 
         let config = engine::GeneralPurposeConfig::new()

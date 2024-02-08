@@ -194,7 +194,10 @@ pub fn to_hex(data: &[u8]) -> String {
 }
 
 pub fn from_hex(data: &str) -> Result<Vec<u8>> {
-    Ok(hex::decode(format!("{data:0>fill$}", fill = data.len() + data.len() % 2))?)
+    Ok(hex::decode(format!(
+        "{data:0>fill$}",
+        fill = data.len() + data.len() % 2
+    ))?)
 }
 
 pub fn _from_decimal(data: &str, delim: Option<&str>) -> Result<Vec<usize>, String> {
@@ -244,20 +247,20 @@ pub fn get_index_by_char(text: &str, ch: char) -> usize {
 
 pub fn char_repr(token: &str) -> &str {
     map!("Space" => " ",
-        "Percent" => "%",
-        "Comma" => ",",
-        "Semi-colon" => ";",
-        "Colon" => ":",
-        "Tab" => "\t",
-        "Line feed" => "\n",
-        "CRLF" => "\r\n",
-        "Forward slash" => "/",
-        "Backslash" => "\\",
-        "0x" => "0x",
-        "\\x" => "\\x",
-        "Nothing (separate chars)" => "",
-        "None" => ""
-        )
+    "Percent" => "%",
+    "Comma" => ",",
+    "Semi-colon" => ";",
+    "Colon" => ":",
+    "Tab" => "\t",
+    "Line feed" => "\n",
+    "CRLF" => "\r\n",
+    "Forward slash" => "/",
+    "Backslash" => "\\",
+    "0x" => "0x",
+    "\\x" => "\\x",
+    "Nothing (separate chars)" => "",
+    "None" => ""
+    )
     .get(token)
     .unwrap_or(&" ")
 }

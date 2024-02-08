@@ -6,4 +6,3 @@ pub mod bitwise_op;
 pub mod ciphers;
 
 pub mod libakrypt;
-

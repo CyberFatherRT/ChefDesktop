@@ -1,6 +1,6 @@
 use std::ffi::{c_char, CString};
 
-use anyhow::{bail, Result, Context};
+use anyhow::{bail, Context, Result};
 use base64::Engine;
 
 use super::structs::{
@@ -65,8 +65,7 @@ impl Akrypt {
                 let output = hex::decode(format!(
                     "{output:0>fill$}",
                     fill = output.len() + output.len() % 2
-                ))
-                .unwrap();
+                ))?;
                 Akrypt::to_base64(&output)
             }
         };
@@ -74,7 +73,7 @@ impl Akrypt {
         Ok(output)
     }
 
-    pub fn decrypt(&mut self) -> Result<String> {
+    pub fn decrypt(&self) -> Result<String> {
         let output = vec![0; self.input.to_bytes().len()];
 
         let config = Config::new(
@@ -116,7 +115,6 @@ impl Akrypt {
             AkryptFunction::Kuznechik => Akrypt::pad(&input, 32),
             AkryptFunction::Magma => Akrypt::pad(&input, 16),
         };
-
 
         Ok(Self {
             input: CString::new(input)?,

@@ -1,4 +1,4 @@
-use std::ffi::{c_int, c_char, c_uchar};
+use std::ffi::{c_char, c_int, c_uchar};
 
 use serde::Deserialize;
 
@@ -72,4 +72,3 @@ extern "C" {
     pub fn akrypt_encrypt(config: *const Config) -> c_int;
     pub fn akrypt_decrypt(config: *const Config) -> c_int;
 }
-
