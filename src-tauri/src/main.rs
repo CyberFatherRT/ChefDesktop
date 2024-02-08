@@ -5,20 +5,9 @@
 
 use chef_desktop::*;
 
-#[link(name = "akrypt", kind = "static")]
-extern "C" {
-    fn foo() -> i32;
-}
-
-#[tauri::command]
-fn rust_foo() -> i32 {
-    unsafe { foo() }
-}
-
 fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
-            rust_foo,
             a1z26_cipher_decode,
             a1z26_cipher_encode,
             add_line_number,
