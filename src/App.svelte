@@ -7,12 +7,6 @@
     import { gsd } from "./lib/core/runOperations";
     import { invoke } from "@tauri-apps/api";
 
-    onMount(async () => {
-        await invoke("rust_foo");
-        gsd();
-    });
-
-
 </script>
 
 

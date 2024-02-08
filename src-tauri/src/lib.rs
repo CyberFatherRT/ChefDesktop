@@ -22,7 +22,7 @@ where
 {
     fn do_black_magic(&self, request: &str) -> Result<String>;
     fn validate(&self, request: &'a str) -> Result<I> {
-        Ok(self.deserialize(request)?)
+        self.deserialize(request)
     }
 
     fn deserialize(&self, request: &'a str) -> Result<I> {

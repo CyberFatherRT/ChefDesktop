@@ -13,8 +13,10 @@ edition = "2021"
 tauri-build = { version = "1.5.1", features = [] }
 
 [dependencies]
-bcrypt = "0.15.0"
+anyhow = "1.0.79"
+base64 = "0.21.7"
 blake2 = "0.9.1"
+bcrypt = "0.15.0"
 digest = { version = "0.10.7", features = ["mac"] }
 md-5 = "0.10.5"
 md2 =  "0.10.2"
@@ -38,8 +40,6 @@ tauri = { version = "1.5.4", features = [ "clipboard-write-text", "clipboard-rea
 fix-path-env = { git = "https://github.com/tauri-apps/fix-path-env-rs" }
 lazy_static = "1.4.0"
 scrypt = "0.11.0"
-anyhow = "1.0.79"
-base64 = "0.21.7"
 hex = "0.4.3"
 libc = "0.2.153"
 

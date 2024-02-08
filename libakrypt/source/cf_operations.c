@@ -45,12 +45,6 @@ int akrypt_encrypt(const Config* config) {
     int error = ak_error_ok;
     int exitstatus = EXIT_FAILURE;
 
-    printf("algorithm: %s\n", algorithm);
-    printf("input: %s\n", input);
-    printf("key: %s\n", ak_ptr_to_hexstr(key, key_size, ak_false));
-    printf("iv: %s\n", ak_ptr_to_hexstr(iv, iv_size, ak_false));
-
-
     if (!ak_libakrypt_create(ak_function_log_stderr)) {
         return ak_libakrypt_destroy();
     }
@@ -64,7 +58,7 @@ int akrypt_encrypt(const Config* config) {
         sprintf(err_msg, "Unknown algorithm: %s", algorithm);
         ak_log_set_message(err_msg);
         free(err_msg);
-        return -1;
+        return 1;
     }
 
     ak_bckey_set_key(&ctx, key, key_size);
@@ -93,7 +87,7 @@ int akrypt_encrypt(const Config* config) {
     }
 
 
-    sprintf(output, "%s", ak_ptr_to_hexstr(output, strlen(input), ak_false));
+    strcpy(output, ak_ptr_to_hexstr(output, strlen(input), ak_false));
 
 exlab: ak_bckey_destroy(&ctx);
 

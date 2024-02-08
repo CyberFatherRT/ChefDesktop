@@ -20,7 +20,7 @@ impl Operation<'_, DeserializeMeDaddy> for AffineCipherEncode {
             request.params.b as i16,
         );
 
-        Ok(ace(&input, lang, a, b)?)
+        ace(&input, lang, a, b)
     }
 }
 
