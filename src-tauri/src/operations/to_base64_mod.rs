@@ -27,7 +27,7 @@ impl Operation<'_, DeserializeMeDaddy> for ToBase64 {
 }
 
 #[derive(Deserialize)]
-pub struct Params {
+struct Params {
     alphabet: Option<String>,
 }
 
