@@ -1,5 +1,7 @@
 use std::ffi::{c_int, c_char, c_uchar};
 
+use serde::Deserialize;
+
 #[allow(non_camel_case_types)]
 pub type ak_uint8 = c_uchar;
 
@@ -38,7 +40,7 @@ impl Config {
 }
 
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Deserialize, Copy, Clone)]
 #[allow(clippy::upper_case_acronyms)]
 pub enum Mode {
     CBC,
@@ -48,6 +50,7 @@ pub enum Mode {
     ECB,
 }
 
+#[derive(Deserialize)]
 pub enum OutputFormat {
     Hex,
     Base64,
@@ -58,6 +61,7 @@ pub enum AkryptFunction {
     Magma,
 }
 
+#[derive(Deserialize)]
 pub enum InputFormat {
     Hex,
     Base64,

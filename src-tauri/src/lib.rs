@@ -81,12 +81,4 @@ pub enum Operations {
     VigenereCipherEncode,
 }
 
-#[derive(Serialize)]
-#[serde(rename_all = "lowercase")]
-pub enum OutputFormat {
-    Hex(String),
-    Base64(String),
-    Uint8Array(Vec<u8>),
-}
-
 pub const DOCS_URL: &str = "soon I transfer all documentation to somewhere :/";
