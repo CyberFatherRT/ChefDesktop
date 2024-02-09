@@ -36,7 +36,7 @@ impl Operation<'_, DeserializeMeDaddy> for KuznechikEncrypt {
 }
 
 #[derive(Deserialize)]
-pub struct Params {
+struct Params {
     key: String,
     iv: String,
     mode: Mode,

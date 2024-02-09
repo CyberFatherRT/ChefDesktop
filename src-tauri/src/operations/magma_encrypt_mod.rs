@@ -9,9 +9,9 @@ use crate::{
 use anyhow::Result;
 use serde::Deserialize;
 
-create_tauri_wrapper!(kuznechik_decrypt, KuznechikDecrypt);
+create_tauri_wrapper!(magma_encrypt, MagmaEncrypt);
 
-impl Operation<'_, DeserializeMeDaddy> for KuznechikDecrypt {
+impl Operation<'_, DeserializeMeDaddy> for MagmaEncrypt {
     fn do_black_magic(&self, request: &str) -> Result<String> {
         let request = self.validate(request)?;
         let (
@@ -21,17 +21,17 @@ impl Operation<'_, DeserializeMeDaddy> for KuznechikDecrypt {
                 iv,
                 mode,
                 input_format,
-                ..
+                output_format,
             },
         ) = (request.input, request.params);
 
-        let akrypt = Akrypt::new(AkryptFunction::Kuznechik)
+        let akrypt = Akrypt::new(AkryptFunction::Magma)
             .set_input(&input, input_format)?
             .set_iv(iv.as_bytes())?
             .set_key(key.as_bytes())?
             .set_mode(mode);
 
-        akrypt.decrypt()
+        akrypt.encrypt(output_format)
     }
 }
 
@@ -41,9 +41,9 @@ struct Params {
     iv: String,
     mode: Mode,
     input_format: InputFormat,
-    _output_format: Option<OutputFormat>,
+    output_format: OutputFormat,
 }
 
 create_me_daddy!();
 
-pub struct KuznechikDecrypt;
+pub struct MagmaEncrypt;

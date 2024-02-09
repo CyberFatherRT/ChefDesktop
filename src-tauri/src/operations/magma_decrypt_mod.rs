@@ -9,9 +9,9 @@ use crate::{
 use anyhow::Result;
 use serde::Deserialize;
 
-create_tauri_wrapper!(kuznechik_decrypt, KuznechikDecrypt);
+create_tauri_wrapper!(magma_decrypt, MagmaDecrypt);
 
-impl Operation<'_, DeserializeMeDaddy> for KuznechikDecrypt {
+impl Operation<'_, DeserializeMeDaddy> for MagmaDecrypt {
     fn do_black_magic(&self, request: &str) -> Result<String> {
         let request = self.validate(request)?;
         let (
@@ -46,4 +46,4 @@ struct Params {
 
 create_me_daddy!();
 
-pub struct KuznechikDecrypt;
+pub struct MagmaDecrypt;
