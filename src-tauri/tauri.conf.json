@@ -44,8 +44,8 @@
                 "title": "ChefDesktop",
                 "width": 1920,
                 "height": 1080,
-                "minWidth": 1000,
-                "minHeight": 500,
+                "minWidth": 1200,
+                "minHeight": 600,
                 "fileDropEnabled": false
             }
         ]
