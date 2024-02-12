@@ -1,8 +1,12 @@
 use crate::{libs::base64::from_base64, map, regex_check};
 use anyhow::{anyhow, bail, Result};
+use lazy_static::lazy_static;
 use num::{Integer, ToPrimitive};
 use serde::{Deserialize, Serialize};
-use std::fmt::{Debug, LowerHex};
+use std::{
+    collections::HashMap,
+    fmt::{Debug, LowerHex},
+};
 
 #[derive(Deserialize)]
 #[serde(rename_all = "lowercase")]
@@ -79,6 +83,25 @@ pub const RU_ALP_WITH_YO: (&str, &str, &str, &str, u8, &str) = (
     33,
     r"^[а-яА-ЯёЁ]+$",
 );
+
+lazy_static! {
+    static ref CHAR_REPR: HashMap<&'static str, &'static str> = map!("Space" => " ",
+        "Percent" => "%",
+        "Comma" => ",",
+        "Semi-colon" => ";",
+        "Colon" => ":",
+        "Tab" => "\t",
+        "Line feed" => "\n",
+        "CRLF" => "\r\n",
+        "Forward slash" => "/",
+        "Backslash" => "\\",
+        "0x" => "0x",
+        "\\x" => "\\x",
+        "Nothing (separate chars)" => "",
+        "None" => ""
+    );
+}
+
 pub const _NUM: (&str, &str) = ("0123456789", r"^\+?(0|[1-9]\d*)$");
 
 pub fn expand_alphabet_range(alphabet: &str) -> Vec<char> {
@@ -246,23 +269,7 @@ pub fn get_index_by_char(text: &str, ch: char) -> usize {
 }
 
 pub fn char_repr(token: &str) -> &str {
-    map!("Space" => " ",
-    "Percent" => "%",
-    "Comma" => ",",
-    "Semi-colon" => ";",
-    "Colon" => ":",
-    "Tab" => "\t",
-    "Line feed" => "\n",
-    "CRLF" => "\r\n",
-    "Forward slash" => "/",
-    "Backslash" => "\\",
-    "0x" => "0x",
-    "\\x" => "\\x",
-    "Nothing (separate chars)" => "",
-    "None" => ""
-    )
-    .get(token)
-    .unwrap_or(&" ")
+    CHAR_REPR.get(token).unwrap_or(&" ")
 }
 
 pub fn chr<T: ToPrimitive>(code: T) -> char {
