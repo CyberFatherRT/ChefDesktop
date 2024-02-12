@@ -14,8 +14,8 @@ export class Hmac implements Run {
     params = new Map([
         ["key", ""],
         ["key_format", KeyFormat.UTF8],
-        ["hash_function", HashFunctions.SHA384],
-        ["output_format", OutputFormats.Hex]
+        ["hash_function", HashFunctions.SHA256],
+        ["output_format", OutputFormats.Base64]
     ]);
 
 
