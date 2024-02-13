@@ -107,26 +107,25 @@
         margin-top: 1rem;
         flex-wrap: wrap;
         align-items: stretch;
-        row-gap: 0;
     }
 
     .enum-feild {
         background-color: var(--arg-background);
         display: flex;
-        border-top-left-radius: 0 !important;
+        border-top-left-radius: 0;
         border-top-right-radius: 4px;
         color: var(--rec-list-operation-font-color);
     }
 
-    .enum-feild select {
+    select {
         color: #6c757d;
-        background-color: var(--arg-background);
+        background-color: transparent;
         border: none;
         justify-items: center;
     }
 
     option {
-        background-color: var(--arg-background);
+        background-color: transparent;
     }
 
 </style>
