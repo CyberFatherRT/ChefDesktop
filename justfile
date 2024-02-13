@@ -3,21 +3,21 @@
     just --list
 
 @build: install
-    bun run tauri build
+    pnpm run tauri build
 
 @dev: install
-    bun run tauri dev
+    pnpm run tauri dev
 
 @update:
     cargo update --manifest-path src-tauri/Cargo.toml
-    bun update
+    pnpm update
 
 @check:
     cargo check --manifest-path src-tauri/Cargo.toml
-    bun check
+    pnpm check
 
 @install:
-    bun install
+    pnpm install
 
 @clean:
     cargo clean --manifest-path src-tauri/Cargo.toml
