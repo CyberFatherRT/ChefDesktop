@@ -47,7 +47,7 @@ impl Operation<'_, DeserializeMeDaddy> for RSAEncrypt {
                 };
                 pub_key.encrypt(&mut rng, padding, input.as_bytes())
             }
-            SupportedEncryptionSchemes::RSA_AES_PKCS1_V1_5 => {
+            SupportedEncryptionSchemes::RSA_PKCS1_V1_5 => {
                 pub_key.encrypt(&mut rng, Pkcs1v15Encrypt, input.as_bytes())
             }
         }?;
@@ -66,7 +66,7 @@ enum SupportedEncryptionSchemes {
     #[serde(rename = "oaep")]
     RSA_OAEP,
     #[serde(rename = "pkcs1_v15")]
-    RSA_AES_PKCS1_V1_5,
+    RSA_PKCS1_V1_5,
 }
 
 #[allow(non_camel_case_types)]

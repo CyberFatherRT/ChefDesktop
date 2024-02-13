@@ -5,6 +5,3 @@ rustflags = [
   "-Lnative=/home/cyberfather/.xwin/sdk/lib/um/x86_64",
   "-Lnative=/home/cyberfather/.xwin/sdk/lib/ucrt/x86_64"
 ]
-#
-# [build]
-# rustflags = ["-lmain"]

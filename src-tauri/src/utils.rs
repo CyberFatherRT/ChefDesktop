@@ -1,5 +1,5 @@
 use crate::{libs::base64::from_base64, map, regex_check};
-use anyhow::{anyhow, bail, Result};
+use anyhow::{bail, Result};
 use lazy_static::lazy_static;
 use num::{Integer, ToPrimitive};
 use serde::{Deserialize, Serialize};
@@ -26,18 +26,6 @@ pub enum SupportedFormats {
     HEX,
     BASE64,
     LATIN1,
-}
-
-#[derive(Eq, PartialEq, Debug)]
-pub enum DataRepresentation {
-    String(String),
-    ByteArray(Vec<u8>),
-}
-
-#[derive(Eq, PartialEq, Debug)]
-pub enum DataRepresentationInput {
-    String,
-    ByteArray,
 }
 
 #[derive(Deserialize, Debug)]
@@ -102,91 +90,11 @@ lazy_static! {
     );
 }
 
-pub const _NUM: (&str, &str) = ("0123456789", r"^\+?(0|[1-9]\d*)$");
-
-pub fn expand_alphabet_range(alphabet: &str) -> Vec<char> {
-    let mut result: Vec<char> = Vec::new();
-    let alphabet_length = alphabet.chars().count();
-    let mut i = 0;
-
-    while i < alphabet_length {
-        let by_index = get_char_by_index(alphabet, i);
-        if (i < alphabet_length - 2)
-            && (get_char_by_index(alphabet, i + 1) == '-')
-            && (by_index != '\\')
-        {
-            let (start, end) = (ord(by_index), ord(get_char_by_index(alphabet, i + 2)));
-
-            for j in start..=end {
-                result.push(chr(j));
-            }
-            i += 2;
-        } else if (i < alphabet_length - 2)
-            && (by_index == '\\')
-            && (get_char_by_index(alphabet, i + 1) == '-')
-        {
-            result.push('-');
-            i += 1;
-        } else {
-            result.push(by_index);
-        }
-        i += 1;
-    }
-
-    result
-}
-
-pub fn _str_to_array_buffer(string: &str) -> Vec<u32> {
-    if string.is_empty() {
-        return Vec::new();
-    }
-
-    let string_length = string.chars().count();
-    let mut result: Vec<u32> = vec![0; string_length];
-
-    for (idx, elem) in result.iter_mut().enumerate() {
-        *elem = ord(get_char_by_index(string, idx));
-    }
-
-    result
-}
-
-pub fn str_to_array_buffer_by_alphabet(string: &str, alphabet: &str) -> Vec<usize> {
-    if string.is_empty() {
-        return Vec::new();
-    }
-
-    let string_length = string.chars().count();
-    let mut result: Vec<usize> = vec![0; string_length];
-    for (idx, c) in string.chars().enumerate() {
-        result[idx] = get_index_by_char(alphabet, c);
-    }
-    result
-}
-
-pub fn _byte_array_to_string(byte_array: Vec<u8>) -> Result<String> {
-    Ok(String::from_utf8(byte_array)?)
-}
-
 pub fn convert_to_byte_array(string: &str, convert_type: &SupportedFormats) -> Result<Vec<u8>> {
     match convert_type {
         SupportedFormats::BINARY => from_binary(string, None, None),
         SupportedFormats::HEX => from_hex(string),
-        SupportedFormats::BASE64 => match from_base64(
-            string.to_string(),
-            "",
-            DataRepresentationInput::ByteArray,
-            true,
-            false,
-        ) {
-            Ok(data) => {
-                let DataRepresentation::ByteArray(data) = data else {
-                    unreachable!()
-                };
-                Ok(data)
-            }
-            Err(e) => Err(anyhow!(e)),
-        },
+        SupportedFormats::BASE64 => from_base64(string),
         SupportedFormats::UTF8 => Ok(string.as_bytes().to_vec()),
         SupportedFormats::LATIN1 => Ok(Vec::new()),
     }
@@ -221,17 +129,6 @@ pub fn from_hex(data: &str) -> Result<Vec<u8>> {
         "{data:0>fill$}",
         fill = data.len() + data.len() % 2
     ))?)
-}
-
-pub fn _from_decimal(data: &str, delim: Option<&str>) -> Result<Vec<usize>, String> {
-    let mut output = Vec::new();
-    for i in data.split(char_repr(delim.unwrap_or("Space"))) {
-        match i.parse::<usize>() {
-            Ok(data) => output.push(data),
-            Err(e) => return Err(e.to_string()),
-        }
-    }
-    Ok(output)
 }
 
 pub fn validate_lang(text: &str, lang: &SupportedLanguages) -> bool {
@@ -270,14 +167,6 @@ pub fn get_index_by_char(text: &str, ch: char) -> usize {
 
 pub fn char_repr(token: &str) -> &str {
     CHAR_REPR.get(token).unwrap_or(&" ")
-}
-
-pub fn chr<T: ToPrimitive>(code: T) -> char {
-    char::from_u32(code.to_u32().unwrap()).unwrap()
-}
-
-pub fn ord(chr: char) -> u32 {
-    chr as u32
 }
 
 pub fn update_step<T: Integer + Copy>(a: &mut T, old_a: &mut T, quotient: T) {

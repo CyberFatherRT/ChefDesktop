@@ -9,7 +9,7 @@ use crate::{
     create_info_struct, create_me_daddy, create_tauri_wrapper,
     libs::base64::{bytes_to_base64, from_base64},
     run_operations,
-    utils::{to_hex, DataRepresentation, DataRepresentationInput},
+    utils::to_hex,
     Operation, DOCS_URL,
 };
 
@@ -18,13 +18,17 @@ create_tauri_wrapper!(rsa_decrypt, RSADecrypt);
 impl Operation<'_, DeserializeMeDaddy> for RSADecrypt {
     fn do_black_magic(&self, request: &str) -> Result<String> {
         let request = self.validate(request)?;
-        let (input, pem_key, encrypted_scheme, message_digest_algorithm, output_format) = (
-            request.input,
-            request.params.private_key,
-            request.params.encrypted_scheme,
-            request.params.message_digest_algorithm,
-            request.params.output_format,
-        );
+
+        let (
+            input,
+            Params {
+                private_key,
+                encrypted_scheme,
+                message_digest_algorithm,
+                output_format,
+                input_format,
+            },
+        ) = (request.input, request.params);
 
         if matches!(encrypted_scheme, SupportedEncryptionSchemes::RSA_OAEP)
             && message_digest_algorithm.is_none()
@@ -32,13 +36,13 @@ impl Operation<'_, DeserializeMeDaddy> for RSADecrypt {
             bail!("RSA_OAEP must have message digest algorithm");
         }
 
-        let DataRepresentation::ByteArray(input) =
-            from_base64(input, "", DataRepresentationInput::ByteArray, false, false)?
-        else {
-            unreachable!()
+        let input = match input_format {
+            SupportedOutputFormat::Hex => hex::decode(input)?,
+            SupportedOutputFormat::Base64 => from_base64(&input)?,
+            SupportedOutputFormat::Raw => input.as_bytes().to_vec(),
         };
 
-        let pem_key: RsaPrivateKey = DecodeRsaPrivateKey::from_pkcs1_pem(&pem_key)?;
+        let pem_key: RsaPrivateKey = DecodeRsaPrivateKey::from_pkcs1_pem(&private_key)?;
 
         let encrypted_text = match encrypted_scheme {
             SupportedEncryptionSchemes::RSA_OAEP => {
@@ -63,9 +67,7 @@ impl Operation<'_, DeserializeMeDaddy> for RSADecrypt {
         Ok(match output_format {
             SupportedOutputFormat::Hex => to_hex(&encrypted_text),
             SupportedOutputFormat::Base64 => bytes_to_base64(&encrypted_text),
-            SupportedOutputFormat::Uint8Array => {
-                String::from_utf8_lossy(&encrypted_text).to_string()
-            }
+            SupportedOutputFormat::Raw => String::from_utf8_lossy(&encrypted_text).to_string(),
         })
     }
 }
@@ -99,7 +101,7 @@ enum SupportedMessageDigestAlgorithm {
 enum SupportedOutputFormat {
     Hex,
     Base64,
-    Uint8Array,
+    Raw,
 }
 
 #[derive(Deserialize)]
@@ -111,6 +113,7 @@ struct Params {
     #[serde(rename = "digest_alg")]
     message_digest_algorithm: Option<SupportedMessageDigestAlgorithm>,
     output_format: SupportedOutputFormat,
+    input_format: SupportedOutputFormat,
 }
 
 create_me_daddy!();

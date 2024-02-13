@@ -1,9 +1,6 @@
 use crate::{
-    create_info_struct, create_me_daddy, create_tauri_wrapper,
-    libs::base64::from_base64,
-    run_operations,
-    utils::{to_hex, DataRepresentation, DataRepresentationInput},
-    Operation, DOCS_URL,
+    create_info_struct, create_me_daddy, create_tauri_wrapper, libs::base64::from_base64,
+    run_operations, utils::to_hex, Operation, DOCS_URL,
 };
 use anyhow::{Error, Result};
 use argon2::{Config, ThreadMode, Variant, Version};
@@ -14,6 +11,8 @@ create_tauri_wrapper!(argon2, Argon2);
 impl Operation<'_, DeserializeMeDaddy> for Argon2 {
     fn do_black_magic(&self, request: &str) -> Result<String> {
         let request = self.validate(request)?;
+
+
 
         let (params, input) = (request.params, request.input);
         let (salt, variant, mem_cost, time_cost, lanes, hash_length) = (
@@ -47,20 +46,11 @@ impl Operation<'_, DeserializeMeDaddy> for Argon2 {
                     .nth(5)
                     .ok_or(Error::msg("Not valid argon2 hash"))?;
 
-                let data = match from_base64(
-                    raw_hash.to_string(),
-                    "",
-                    DataRepresentationInput::String,
-                    false,
-                    false,
-                ) {
-                    Ok(DataRepresentation::String(data)) => data,
-                    _ => unreachable!(),
-                };
+                let data = from_base64(raw_hash)?;
 
                 match format {
-                    OutputFormat::Hex => to_hex(data.as_bytes()),
-                    OutputFormat::Raw => data,
+                    OutputFormat::Hex => to_hex(&data),
+                    OutputFormat::Raw => String::from_utf8(data)?,
                     _ => unreachable!(),
                 }
             }
