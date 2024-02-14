@@ -1,4 +1,4 @@
-export interface Run {
+export interface Operation {
     name: string;
     op_name: string;
     module: Modules;
@@ -8,9 +8,11 @@ export interface Run {
     args: Arg[];
     params: Map<string, string>
     run(input: string): Promise<string>
+    is_disable: boolean,
+    is_breakpoint: boolean,
 }
 
-export type Arg = {
+export interface Arg {
     name: string,
     op_name: string,
     type: UserInputOptions,
@@ -20,6 +22,8 @@ export type Arg = {
         [key: string]: (input: CustomEvent) => void,
     },
 }
+
+
 
 export enum Modules {
     "Data Format",
