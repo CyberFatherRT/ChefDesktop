@@ -1,7 +1,7 @@
 use std::ffi::{c_char, CString};
 
 use anyhow::{bail, Context, Result};
-use base64::Engine;
+use crate::{libs::base64::{from_base64, to_base64}, utils::from_hex};
 
 use super::structs::{
     ak_uint8, akrypt_decrypt, akrypt_encrypt, AkryptFunction, Config, InputFormat, Mode,
@@ -54,20 +54,14 @@ impl Akrypt {
             bail!("Some error in C code");
         }
 
+        let output = String::from_utf8_lossy(&output)
+            .trim_end_matches('\0')
+            .to_string();
+
         let output = match format {
-            OutputFormat::Hex => String::from_utf8_lossy(&output)
-                .trim_end_matches(char::from(0))
-                .to_string(),
-            OutputFormat::Base64 => {
-                let output = String::from_utf8_lossy(&output)
-                    .trim_end_matches(char::from(0))
-                    .to_string();
-                let output = hex::decode(format!(
-                    "{output:0>fill$}",
-                    fill = output.len() + output.len() % 2
-                ))?;
-                Akrypt::to_base64(&output)
-            }
+            OutputFormat::Hex => output,
+            OutputFormat::Base64 => to_base64(&from_hex(&output)?),
+            OutputFormat::Raw => String::from_utf8_lossy(&from_hex(&output)?).to_string(),
         };
 
         Ok(output)
@@ -88,7 +82,7 @@ impl Akrypt {
             self.mode,
         );
 
-        let return_code = unsafe { akrypt_decrypt(&config as *const Config) };
+        let return_code = unsafe { akrypt_decrypt(config as *const Config) };
         if return_code != 0 {
             bail!("Some error in C code");
         }
@@ -107,7 +101,7 @@ impl Akrypt {
     pub fn set_input(self, input: &str, format: InputFormat) -> Result<Self> {
         let input = match format {
             InputFormat::Hex => hex::decode(input)?,
-            InputFormat::Base64 => Akrypt::from_base64(input)?,
+            InputFormat::Base64 => from_base64(input)?,
             InputFormat::Raw => input.as_bytes().to_vec(),
         };
 
@@ -155,25 +149,18 @@ impl Akrypt {
         ]
         .concat();
 
-        if output[output.len() - size..] == vec![padding as ak_uint8; padding] {
+        if output.len() != size && output[output.len() - size..] == vec![padding as ak_uint8; padding] {
             return output[..output.len() - size].to_vec();
         }
+
         output
     }
 
     fn unpad(input: &[ak_uint8]) -> Result<Vec<u8>> {
-        let last_byte = input.last().context("Value is empty")?;
-        if input[input.len() - *last_byte as usize..] == vec![*last_byte; *last_byte as usize] {
-            return Ok(input[..input.len() - *last_byte as usize].to_vec());
+        let last_byte = *input.last().context("Value is empty")? as usize;
+        if last_byte <= input.len() && input[input.len() - last_byte..] == vec![last_byte as u8; last_byte] {
+            return Ok(input[..input.len() - last_byte].to_vec());
         }
         Ok(input.to_vec())
-    }
-
-    fn from_base64(input: &str) -> Result<Vec<u8>> {
-        Ok(base64::prelude::BASE64_STANDARD.decode(input)?)
-    }
-
-    fn to_base64(input: &[u8]) -> String {
-        base64::prelude::BASE64_STANDARD.encode(input)
     }
 }

@@ -1,7 +1,7 @@
 use anyhow::Result;
 use base64::{engine::general_purpose, Engine};
 
-pub fn bytes_to_base64(data: &[u8]) -> String {
+pub fn to_base64(data: &[u8]) -> String {
     base64::prelude::BASE64_STANDARD.encode(data)
 }
 

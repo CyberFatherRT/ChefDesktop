@@ -7,14 +7,14 @@ pub type ak_uint8 = c_uchar;
 
 #[repr(C)]
 pub struct Config {
-    algorithm: *const c_char,
-    input: *mut c_char,
-    output: *mut c_char,
-    key: *const ak_uint8,
-    key_size: usize,
-    iv: *const ak_uint8,
-    iv_size: usize,
-    mode: Mode,
+    pub algorithm: *const c_char,
+    pub input: *mut c_char,
+    pub output: *mut c_char,
+    pub key: *const ak_uint8,
+    pub key_size: usize,
+    pub iv: *const ak_uint8,
+    pub iv_size: usize,
+    pub mode: Mode,
 }
 
 impl Config {
@@ -40,7 +40,7 @@ impl Config {
 }
 
 #[repr(C)]
-#[derive(Deserialize, Copy, Clone)]
+#[derive(Deserialize, Copy, Clone, Debug)]
 #[allow(clippy::upper_case_acronyms)]
 pub enum Mode {
     CBC,
@@ -50,22 +50,26 @@ pub enum Mode {
     ECB,
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Debug)]
+#[serde(rename_all = "lowercase")]
 pub enum OutputFormat {
     Hex,
     Base64,
+    Raw,
 }
 
-pub enum AkryptFunction {
-    Kuznechik,
-    Magma,
-}
-
-#[derive(Deserialize)]
+#[derive(Deserialize, Debug)]
+#[serde(rename_all = "lowercase")]
 pub enum InputFormat {
     Hex,
     Base64,
     Raw,
+}
+
+#[derive(Debug)]
+pub enum AkryptFunction {
+    Kuznechik,
+    Magma,
 }
 
 extern "C" {
