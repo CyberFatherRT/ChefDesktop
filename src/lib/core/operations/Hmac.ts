@@ -1,8 +1,8 @@
 import { invoke } from "@tauri-apps/api";
-import { Modules, UserInputOptions, type Run } from "../baseOperation";
+import { Modules, UserInputOptions, type Operation } from "../baseOperation";
 import { gsd } from "../runOperations";
 
-export class Hmac implements Run {
+export class Hmac implements Operation {
 
     name = "HMAC";
     op_name = "hmac";
@@ -18,6 +18,9 @@ export class Hmac implements Run {
         ["output_format", OutputFormats.Base64]
     ]);
 
+
+    is_disable = false;
+    is_breakpoint = false;
 
     // @ts-ignore
     args = [
@@ -62,12 +65,7 @@ export class Hmac implements Run {
     async run(input: string): Promise<string> {
         let request = {
             input,
-            params: {
-                key: this.params.get('key'),
-                key_format: this.params.get('key_format'),
-                hash_function: this.params.get('hash_function'),
-                output_format: this.params.get('output_format'),
-            }
+            params: Object.fromEntries(this.params)
         }
         return await invoke(this.op_name, { request: JSON.stringify(request) })
     }

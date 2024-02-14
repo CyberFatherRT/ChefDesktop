@@ -1,9 +1,18 @@
 <script lang="ts">
-    import { UserInputOptions, type Run } from "../../../core/baseOperation";
+    import { UserInputOptions, type Operation } from "../../../core/baseOperation";
     import InputWithType from "../../operations/utils/InputWithType.svelte";
 
-    export let operation: Run;
+    export let operation: Operation;
     export let id: string = "";
+
+    function disable() {
+        operation.is_disable != operation.is_disable
+    }
+
+    function breakpoint() {
+        operation.is_breakpoint != operation.is_breakpoint
+    }
+
 </script>
 
 <li {id} draggable="true" class="preview">
@@ -11,15 +20,14 @@
     <title>
         <p>{operation.name}</p>
         <div>
-            <button> <i class="material-icons">pause</i> </button>
-            <button> <i class="material-icons">not_interested</i> </button>
+            <button on:click={disable}> <i class="material-icons">pause</i> </button>
+            <button on:click={breakpoint}> <i class="material-icons">not_interested</i> </button>
         </div>
     </title>
 
     {#each operation.args as arg}
         {#if arg.type === UserInputOptions.inputWithType}
-        <InputWithType
-                id="4"
+        <InputWithType id="4"
                 on:getInput={arg.functions.input}
                 on:getEnumValue={arg.functions.enum}
                 type_enum={arg.value}

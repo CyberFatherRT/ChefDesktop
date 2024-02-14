@@ -3,11 +3,11 @@
 
     export let placeholder: string;
     export let type_enum: any;
-    export let enum_default: string;
+    export let enum_default: string | number | boolean;
     export let id: string;
 
     let input: string = "";
-    let selected_enum_value: string = enum_default.toUpperCase();
+    let selected_enum_value: string = (enum_default as string).toUpperCase();
 
     const dispatch = createEventDispatcher();
 
