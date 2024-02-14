@@ -13,7 +13,7 @@
     bun update
 
 @check:
-    cargo check --manifest-path src-tauri/Cargo.toml
+    cargo clippy --manifest-path src-tauri/Cargo.toml
     bun check
 
 @install:
