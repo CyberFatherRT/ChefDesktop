@@ -82,7 +82,7 @@ impl Akrypt {
             self.mode,
         );
 
-        let return_code = unsafe { akrypt_decrypt(config as *const Config) };
+        let return_code = unsafe { akrypt_decrypt(&config as *const Config) };
         if return_code != 0 {
             bail!("Some error in C code");
         }
