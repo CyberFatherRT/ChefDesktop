@@ -17,8 +17,8 @@ export class KuznechikDecrypt implements Operation {
         ["iv", ""],
         ["iv_format", Key_IV_Format.HEX],
         ["mode", Mode.CBC],
-        ["padding", Padding.NO],
         ["input_format", InputFormat.Hex],
+        ["padding", Padding.NO],
         ["output_format", OutputFormat.Raw],
     ]);
 

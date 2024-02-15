@@ -26,7 +26,6 @@
 </script>
 
 <div class="container">
-
     <div class="input-field">
         <label for={id}>{placeholder}</label>
         <input bind:value={input} on:input={getInput} {id} type="text">
@@ -39,7 +38,6 @@
             {/each}
         </select>
     </div>
-
 </div>
 
 <style>
