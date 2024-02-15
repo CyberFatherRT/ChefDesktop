@@ -22,7 +22,6 @@ export class KuznechikEncrypt implements Operation {
         ["output_format", OutputFormat.Hex],
     ]);
 
-
     is_disable = false;
     is_breakpoint = false;
 

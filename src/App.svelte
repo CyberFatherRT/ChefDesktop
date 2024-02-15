@@ -3,7 +3,6 @@
     import Operations from "./lib/web/components/main/OperationsList.svelte";
     import Recipe from "./lib/web/components/main/Recipe.svelte";
     import IO from "./lib/web/components/IO/IO.svelte";
-    import { invoke } from "@tauri-apps/api";
 </script>
 
 
