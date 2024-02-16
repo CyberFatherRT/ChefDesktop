@@ -1,43 +1,34 @@
 <script lang="ts">
-    import { createEventDispatcher } from "svelte";
+    import type { Arg } from "../../../core/baseOperation";
 
-    export let placeholder: string;
-    export let type_enum: any;
-    export let enum_default: string | number | boolean;
-    export let id: string;
+    export let arg: Arg;
 
+    let { name, default_value, value } = arg;
+
+    let id = Math.random().toString(36).substring(4);
     let input: string = "";
-    let selected_enum_value: string = (enum_default as string).toUpperCase();
+    let selected_enum_value: string = (default_value as string).toLowerCase();
 
-    const dispatch = createEventDispatcher();
-
-    function getInput() {
-        dispatch('getInput', {
-            value: input
-        })
-    }
-
-    function getEnumValue() {
-        dispatch('getEnumValue', {
-            value: type_enum[selected_enum_value]
-        })
-    }
+    const getInput = () => arg.functions.input(input);
+    const getEnumValue = () => arg.functions.enum(value[selected_enum_value]);
 
 </script>
 
 <div class="container">
+
     <div class="input-field">
-        <label for={id}>{placeholder}</label>
+        <label for={id}>{name}</label>
         <input bind:value={input} on:input={getInput} {id} type="text">
     </div>
 
     <div class="enum-feild">
-       <select bind:value={selected_enum_value} on:change={getEnumValue}>
-            {#each Object.keys(type_enum) as name}
-                <option value={name} selected={name.toLowerCase() === selected_enum_value}>{name}</option>
+       <select bind:value={selected_enum_value} on:change={getEnumValue} id={`select-${id}`}>
+            {#each Object.keys(value) as name}
+                <option value={name} selected={name.toLowerCase() == selected_enum_value}>{name}</option>
             {/each}
         </select>
     </div>
+
 </div>
 
 <style>

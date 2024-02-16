@@ -1,9 +1,9 @@
 import { get, writable, type Writable } from "svelte/store"
-import type { Operation } from "./baseOperation";
+import { BaseOperation } from "./baseOperation";
 
 export const input: Writable<string> = writable('');
 export const output: Writable<string> = writable('');
-export const operations: Writable<Operation[]> = writable([]);
+export const operations: Writable<BaseOperation[]> = writable([]);
 
 input.subscribe(async () => await gsd())
 operations.subscribe(async () => await gsd())

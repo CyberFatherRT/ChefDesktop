@@ -1,8 +1,6 @@
-import { invoke } from "@tauri-apps/api";
-import { Modules, UserInputOptions, type Operation } from "../baseOperation";
-import { gsd } from "../runOperations";
+import { Modules, UserInputOptions, BaseOperation } from "../baseOperation";
 
-export class KuznechikDecrypt implements Operation {
+export class KuznechikDecrypt extends BaseOperation {
 
     name = "Kuznechik Decrypt";
     op_name = "kuznechik_decrypt";
@@ -17,8 +15,8 @@ export class KuznechikDecrypt implements Operation {
         ["iv", ""],
         ["iv_format", Key_IV_Format.HEX],
         ["mode", Mode.CBC],
-        ["input_format", InputFormat.Hex],
         ["padding", Padding.NO],
+        ["input_format", InputFormat.Hex],
         ["output_format", OutputFormat.Raw],
     ]);
 
@@ -35,8 +33,8 @@ export class KuznechikDecrypt implements Operation {
             value: Key_IV_Format,
             default_value: Key_IV_Format.HEX,
             functions: {
-                input: (input: CustomEvent) => this.event_function(input, 'key'),
-                enum: (input: CustomEvent) => this.event_function(input, 'key_format'),
+                input: (input: string) => this.event_function(input, 'key'),
+                enum: (input: string) => this.event_function(input, 'key_format'),
             },
         },
         {
@@ -46,8 +44,8 @@ export class KuznechikDecrypt implements Operation {
             value: Key_IV_Format,
             default_value: Key_IV_Format.HEX,
             functions: {
-                input: (input: CustomEvent) => this.event_function(input, 'iv'),
-                enum: (input: CustomEvent) => this.event_function(input, 'iv_format'),
+                input: (input: string) => this.event_function(input, 'iv'),
+                enum: (input: string) => this.event_function(input, 'iv_format'),
             },
         },
         {
@@ -57,7 +55,7 @@ export class KuznechikDecrypt implements Operation {
             value: InputFormat,
             default: InputFormat.Raw,
             function: {
-                enum: (input: CustomEvent) => this.event_function(input, "input_format"),
+                enum: (input: string) => this.event_function(input, "input_format"),
             }
         },
         {
@@ -67,7 +65,7 @@ export class KuznechikDecrypt implements Operation {
             value: InputFormat,
             default: InputFormat.Hex,
             function: {
-                enum: (input: CustomEvent) => this.event_function(input, "output_format"),
+                enum: (input: string) => this.event_function(input, "output_format"),
             }
         },
         {
@@ -77,7 +75,7 @@ export class KuznechikDecrypt implements Operation {
             value: Mode,
             default_value: Mode.ECB,
             function: {
-                enum: (input: CustomEvent) => this.event_function(input, "mode"),
+                enum: (input: string) => this.event_function(input, "mode"),
             }
         },
         {
@@ -87,21 +85,10 @@ export class KuznechikDecrypt implements Operation {
             value: Padding,
             defualt_value: Padding.PKCS5,
             function: {
-                enum: (input: CustomEvent) => this.event_function(input, "padding"),
+                enum: (input: string) => this.event_function(input, "padding"),
             }
         }
     ]
-
-    event_function(input: CustomEvent, key: string) {
-        this.params.set(key, input.detail.value)
-        gsd()
-    }
-
-    async run(input: string): Promise<string> {
-        let request = { input, params: Object.fromEntries(this.params) }
-        console.log(request)
-        return await invoke(this.op_name, { request: JSON.stringify(request) })
-    }
 }
 
 enum OutputFormat {

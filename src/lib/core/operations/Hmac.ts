@@ -1,8 +1,6 @@
-import { invoke } from "@tauri-apps/api";
-import { Modules, UserInputOptions, type Operation } from "../baseOperation";
-import { gsd } from "../runOperations";
+import { Modules, UserInputOptions, BaseOperation } from "../baseOperation";
 
-export class Hmac implements Operation {
+export class Hmac extends BaseOperation {
 
     name = "HMAC";
     op_name = "hmac";
@@ -18,7 +16,6 @@ export class Hmac implements Operation {
         ["output_format", OutputFormats.Base64]
     ]);
 
-
     is_disable = false;
     is_breakpoint = false;
 
@@ -31,8 +28,8 @@ export class Hmac implements Operation {
             value: KeyFormat,
             default_value: KeyFormat.UTF8,
             functions: {
-                input: (input: CustomEvent) => this.event_function(input, 'key'),
-                enum: (input: CustomEvent) => this.event_function(input, 'key_format'),
+                input: (input: string) => this.event_function(input, 'key'),
+                enum: (input: string) => this.event_function(input, 'key_format'),
             },
         },
         {
@@ -42,7 +39,7 @@ export class Hmac implements Operation {
             value: HashFunctions,
             default_value: HashFunctions.SHA256,
             functions: {
-                enum: (input: CustomEvent) => this.event_function(input, 'hash_function'),
+                enum: (input: string) => this.event_function(input, 'hash_function'),
             }
         },
         {
@@ -52,23 +49,11 @@ export class Hmac implements Operation {
             value: OutputFormats,
             default_value: OutputFormats.Hex,
             functions: {
-                enum: (input: CustomEvent) => this.event_function(input, 'output_format'),
+                enum: (input: string) => this.event_function(input, 'output_format'),
             }
         }
     ]
 
-    event_function(input: CustomEvent, key: string) {
-        this.params.set(key, input.detail.value)
-        gsd()
-    }
-
-    async run(input: string): Promise<string> {
-        let request = {
-            input,
-            params: Object.fromEntries(this.params)
-        }
-        return await invoke(this.op_name, { request: JSON.stringify(request) })
-    }
 }
 
 enum OutputFormats {
