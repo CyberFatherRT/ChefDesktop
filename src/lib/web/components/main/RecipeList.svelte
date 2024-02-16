@@ -1,13 +1,12 @@
 <script lang="ts">
     import { get } from "svelte/store";
     import RecipeOperation from "./RecipeOperation.svelte";
-    import { KuznechikEncrypt, KuznechikDecrypt } from "../../../core/operations/Operations";
-    import type { Operation } from "../../../core/baseOperation";
+    import { KuznechikEncrypt, KuznechikDecrypt, Hmac } from "../../../core/operations/Operations";
+    import { BaseOperation } from "../../../core/baseOperation";
     import { operations } from "../../../core/runOperations";
 
     let foo = [
-        new KuznechikEncrypt() as Operation,
-        new KuznechikDecrypt() as Operation,
+        new Hmac() as BaseOperation,
     ];
 
     operations.set(foo);
@@ -15,8 +14,8 @@
 </script>
 
 <ul class="recipe-list">
-    {#each get(operations) as operation}
-        <RecipeOperation operation={operation}/>
+    {#each get(operations) as operation, id (id)}
+        <RecipeOperation id={id.toString()} operation={operation}/>
     {/each}
 </ul>
 

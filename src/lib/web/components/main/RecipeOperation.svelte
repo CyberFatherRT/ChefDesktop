@@ -1,17 +1,13 @@
 <script lang="ts">
-    import { UserInputOptions, type Operation } from "../../../core/baseOperation";
+    import { UserInputOptions, BaseOperation } from "../../../core/baseOperation";
+    import Enum from "../../operations/utils/Enum.svelte";
     import InputWithType from "../../operations/utils/InputWithType.svelte";
 
-    export let operation: Operation;
+    export let operation: BaseOperation;
     export let id: string = "";
 
-    function disable() {
-        operation.is_disable != operation.is_disable
-    }
-
-    function breakpoint() {
-        operation.is_breakpoint != operation.is_breakpoint
-    }
+    const disable = () => operation.is_disable != operation.is_disable;
+    const breakpoint = () => operation.is_breakpoint != operation.is_breakpoint;
 
 </script>
 
@@ -25,17 +21,15 @@
         </div>
     </title>
 
-    {#each operation.args as arg}
-        {#if arg.type === UserInputOptions.inputWithType}
-        <InputWithType id="4"
-                on:getInput={arg.functions.input}
-                on:getEnumValue={arg.functions.enum}
-                type_enum={arg.value}
-                enum_default={arg.default_value}
-                placeholder={arg.name}
-            />
-        {/if}
-    {/each}
+    <div class="arg-wrapper">
+        {#each operation.args as arg}
+            {#if arg.type === UserInputOptions.inputWithType}
+                <InputWithType {arg}/>
+            {:else if arg.type === UserInputOptions.enum}
+                <Enum {arg}/>
+            {/if}
+        {/each}
+    </div>
 
 </li>
 
@@ -45,6 +39,11 @@
         display: flex;
         justify-content: space-between;
         height: 39px;
+    }
+
+    .arg-wrapper {
+        display: flex;
+        flex: row;
     }
 
     i {

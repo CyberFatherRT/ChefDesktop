@@ -7,10 +7,10 @@
 
     let id = Math.random().toString(36).substring(4);
     let input: string = "";
-    let selected_enum_value: string = (default_value as string).toLowerCase();
+    let selected: string = (default_value as string).toLowerCase();
 
     const getInput = () => arg.functions.input(input);
-    const getEnumValue = () => arg.functions.enum(value[selected_enum_value]);
+    const getEnumValue = () => arg.functions.enum(value[selected]);
 
 </script>
 
@@ -22,9 +22,13 @@
     </div>
 
     <div class="enum-feild">
-       <select bind:value={selected_enum_value} on:change={getEnumValue} id={`select-${id}`}>
+       <select bind:value={selected} on:change={getEnumValue} id={`select-${id}`}>
             {#each Object.keys(value) as name}
-                <option value={name} selected={name.toLowerCase() == selected_enum_value}>{name}</option>
+                {#if value[name] == selected}
+                    <option value={name} selected>{name}</option>
+                {:else}
+                    <option value={name}>{name}</option>
+                {/if}
             {/each}
         </select>
     </div>
