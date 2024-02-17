@@ -9,7 +9,7 @@ export abstract class BaseOperation {
     russianDescription: string = "";
     infoURL: string | null = null;
     args: Arg[] = [];
-    params: Map<string, string> = new Map();
+    params: Map<string, string | number | boolean> = new Map();
     is_disable: boolean = false;
     is_breakpoint: boolean = false;
 
