@@ -4,9 +4,10 @@
     import { operations } from "../../../core/runOperations";
 
     let icons = {
-      "save": { description: "Save recipe" },
-      "folder": { description: "Open recipe"},
-      "delete": { description: "Delete recipe", func: () => operations.set([])}
+        "save": { description: "Save recipe" },
+        "folder": { description: "Open recipe"},
+        // @ts-ignore
+        "delete": { description: "Delete recipe", func: () => operations.set([])}
     }
 
 </script>

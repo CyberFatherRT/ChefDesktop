@@ -1,21 +1,18 @@
 <script lang="ts">
-    import { get } from "svelte/store";
-    import RecipeOperation from "./RecipeOperation.svelte";
-    import { KuznechikEncrypt, KuznechikDecrypt, Hmac } from "../../../core/operations/Operations";
-    import { BaseOperation } from "../../../core/baseOperation";
+    import type { BaseOperation } from "../../../core/baseOperation";
     import { operations } from "../../../core/runOperations";
+    import RecipeOperation from "./RecipeOperation.svelte";
 
-    let foo = [
-        new Hmac() as BaseOperation,
-    ];
+    let ingredients: [string, BaseOperation][] = [];
+    operations.subscribe(value => ingredients = value);
 
-    operations.set(foo);
+    console.log(ingredients);
 
 </script>
 
 <ul class="recipe-list">
-    {#each get(operations) as operation, id (id)}
-        <RecipeOperation id={id.toString()} operation={operation}/>
+    {#each ingredients as [name, operation], id (id)}
+        <RecipeOperation id={id.toString()} {name} {operation}/>
     {/each}
 </ul>
 

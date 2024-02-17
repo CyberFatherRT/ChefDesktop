@@ -1,38 +1,19 @@
 <script lang="ts">
     import Title from "../title/Title.svelte";
     import Operation from "./Operation.svelte";
+    import { operationList } from "../../../core/operations/Operations";
 
 	let search: string;
-    
-    type RecipeOperation = {
-        name: string
-        disabled: boolean,
-        breakpoint: boolean
-    }
-
-    let operations: RecipeOperation[] = [
-        {
-            name: "To Base64",
-            disabled: false,
-            breakpoint: false,
-        },
-        {
-            name: "HMAC",
-            disabled: false,
-            breakpoint: false
-        }
-    ];
-    
 </script>
 
 <div class="operations">
     <Title title="Operations"/>
     <div class="SearchBar">
-        <input bind:value={search} on:drop={(e) => e.preventDefault()} type="text" placeholder="Search..." />
+        <input bind:value={search} on:drop|preventDefault type="text" placeholder="Search..." />
     </div>
     <section class="operations-list">
-        {#each operations as operation_name}
-            <Operation name={operation_name.name} />
+        {#each Object.keys(operationList) as name}
+            <Operation {name}/>
         {/each}
     </section>
 </div>
@@ -54,7 +35,7 @@
         height: 100%;
 
         color: var(--primary-font-color);
-        
+
         padding-left: 10px;
         padding-right: 10px;
 

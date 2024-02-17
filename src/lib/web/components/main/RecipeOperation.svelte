@@ -1,13 +1,21 @@
 <script lang="ts">
     import { UserInputOptions, BaseOperation } from "../../../core/baseOperation";
+    import { operations } from "../../../core/runOperations";
     import Enum from "../../operations/utils/Enum.svelte";
     import InputWithType from "../../operations/utils/InputWithType.svelte";
 
     export let operation: BaseOperation;
+    export let name: string;
     export let id: string = "";
 
-    const disable = () => operation.is_disable != operation.is_disable;
-    const breakpoint = () => operation.is_breakpoint != operation.is_breakpoint;
+    const disable = () => {
+        operations.update(ops => ops.filter(([op_name, _]) => op_name !== name));
+        operation.is_disable = !operation.is_disable
+    };
+
+    const breakpoint = () => {
+        operation.is_breakpoint = !operation.is_breakpoint
+    };
 
 </script>
 

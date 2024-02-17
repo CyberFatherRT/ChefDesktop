@@ -1,20 +1,23 @@
 <script lang="ts">
+    import { operationList } from "../../../core/operations/Operations";
+    import { operations } from "../../../core/runOperations";
 
     export let name: string;
-    
-    function handleDragStart(e: DragEvent) {
-        e.dataTransfer?.setData("text", name);
+
+    function addOperation() {
+        let random_key = Math.random().toString(36).substring(4);
+        let operation = operationList[name];
+        operations.update(ops => [...ops, [random_key, new operation()]])
     }
 
 </script>
 
-<li on:dragstart={handleDragStart} draggable="true" class="operation">
+<button on:click={addOperation} class="operation" >
     {name}
-</li>
-
+</button>
 
 <style>
-    
+
     .operation {
         cursor: grub;
         padding: 10px;
@@ -25,6 +28,7 @@
 
         color: var(--op-list-operation-font-color);
         background-color: var(--op-list-operation-bg-color);
+        border: none;
         border-bottom: 1px solid var(--op-list-operation-border-color);
 
         list-style-type: none;
