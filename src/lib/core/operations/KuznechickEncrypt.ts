@@ -17,7 +17,7 @@ export class KuznechikEncrypt extends BaseOperation {
         ["mode", Mode.CBC],
         ["padding", Padding.NO],
         ["input_format", InputFormat.Raw],
-        ["output_format", OutputFormat.Base64],
+        ["output_format", OutputFormat.Hex],
     ]);
 
     is_disable = false;
