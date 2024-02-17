@@ -1,7 +1,10 @@
 use std::ffi::{c_char, CString};
 
+use crate::{
+    libs::base64::{from_base64, to_base64},
+    utils::from_hex,
+};
 use anyhow::{bail, Context, Result};
-use crate::{libs::base64::{from_base64, to_base64}, utils::from_hex};
 
 use super::structs::{
     ak_uint8, akrypt_decrypt, akrypt_encrypt, AkryptFunction, Config, InputFormat, Mode,
@@ -149,7 +152,9 @@ impl Akrypt {
         ]
         .concat();
 
-        if output.len() != size && output[output.len() - size..] == vec![padding as ak_uint8; padding] {
+        if output.len() != size
+            && output[output.len() - size..] == vec![padding as ak_uint8; padding]
+        {
             return output[..output.len() - size].to_vec();
         }
 
@@ -158,7 +163,9 @@ impl Akrypt {
 
     fn unpad(input: &[ak_uint8]) -> Result<Vec<u8>> {
         let last_byte = *input.last().context("Value is empty")? as usize;
-        if last_byte <= input.len() && input[input.len() - last_byte..] == vec![last_byte as u8; last_byte] {
+        if last_byte <= input.len()
+            && input[input.len() - last_byte..] == vec![last_byte as u8; last_byte]
+        {
             return Ok(input[..input.len() - last_byte].to_vec());
         }
         Ok(input.to_vec())

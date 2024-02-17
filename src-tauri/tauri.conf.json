@@ -29,7 +29,8 @@
         "bundle": {
             "active": true,
             "targets": "all",
-            "identifier": "chef.cyberfather.net",
+            "category": "DeveloperTool",
+            "identifier": "chef.cfrt.sh",
             "icon": [
                 "icons/32x32.png",
                 "icons/128x128.png",
