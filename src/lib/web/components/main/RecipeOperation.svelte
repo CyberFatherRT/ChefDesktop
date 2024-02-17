@@ -19,7 +19,7 @@
 
 </script>
 
-<li {id} draggable="true" class="preview">
+<li {id} class="preview">
 
     <title>
         <p>{operation.name}</p>

@@ -6,6 +6,7 @@
 
     function addOperation() {
         let random_key = Math.random().toString(36).substring(4);
+        // @ts-ignore
         let operation = operationList[name];
         operations.update(ops => [...ops, [random_key, new operation()]])
     }
