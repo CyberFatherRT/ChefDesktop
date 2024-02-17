@@ -12,7 +12,7 @@ export class FromBase64 extends BaseOperation {
     // @ts-ignore
     params = new Map([
         ["alphabet", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"],
-        ["remove_non_alphabet_chars", false],
+        ["remove_non_alphabetic_chars", false],
         ["strict_mode", false],
     ]);
 
@@ -38,7 +38,7 @@ export class FromBase64 extends BaseOperation {
             value: false,
             default_value: false,
             functions: {
-                checkbox: (input: string) => this.event_function(input, "remove_non_alphabet_chars"),
+                checkbox: (input: string) => this.event_function(input, "remove_non_alphabetic_chars"),
             },
         },
         {
