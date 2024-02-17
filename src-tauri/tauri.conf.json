@@ -20,6 +20,10 @@
             "clipboard": {
                 "writeText": true,
                 "readText": true
+            },
+            "dialog": {
+                "open": true,
+                "save": true
             }
         },
         "bundle": {
