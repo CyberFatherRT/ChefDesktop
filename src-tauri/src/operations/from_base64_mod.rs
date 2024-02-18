@@ -19,6 +19,9 @@ impl Operation<'_, DeserializeMeDaddy> for FromBase64 {
             },
         ) = (request.input, request.params);
 
+        let alphabet = alphabet.unwrap_or(
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".to_string(),
+        );
         let alphabet = alphabet::Alphabet::new(&alphabet)?;
 
         if remove_non_alphabetic_chars {
@@ -40,7 +43,7 @@ impl Operation<'_, DeserializeMeDaddy> for FromBase64 {
 
 #[derive(Deserialize)]
 struct Params {
-    alphabet: String,
+    alphabet: Option<String>,
     remove_non_alphabetic_chars: bool,
     strict_mode: bool,
 }

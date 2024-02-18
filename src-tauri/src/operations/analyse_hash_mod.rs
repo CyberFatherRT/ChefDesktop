@@ -1,5 +1,5 @@
 use crate::{create_info_struct, create_tauri_wrapper, run_operations, Operation, DOCS_URL};
-use anyhow::Result;
+use anyhow::{bail, Result};
 use serde::{Deserialize, Serialize};
 
 create_tauri_wrapper!(analyse_hash, AnalyseHash);
@@ -76,7 +76,7 @@ impl Operation<'_, DeserializeMeDaddy> for AnalyseHash {
             ],
             1024 => vec!["Fowler-Noll-Vo"],
             _ => {
-                vec!["Unknown"]
+                bail!("Invalid hash");
             }
         };
 
