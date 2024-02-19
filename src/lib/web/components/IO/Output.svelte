@@ -1,13 +1,13 @@
 <script lang="ts">
+    import { saveToFile } from "./io_utils";
     import Title from "../title/Title.svelte";
     import { writeText } from "@tauri-apps/api/clipboard";
-    import { output } from "../../../core/runOperations";
+    import { gsd, input, output } from "../../../core/runOperations";
 
     let icons = {
-        "save": { description: "Save output to file" },
+        "save": { description: "Save output to file", func: saveToFile },
         "content_copy": { description: "Copy raw output- to the clipboard", func: () => writeText(outputValue)},
-        "open_in_browser": { description: "Replace input with output" },
-        "fullscreen": { description: "Maximase output- pane" }
+        "open_in_browser": { description: "Replace input with output", func: () => { input.set(outputValue); gsd() }},
     };
 
     let outputValue: string;
