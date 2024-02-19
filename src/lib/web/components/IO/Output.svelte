@@ -6,7 +6,7 @@
 
     let icons = {
         "save": { description: "Save output to file", func: saveToFile },
-        "content_copy": { description: "Copy raw output- to the clipboard", func: () => writeText(outputValue)},
+        "content_copy": { description: "Copy raw output to the clipboard", func: () => writeText(outputValue)},
         "open_in_browser": { description: "Replace input with output", func: () => { input.set(outputValue); gsd() }},
     };
 
