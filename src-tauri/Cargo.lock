@@ -380,7 +380,7 @@ dependencies = [
  "fix-path-env",
  "hex",
  "hmac",
- "itertools 0.11.0",
+ "itertools",
  "lazy_static",
  "libc",
  "md-5",
@@ -395,7 +395,6 @@ dependencies = [
  "scrypt",
  "serde",
  "serde_json",
- "serde_valid",
  "sha1",
  "sha2",
  "sha3",
@@ -1568,15 +1567,6 @@ dependencies = [
 
 [[package]]
 name = "itertools"
-version = "0.10.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b0fd2260e829bddf4cb6ea802289de2f86d6a7a690192fbe91b3f46e0f2c8473"
-dependencies = [
- "either",
-]
-
-[[package]]
-name = "itertools"
 version = "0.11.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b1c173a5686ce8bfa551b3563d0c2170bf24ca44da99c7ca4bfdab5418c3fe57"
@@ -2177,12 +2167,6 @@ dependencies = [
  "rand_core 0.6.4",
  "subtle",
 ]
-
-[[package]]
-name = "paste"
-version = "1.0.14"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "de3145af08024dea9fa9914f381a17b8fc6034dfb00f3a84013f7ff43f29ed4c"
 
 [[package]]
 name = "pathdiff"
@@ -2882,50 +2866,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "eb3622f419d1296904700073ea6cc23ad690adbd66f13ea683df73298736f0c1"
 dependencies = [
  "serde",
-]
-
-[[package]]
-name = "serde_valid"
-version = "0.16.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0adc7a19d45e581abc6d169c865a0b14b84bb43a9e966d1cca4d733e70f7f35a"
-dependencies = [
- "indexmap 1.9.3",
- "itertools 0.10.5",
- "num-traits",
- "once_cell",
- "paste",
- "regex",
- "serde",
- "serde_json",
- "serde_valid_derive",
- "serde_valid_literal",
- "thiserror",
- "unicode-segmentation",
-]
-
-[[package]]
-name = "serde_valid_derive"
-version = "0.16.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "071237362e267e2a76ffe4434094e089dcd8b5e9d8423ada499e5550dcb0181d"
-dependencies = [
- "paste",
- "proc-macro-error",
- "proc-macro2",
- "quote",
- "strsim",
- "syn 1.0.109",
-]
-
-[[package]]
-name = "serde_valid_literal"
-version = "0.16.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f57df292b1d64449f90794fc7a67efca0b21acca91493e64a46418a29bbe36b4"
-dependencies = [
- "paste",
- "regex",
 ]
 
 [[package]]

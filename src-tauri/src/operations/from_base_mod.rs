@@ -1,11 +1,10 @@
 use num::{BigInt, Num};
 use serde::{Deserialize, Serialize};
-use serde_valid::Validate;
 
 use crate::{
     create_info_struct, create_me_daddy, create_tauri_wrapper, run_operations, Operation, DOCS_URL,
 };
-use anyhow::Result;
+use anyhow::{bail, Result};
 create_tauri_wrapper!(from_base, FromBase);
 
 impl Operation<'_, DeserializeMeDaddy> for FromBase {
@@ -17,12 +16,20 @@ impl Operation<'_, DeserializeMeDaddy> for FromBase {
         let big_D_number = BigInt::from_str_radix(&input, radix)?;
         Ok(big_D_number.to_string())
     }
+
+    fn validate(&self, request: &'_ str) -> Result<DeserializeMeDaddy> {
+        let request = self.deserialize(request)?;
+
+        if !(2..=36).contains(&request.params.radix) {
+            bail!("ERROR: Param `rounds` must be between 2 and 36")
+        }
+
+        Ok(request)
+    }
 }
 
-#[derive(Deserialize, Validate)]
+#[derive(Deserialize)]
 struct Params {
-    #[validate(maximum = 36)]
-    #[validate(minimum = 2)]
     radix: u32,
 }
 

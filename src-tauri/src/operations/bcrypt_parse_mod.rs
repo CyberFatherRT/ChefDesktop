@@ -2,7 +2,6 @@ use crate::{create_info_struct, create_tauri_wrapper, run_operations, Operation,
 use anyhow::{bail, Result};
 use bcrypt::BcryptError;
 use serde::{Deserialize, Serialize};
-use serde_valid::Validate;
 
 create_tauri_wrapper!(bcrypt_parse, BcryptParse);
 
@@ -23,11 +22,7 @@ impl Operation<'_, DeserializeMeDaddy> for BcryptParse {
             bail!(BcryptError::InvalidHash(hash));
         }
 
-        if raw_parts[0] != "2y"
-            && raw_parts[0] != "2b"
-            && raw_parts[0] != "2a"
-            && raw_parts[0] != "2x"
-        {
+        if !["2y", "2b", "2a", "2x"].contains(&raw_parts[0]) {
             bail!(BcryptError::InvalidPrefix(raw_parts[0].to_string()));
         }
 
@@ -54,10 +49,8 @@ struct DeserializeMeDaddy {
     hash: String,
 }
 
-#[derive(Serialize, Validate)]
+#[derive(Serialize)]
 pub struct HashParts {
-    #[validate(maximum = 31)]
-    #[validate(minimum = 4)]
     cost: u32,
     salt: String,
     hash: String,

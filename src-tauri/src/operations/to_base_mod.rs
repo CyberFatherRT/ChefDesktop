@@ -1,7 +1,6 @@
-use anyhow::Result;
+use anyhow::{bail, Error, Result};
 use num::{BigInt, Num};
 use serde::{Deserialize, Serialize};
-use serde_valid::Validate;
 
 use crate::{
     create_info_struct, create_me_daddy, create_tauri_wrapper, run_operations, Operation, DOCS_URL,
@@ -16,15 +15,23 @@ impl Operation<'_, DeserializeMeDaddy> for ToBase {
 
         #[allow(non_snake_case)]
         let big_D_number = BigInt::from_str_radix(&input, 10)
-            .map_err(|_| anyhow::Error::msg("Invalid symbols found in string"))?;
+            .map_err(|_| Error::msg("Invalid symbols found in string"))?;
         Ok(big_D_number.to_str_radix(radix))
+    }
+
+    fn validate(&self, request: &'_ str) -> Result<DeserializeMeDaddy> {
+        let request = self.deserialize(request)?;
+
+        if !(4..=31).contains(&request.params.radix) {
+            bail!("ERROR: Param `rounds` must be between 4 and 31");
+        }
+
+        Ok(request)
     }
 }
 
-#[derive(Deserialize, Validate)]
+#[derive(Deserialize)]
 struct Params {
-    #[validate(maximum = 36)]
-    #[validate(minimum = 2)]
     radix: u32,
 }
 

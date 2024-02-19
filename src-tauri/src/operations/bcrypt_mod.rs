@@ -1,10 +1,9 @@
 use crate::{
     create_info_struct, create_me_daddy, create_tauri_wrapper, run_operations, Operation, DOCS_URL,
 };
-use anyhow::Result;
+use anyhow::{bail, Result};
 use bcrypt::Version;
 use serde::{Deserialize, Serialize};
-use serde_valid::Validate;
 
 create_tauri_wrapper!(bcrypt, Bcrypt);
 
@@ -14,6 +13,16 @@ impl Operation<'_, DeserializeMeDaddy> for Bcrypt {
         let (input, Params { rounds, version }) = (request.input, request.params);
         let res = bcrypt::hash_with_result(input.as_bytes(), rounds)?;
         Ok(res.format_for_version(version))
+    }
+
+    fn validate(&self, request: &'_ str) -> Result<DeserializeMeDaddy> {
+        let request = self.deserialize(request)?;
+
+        if !(4..=31).contains(&request.params.rounds) {
+            bail!("ERROR: Param `rounds` must be between 4 and 31");
+        }
+
+        Ok(request)
     }
 }
 
@@ -30,10 +39,8 @@ pub enum MyVersion {
     TwoB,
 }
 
-#[derive(Deserialize, Validate)]
+#[derive(Deserialize)]
 struct Params {
-    #[validate(maximum = 31)]
-    #[validate(minimum = 4)]
     rounds: u32,
     #[serde(with = "MyVersion")]
     version: Version,
