@@ -16,6 +16,9 @@ export let operationList = {
 };
 
 export {
+    AnalyseHash,
+    ToBase64,
+    FromBase64,
     Hmac,
     KuznechikEncrypt,
     KuznechikDecrypt,
