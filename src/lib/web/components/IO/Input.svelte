@@ -1,17 +1,19 @@
 <script lang="ts">
     import Title from "../title/Title.svelte";
     import { input } from "../../../core/runOperations";
+    import { readFromFile } from "./io_utils";
 
     let icons = {
-        "add": { description: "Add a new input tab"},
+        // "add": { description: "Add a new input tab"},
         "folder_open": { description: "Open folder as input"},
-        "input": { description: "Open file as input"},
-        "delete": { description: "Clear input and output"},
-        "view_compact": { description: "Reset pane layout"}
+        "input": { description: "Open file as input", func: readFromFile },
+        "delete": { description: "Clear input and output", func: () => input.set("")},
+        // "view_compact": { description: "Reset pane layout"}
     }
 
     let inputValue: string = "";
     $: input.set(inputValue)
+    input.subscribe(value => inputValue = value)
 
 </script>
 
@@ -20,7 +22,7 @@
     <div class="input-wrapper">
         <div class="input-tabs"></div>
         <div class="input-text">
-            <textarea id="input-textarea" bind:value={inputValue} on:drop={(e) => e.preventDefault()}/>
+            <textarea id="input-textarea" bind:value={inputValue} on:drop|preventDefault/>
         </div>
         <div class="input-status-bar"></div>
     </div>
