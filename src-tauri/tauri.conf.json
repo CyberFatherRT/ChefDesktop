@@ -12,11 +12,6 @@
     },
     "tauri": {
         "allowlist": {
-            "all": false,
-            "shell": {
-                "all": false,
-                "open": true
-            },
             "clipboard": {
                 "writeText": true,
                 "readText": true
