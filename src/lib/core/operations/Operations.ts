@@ -1,3 +1,4 @@
+import { AnalyseHash } from "./AnalyseHash";
 import { FromBase64 } from "./FromBase64";
 import { Hmac } from "./Hmac";
 import { KuznechikDecrypt } from "./KuznechickDecrypt";
@@ -6,6 +7,7 @@ import { ToBase64 } from "./ToBase64";
 
 // @ts-ignore
 export let operationList = {
+    "Analyse Hash": AnalyseHash,
     "To Base64": ToBase64,
     "From Base64": FromBase64,
     "HMAC": Hmac,
