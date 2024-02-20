@@ -24,16 +24,16 @@ impl CharTrait for char {
 }
 
 pub trait StringTrait {
-    fn replace_by_alphabet(&self, alphabet: &str) -> String;
+    fn _replace_by_alphabet(&self, alphabet: &str) -> String;
 
-    fn regex_replace_all(&self, regex: &str, replacement: &str) -> Result<String, String>;
-    fn regex_replace(&self, regex: &str, replacement: &str) -> Result<String, String>;
+    fn _regex_replace_all(&self, regex: &str, replacement: &str) -> Result<String, String>;
+    fn _regex_replace(&self, regex: &str, replacement: &str) -> Result<String, String>;
 
     fn capitalize(&self) -> String;
 }
 
 impl StringTrait for String {
-    fn replace_by_alphabet(&self, alphabet: &str) -> String {
+    fn _replace_by_alphabet(&self, alphabet: &str) -> String {
         let alphabet: HashSet<char> = HashSet::from_iter(alphabet.chars());
 
         self.chars()
@@ -41,13 +41,13 @@ impl StringTrait for String {
             .collect::<String>()
     }
 
-    fn regex_replace_all(&self, regex_str: &str, replacement: &str) -> Result<String, String> {
+    fn _regex_replace_all(&self, regex_str: &str, replacement: &str) -> Result<String, String> {
         let re = regex::Regex::new(regex_str).map_err(|_| String::from("wrong regex"))?;
         let output: String = re.replace_all(regex_str, replacement).to_string();
         Ok(output)
     }
 
-    fn regex_replace(&self, regex_str: &str, replacement: &str) -> Result<String, String> {
+    fn _regex_replace(&self, regex_str: &str, replacement: &str) -> Result<String, String> {
         let re = regex::Regex::new(regex_str).map_err(|_| String::from("wrong regex"))?;
         let output: String = re.replace(regex_str, replacement).to_string();
         Ok(output)
