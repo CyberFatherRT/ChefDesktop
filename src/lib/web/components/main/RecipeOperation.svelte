@@ -33,8 +33,6 @@
         {#each operation.args as arg}
             {#if arg.type === UserInputOptions.inputWithType}
                 <InputWithType {arg}/>
-            {:else if arg.type === UserInputOptions.enum}
-                <Enum {arg}/>
             {/if}
         {/each}
     </div>
@@ -46,7 +44,7 @@
     title {
         display: flex;
         justify-content: space-between;
-        height: 39px;
+        height: 30px;
     }
 
     .arg-wrapper {
