@@ -1,7 +1,7 @@
 <script lang="ts">
     import { saveToFile } from "./io_utils";
     import Title from "../title/Title.svelte";
-    import { writeText } from "@tauri-apps/api/clipboard";
+    import { writeText } from "@tauri-apps/plugin-clipboard-manager";
     import { gsd, input, output } from "../../../core/runOperations";
 
     let icons = {

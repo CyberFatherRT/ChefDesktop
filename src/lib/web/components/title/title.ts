@@ -1,6 +1,5 @@
-import tippy, {type Props} from "tippy.js";
+import tippy, { type Props } from "tippy.js";
 import "tippy.js/dist/tippy.css";
-import {writeText} from "@tauri-apps/api/clipboard";
 
 type Options = Partial<Props>;
 

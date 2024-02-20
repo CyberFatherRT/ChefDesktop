@@ -6,8 +6,6 @@
     let ingredients: [string, BaseOperation][] = [];
     operations.subscribe(value => ingredients = value);
 
-    console.log(ingredients);
-
 </script>
 
 <ul class="recipe-list">

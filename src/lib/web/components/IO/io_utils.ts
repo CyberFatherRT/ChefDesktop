@@ -1,5 +1,5 @@
-import { invoke } from "@tauri-apps/api";
-import { open, save } from "@tauri-apps/api/dialog"
+import { invoke } from "@tauri-apps/api/core";
+import { open, save } from "@tauri-apps/plugin-dialog"
 import { input, output } from "../../../core/runOperations";
 import { get } from "svelte/store";
 
