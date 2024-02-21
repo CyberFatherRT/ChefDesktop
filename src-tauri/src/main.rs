@@ -11,7 +11,6 @@ use tauri_utils::*;
 fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
-            save_to_file,
             read_from_file,
             a1z26_cipher_decode,
             a1z26_cipher_encode,
@@ -55,6 +54,8 @@ fn main() {
             vigenere_cipher_decode,
             vigenere_cipher_encode,
         ])
+        .plugin(tauri_plugin_clipboard_manager::init())
+        .plugin(tauri_plugin_dialog::init())
         .run(tauri::generate_context!())
-        .expect("error while running tauri application");
+        .expect("error while running tauri application")
 }
