@@ -15,19 +15,29 @@ jobs:
 
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@v4
 
-      - name: setup bun
+      - name: Checkout
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Setup bun
         uses: oven-sh/setup-bun@v1
         with:
           bun-version: latest
 
-      - name: install Rust stable
+      - name: Build libakrypt
+        uses: threeal/cmake-action@v1.3.0
+        with:
+          source-dir: libakrypt
+          build-dir: libakrypt/build
+
+      - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: nightly
 
-      - name: install dependencies (ubuntu only)
+      - name: Install dependencies (ubuntu only)
         if: matrix.platform == 'ubuntu-20.04'
         run: |
           sudo apt-get update
@@ -37,17 +47,3 @@ jobs:
         run: bun install # change this to npm or pnpm depending on which one you use
 
       - uses: tauri-apps/tauri-action@v0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tagName: app-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
-          releaseName: 'App v__VERSION__'
-          releaseBody: 'See the assets to download this version and install.'
-          releaseDraft: true
-          prerelease: false
-
-      - name: Archive code coverage results
-        uses: actions/upload-artifact@v4
-        with:
-          name: finally
-          path: D:\a\ChefDesktop\ChefDesktop\src-tauri\target\release\bundle
