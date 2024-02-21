@@ -19,7 +19,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GIT_KEY }}
+          ssh-key: ${{ secrets.GIT_KEY }}
           submodules: true
 
       - name: Setup bun
