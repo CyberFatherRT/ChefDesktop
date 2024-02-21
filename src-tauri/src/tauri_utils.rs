@@ -10,7 +10,7 @@ pub fn read_from_file(path: &Path) -> Result<String, String> {
     let mut buf_reader = BufReader::new(file);
     let mut content = Vec::new();
 
-    let _ = buf_reader
+    buf_reader
         .read_to_end(&mut content)
         .map_err(|err| err.to_string())?;
 
@@ -22,7 +22,7 @@ pub fn save_to_file(path: &Path, content: String) -> Result<(), String> {
     let file = File::create(path).map_err(|err| err.to_string())?;
     let mut buf_writer = BufWriter::new(file);
 
-    let _ = buf_writer
+    buf_writer
         .write_all(content.as_bytes())
         .map_err(|err| err.to_string())?;
 
