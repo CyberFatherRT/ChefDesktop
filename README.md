@@ -1,6 +1,6 @@
 # ChefDesktop
 
-[![Master build, Test & Deploy](https://github.com/CyberFatherRT/ChefDesktop/actions/workflows/rust.yml/badge.svg)](https://github.com/CyberFatherRT/ChefDesktop/actions/workflows/rust.yml)
+[![Master build, Test & Deploy](https://github.com/CyberFatherRT/ChefDesktop/actions/workflows/CI.yml/badge.svg)](https://github.com/CyberFatherRT/ChefDesktop/actions/workflows/CI.yml)
 
 ChefDesktop is a simple, intuitive desktop app for carrying out all manner of "cyber" operations within a native application. These operations include simple encoding like XOR and Base64, more complex encryption like AES, Blowfish and Kuznechik, creating binary and hexdumps, compression and decompression of data, calculating hashes and checksums, IPv6 and X.509 parsing, changing character encodings, and much more.
 
