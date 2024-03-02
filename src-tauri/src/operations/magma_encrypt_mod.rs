@@ -25,8 +25,9 @@ impl Operation<'_, DeserializeMeDaddy> for MagmaEncrypt {
             },
         ) = (request.input, request.params);
 
-        let akrypt = Akrypt::new(AkryptFunction::Magma)
-            .set_input(&input, input_format)?
+        let mut akrypt = Akrypt::new(AkryptFunction::Magma);
+
+        akrypt.set_input(&input, input_format)?
             .set_iv(iv.as_bytes())?
             .set_key(key.as_bytes())?
             .set_mode(mode);

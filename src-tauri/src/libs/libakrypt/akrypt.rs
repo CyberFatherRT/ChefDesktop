@@ -97,11 +97,12 @@ impl Akrypt {
             .to_string())
     }
 
-    pub fn set_mode(self, mode: Mode) -> Self {
-        Self { mode, ..self }
+    pub fn set_mode(&mut self, mode: Mode) -> &mut Self {
+        self.mode = mode;
+        self
     }
 
-    pub fn set_input(self, input: &str, format: InputFormat) -> Result<Self> {
+    pub fn set_input(&mut self, input: &str, format: InputFormat) -> Result<&mut Self> {
         let input = match format {
             InputFormat::Hex => hex::decode(input)?,
             InputFormat::Base64 => from_base64(input)?,
@@ -113,35 +114,31 @@ impl Akrypt {
             AkryptFunction::Magma => Akrypt::pad(&input, 16),
         };
 
-        Ok(Self {
-            input: CString::new(input)?,
-            ..self
-        })
+        self.input = CString::new(input)?;
+        Ok(self)
     }
 
-    pub fn set_key(self, key: &[ak_uint8]) -> Result<Self> {
+    pub fn set_key(&mut self, key: &[ak_uint8]) -> Result<&mut Self> {
         let key = Akrypt::pad(key, 32);
         let key_size = key.len();
 
-        Ok(Self {
-            key,
-            key_size,
-            ..self
-        })
+        self.key = key;
+        self.key_size = key_size;
+
+        Ok(self)
     }
 
-    pub fn set_iv(self, iv: &[ak_uint8]) -> Result<Self> {
+    pub fn set_iv(&mut self, iv: &[ak_uint8]) -> Result<&mut Self> {
         let iv = match self.algorithm {
             AkryptFunction::Kuznechik => Akrypt::pad(iv, 16),
             AkryptFunction::Magma => Akrypt::pad(iv, 8),
         };
         let iv_size = iv.len();
 
-        Ok(Self {
-            iv,
-            iv_size,
-            ..self
-        })
+        self.iv = iv;
+        self.iv_size = iv_size;
+
+        Ok(self)
     }
 
     fn pad(input: &[ak_uint8], size: usize) -> Vec<ak_uint8> {
