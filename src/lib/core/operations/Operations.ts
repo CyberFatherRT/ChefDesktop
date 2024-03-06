@@ -5,7 +5,6 @@ import { KuznechikDecrypt } from "./KuznechickDecrypt";
 import { KuznechikEncrypt } from "./KuznechickEncrypt";
 import { ToBase64 } from "./ToBase64";
 
-// @ts-ignore
 export let operationList = {
     "Analyse Hash": AnalyseHash,
     "To Base64": ToBase64,

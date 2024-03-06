@@ -3,12 +3,34 @@
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 
-mod tauri_utils;
+mod tauri_commands;
+
+use std::{env::args, process::exit};
+use nix::unistd::{fork, ForkResult};
 
 use chef_desktop::*;
-use tauri_utils::*;
+use tauri_commands::fs::*;
 
-fn main() {
+fn main() -> anyhow::Result<()> {
+    let args: Vec<_> = args().collect();
+
+    if args.len() == 1 {
+        match unsafe{fork()} {
+            Ok(ForkResult::Child) => start()?,
+            Ok(_) => exit(0),
+            Err(err) => {
+                eprintln!("{err}");
+                exit(1);
+            },
+        }
+    }
+
+    println!("args: {:?}", args);
+
+    Ok(())
+}
+
+fn start() -> anyhow::Result<()> {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
             save_to_file,
@@ -55,6 +77,6 @@ fn main() {
             vigenere_cipher_decode,
             vigenere_cipher_encode,
         ])
-        .run(tauri::generate_context!())
-        .expect("error while running tauri application");
+        .run(tauri::generate_context!())?;
+    Ok(())
 }

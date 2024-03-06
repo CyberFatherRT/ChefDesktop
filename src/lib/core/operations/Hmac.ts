@@ -13,7 +13,7 @@ export class Hmac extends BaseOperation {
         ["key", ""],
         ["key_format", KeyFormat.UTF8],
         ["hash_function", HashFunctions.SHA256],
-        ["output_format", OutputFormats.Base64]
+        ["output_format", OutputFormats.Base64],
     ]);
 
     is_disable = false;

@@ -148,7 +148,7 @@ impl Akrypt {
         let padding = size - (input.len() % size);
         let output = [
             input.to_vec().as_slice(),
-            &vec![padding as ak_uint8; padding].as_slice(),
+            vec![padding as ak_uint8; padding].as_slice(),
         ]
         .concat();
 

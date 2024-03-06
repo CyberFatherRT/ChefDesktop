@@ -9,11 +9,10 @@ export class FromBase64 extends BaseOperation {
     russianDescription = "Base64 — это нотация для кодирования произвольных байтовых данных с использованием ограниченного набора символов, которые могут удобно использоваться людьми и обрабатываться компьютерами.<br><br>Эта операция декодирует необработанные данные в строку ASCII Base64.";
     infoURL = "https://wikipedia.org/wiki/Base64";
 
-    // @ts-ignore
     params = new Map([
         ["alphabet", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"],
-        ["remove_non_alphabetic_chars", false],
-        ["strict_mode", false],
+        ["remove_non_alphabetic_chars", "false"],
+        ["strict_mode", "false"],
     ]);
 
     is_disable = false;
