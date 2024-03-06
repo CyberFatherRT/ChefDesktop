@@ -20,8 +20,8 @@ export abstract class BaseOperation {
 
     serialize() {
         return {
-            name: this.name,
-            request: Object.fromEntries(this.params)
+            name: this.op_name,
+            request: JSON.stringify(Object.fromEntries(this.params))
         }
     }
 

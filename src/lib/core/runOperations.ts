@@ -1,5 +1,6 @@
 import { get, writable, type Writable } from "svelte/store"
 import { BaseOperation } from "./baseOperation";
+import { invoke } from "@tauri-apps/api/tauri";
 
 export const input: Writable<string> = writable('');
 export const output: Writable<string> = writable('');
@@ -11,12 +12,14 @@ operations.subscribe(async () => await gsd())
 
 export async function gsd() {
 
-    let foo = get(operations)
+    let foo = get(operations).map(([_, op]) => op.serialize())
+    console.log(foo)
 
-    if (foo.length !== 0) {
-        console.log(foo[0])
-        console.log(JSON.stringify(foo[0]))
-    }
+    await invoke("gsd", {
+        input: get(input),
+        ops: foo
+    }).catch(err => console.log(err))
+
 
     // let local_input = get(input);
     //

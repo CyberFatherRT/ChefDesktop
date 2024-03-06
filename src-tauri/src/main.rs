@@ -10,6 +10,7 @@ mod tauri_commands;
 
 use chef_desktop::*;
 use tauri_commands::fs::*;
+use tauri_commands::utils::*;
 
 fn main() -> anyhow::Result<()> {
     // let args: Vec<_> = args().collect();
@@ -35,6 +36,7 @@ fn main() -> anyhow::Result<()> {
 fn start() -> anyhow::Result<()> {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
+            gsd,
             save_to_file,
             read_from_file,
             a1z26_cipher_decode,
