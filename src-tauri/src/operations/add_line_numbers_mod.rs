@@ -1,6 +1,8 @@
-use crate::{create_info_struct, Operation, DOCS_URL};
+use crate::{create_info_struct, run_op, Operation, DOCS_URL};
 use anyhow::Result;
 use serde::Serialize;
+
+run_op!(run_addlinenumbers, AddLineNumbers);
 
 impl Operation<'_, ()> for AddLineNumbers {
     fn do_black_magic(&self, input: &str, _request: &str) -> Result<String> {

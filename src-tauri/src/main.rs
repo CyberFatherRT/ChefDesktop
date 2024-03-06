@@ -12,7 +12,6 @@ use tauri_commands::fs::*;
 use tauri_commands::utils::*;
 
 fn main() -> anyhow::Result<()> {
-
     // let args: Vec<_> = args().collect();
     //
     // if args.len() == 1 {
@@ -35,11 +34,7 @@ fn main() -> anyhow::Result<()> {
 
 fn start() -> anyhow::Result<()> {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![
-            gsd,
-            save_to_file,
-            read_from_file,
-        ])
+        .invoke_handler(tauri::generate_handler![gsd, save_to_file, read_from_file,])
         .run(tauri::generate_context!())?;
     Ok(())
 }

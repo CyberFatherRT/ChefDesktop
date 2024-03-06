@@ -64,3 +64,13 @@ macro_rules! create_info_struct {
         }
     };
 }
+
+#[macro_export]
+macro_rules! run_op {
+    ($op:ident, $struct:ident) => {
+        pub fn $op(op: $struct, input: &str, request: &str) -> Result<String, String> {
+            op.do_black_magic(input, request)
+                .map_err(|err| err.to_string())
+        }
+    };
+}

@@ -6,6 +6,15 @@ use crate::{
 };
 use anyhow::Result;
 
+pub fn run_affinecipherencode(
+    op: AffineCipherEncode,
+    input: &str,
+    request: &str,
+) -> Result<String, String> {
+    op.do_black_magic(input, request)
+        .map_err(|err| err.to_string())
+}
+
 impl Operation<'_, DeserializeMeDaddy> for AffineCipherEncode {
     fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {
         let request = self.validate(request)?;

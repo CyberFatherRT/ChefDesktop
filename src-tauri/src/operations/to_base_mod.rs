@@ -2,7 +2,9 @@ use anyhow::{bail, Error, Result};
 use num::{BigInt, Num};
 use serde::{Deserialize, Serialize};
 
-use crate::{create_info_struct, Operation, DOCS_URL};
+use crate::{create_info_struct, run_op, Operation, DOCS_URL};
+
+run_op!(run_tobase, ToBase);
 
 impl Operation<'_, DeserializeMeDaddy> for ToBase {
     fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {

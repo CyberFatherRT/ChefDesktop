@@ -1,7 +1,11 @@
-use crate::{create_info_struct, libs::base64::from_base64, utils::to_hex, Operation, DOCS_URL};
+use crate::{
+    create_info_struct, libs::base64::from_base64, run_op, utils::to_hex, Operation, DOCS_URL,
+};
 use anyhow::{Error, Result};
 use argon2::{Config, ThreadMode, Variant, Version};
 use serde::{Deserialize, Serialize};
+
+run_op!(run_argon2, Argon2);
 
 impl Operation<'_, DeserializeMeDaddy> for Argon2 {
     fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {

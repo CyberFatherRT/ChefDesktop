@@ -1,7 +1,9 @@
-use crate::{create_info_struct, utils::to_hex, Operation, DOCS_URL};
+use crate::{create_info_struct, run_op, utils::to_hex, Operation, DOCS_URL};
 use anyhow::Result;
 use serde::{Deserialize, Serialize};
 use sha3::{Digest, Sha3_224, Sha3_256, Sha3_384, Sha3_512};
+
+run_op!(run_sha3, SHA3);
 
 impl Operation<'_, DeserializeMeDaddy> for SHA3 {
     fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {

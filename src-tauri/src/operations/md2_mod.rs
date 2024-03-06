@@ -2,7 +2,9 @@ use anyhow::Result;
 use md2::{Digest, Md2};
 use serde::Serialize;
 
-use crate::{create_info_struct, utils::to_hex, Operation, DOCS_URL};
+use crate::{create_info_struct, run_op, utils::to_hex, Operation, DOCS_URL};
+
+run_op!(run_md2, MD2);
 
 impl Operation<'_, ()> for MD2 {
     fn do_black_magic(&self, input: &str, _request: &str) -> Result<String> {

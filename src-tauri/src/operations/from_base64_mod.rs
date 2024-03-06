@@ -4,6 +4,11 @@ use anyhow::Result;
 use base64::{alphabet, engine, Engine};
 use serde::{Deserialize, Serialize};
 
+pub fn run_frombase64(op: FromBase64, input: &str, request: &str) -> Result<String, String> {
+    op.do_black_magic(input, request)
+        .map_err(|err| err.to_string())
+}
+
 impl Operation<'_, DeserializeMeDaddy> for FromBase64 {
     fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {
         let request = self.validate(request)?;

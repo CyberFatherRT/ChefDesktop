@@ -1,7 +1,9 @@
-use crate::{create_info_struct, Operation, DOCS_URL};
+use crate::{create_info_struct, run_op, Operation, DOCS_URL};
 use anyhow::{bail, Result};
 use bcrypt::BcryptError;
 use serde::Serialize;
+
+run_op!(run_bcryptparse, BcryptParse);
 
 impl Operation<'_, ()> for BcryptParse {
     fn do_black_magic(&self, input: &str, _request: &str) -> Result<String> {

@@ -1,10 +1,12 @@
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    create_info_struct, libs::ciphers::affine_cipher_encode, utils::SupportedLanguages, Operation,
-    DOCS_URL,
+    create_info_struct, libs::ciphers::affine_cipher_encode, run_op, utils::SupportedLanguages,
+    Operation, DOCS_URL,
 };
 use anyhow::Result;
+
+run_op!(run_atbashcipher, AtbashCipher);
 
 impl Operation<'_, DeserializeMeDaddy> for AtbashCipher {
     fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {

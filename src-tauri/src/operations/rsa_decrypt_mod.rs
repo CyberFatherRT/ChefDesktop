@@ -8,9 +8,12 @@ use sha3::{Sha3_224, Sha3_256, Sha3_384, Sha3_512};
 use crate::{
     create_info_struct,
     libs::base64::{from_base64, to_base64},
+    run_op,
     utils::to_hex,
     Operation, DOCS_URL,
 };
+
+run_op!(run_rsadecrypt, RSADecrypt);
 
 impl Operation<'_, DeserializeMeDaddy> for RSADecrypt {
     fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {

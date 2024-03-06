@@ -3,10 +3,12 @@ use crate::{
         akrypt::Akrypt,
         structs::{AkryptFunction, InputFormat, Mode, OutputFormat},
     },
-    Operation,
+    run_op, Operation,
 };
 use anyhow::Result;
 use serde::Deserialize;
+
+run_op!(run_magmadecrypt, MagmaDecrypt);
 
 impl Operation<'_, DeserializeMeDaddy> for MagmaDecrypt {
     fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {

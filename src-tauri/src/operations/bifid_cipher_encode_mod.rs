@@ -5,12 +5,14 @@ use std::collections::HashMap;
 use crate::{
     create_info_struct,
     libs::ciphers::gen_polybius_square,
-    regex_check,
+    regex_check, run_op,
     traits::CharTrait,
     utils::{get_alphabet, SupportedLanguages},
     Operation, DOCS_URL,
 };
 use anyhow::{bail, Result};
+
+run_op!(run_bifidcipherencode, BifidCipherEncode);
 
 impl Operation<'_, DeserializeMeDaddy> for BifidCipherEncode {
     fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {

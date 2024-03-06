@@ -1,11 +1,14 @@
 use crate::{
     create_info_struct,
     libs::bitwise_op::{and as and_fun, bit_op},
+    run_op,
     utils::{convert_to_byte_array, SupportedFormats},
     Operation, DOCS_URL,
 };
 use anyhow::Result;
 use serde::{Deserialize, Serialize};
+
+run_op!(run_and, AND);
 
 impl Operation<'_, DeserializeMeDaddy> for AND {
     fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {

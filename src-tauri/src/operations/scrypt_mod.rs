@@ -1,4 +1,5 @@
 use crate::{
+    run_op,
     utils::{convert_to_byte_array, SupportedFormats},
     Operation,
 };
@@ -6,6 +7,8 @@ use anyhow::Result;
 use scrypt::{password_hash::PasswordHasher, Scrypt as MScrypt};
 use scrypt::{password_hash::SaltString, Params};
 use serde::{Deserialize, Serialize};
+
+run_op!(run_scrypt, Scrypt);
 
 impl Operation<'_, DeserializeMeDaddy> for Scrypt {
     fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {

@@ -1,6 +1,8 @@
-use crate::{create_info_struct, utils::hex, Operation, DOCS_URL};
+use crate::{create_info_struct, run_op, utils::hex, Operation, DOCS_URL};
 use anyhow::Result;
 use serde::Serialize;
+
+run_op!(run_adler32checksum, Adler32CheckSum);
 
 impl Operation<'_, ()> for Adler32CheckSum {
     fn do_black_magic(&self, input: &str, _request: &str) -> Result<String> {

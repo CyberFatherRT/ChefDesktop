@@ -1,11 +1,14 @@
 use crate::{
     create_info_struct,
     libs::bitwise_op::{add as add_fun, bit_op},
+    run_op,
     utils::{convert_to_byte_array, SupportedFormats},
     Operation, DOCS_URL,
 };
 use anyhow::Result;
 use serde::{Deserialize, Serialize};
+
+run_op!(run_add, ADD);
 
 impl Operation<'_, DeserializeMeDaddy> for ADD {
     fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {

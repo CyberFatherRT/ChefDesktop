@@ -2,7 +2,9 @@ use anyhow::Result;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha224, Sha256, Sha384, Sha512, Sha512_224, Sha512_256};
 
-use crate::{create_info_struct, utils::to_hex, Operation, DOCS_URL};
+use crate::{create_info_struct, run_op, utils::to_hex, Operation, DOCS_URL};
+
+run_op!(run_sha2, SHA2);
 
 impl Operation<'_, DeserializeMeDaddy> for SHA2 {
     fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {

@@ -1,6 +1,8 @@
-use crate::{utils::SupportedDelimiter, Operation};
+use crate::{run_op, utils::SupportedDelimiter, Operation};
 use anyhow::Result;
 use serde::Deserialize;
+
+run_op!(run_filter, Filter);
 
 impl Operation<'_, DeserializeMeDaddy> for Filter {
     fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {

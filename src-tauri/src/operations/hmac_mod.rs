@@ -1,6 +1,6 @@
 use anyhow::Result;
 
-use hmac::{Hmac as m_hmac, Mac};
+use hmac::{Hmac, Mac};
 use md2::*;
 use md4::*;
 use md5::*;
@@ -13,11 +13,14 @@ use whirlpool::*;
 use crate::{
     create_info_struct,
     libs::base64::to_base64,
+    run_op,
     utils::{convert_to_byte_array, to_hex, SupportedFormats},
     Operation, DOCS_URL,
 };
 
-impl Operation<'_, DeserializeMeDaddy> for Hmac {
+run_op!(run_hmac, HMAC);
+
+impl Operation<'_, DeserializeMeDaddy> for HMAC {
     fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {
         let request = self.validate(request)?;
 
@@ -116,21 +119,21 @@ impl Operation<'_, DeserializeMeDaddy> for Hmac {
     }
 }
 
-type HmacMD2 = m_hmac<Md2>;
-type HmacMD4 = m_hmac<Md4>;
-type HmacMD5 = m_hmac<Md5>;
-type HmacSha1 = m_hmac<Sha1>;
-type HmacSha224 = m_hmac<Sha224>;
-type HmacSha256 = m_hmac<Sha256>;
-type HmacSha384 = m_hmac<Sha384>;
-type HmacSha512 = m_hmac<Sha512>;
-type HmacSha512_224 = m_hmac<Sha512_224>;
-type HmacSha512_256 = m_hmac<Sha512_256>;
-type HmacRipemd128 = m_hmac<Ripemd128>;
-type HmacRipemd160 = m_hmac<Ripemd160>;
-type HmacRipemd256 = m_hmac<Ripemd256>;
-type HmacRipemd320 = m_hmac<Ripemd320>;
-type HmacWhirlPool = m_hmac<Whirlpool>;
+type HmacMD2 = Hmac<Md2>;
+type HmacMD4 = Hmac<Md4>;
+type HmacMD5 = Hmac<Md5>;
+type HmacSha1 = Hmac<Sha1>;
+type HmacSha224 = Hmac<Sha224>;
+type HmacSha256 = Hmac<Sha256>;
+type HmacSha384 = Hmac<Sha384>;
+type HmacSha512 = Hmac<Sha512>;
+type HmacSha512_224 = Hmac<Sha512_224>;
+type HmacSha512_256 = Hmac<Sha512_256>;
+type HmacRipemd128 = Hmac<Ripemd128>;
+type HmacRipemd160 = Hmac<Ripemd160>;
+type HmacRipemd256 = Hmac<Ripemd256>;
+type HmacRipemd320 = Hmac<Ripemd320>;
+type HmacWhirlPool = Hmac<Whirlpool>;
 
 #[derive(Deserialize)]
 #[serde(rename_all = "lowercase")]
@@ -270,7 +273,7 @@ struct DeserializeMeDaddy {
 ///   "Err": "Missing field `hash_function`"
 /// }
 /// ```
-pub struct Hmac;
+pub struct HMAC;
 
 const NAME: &str = "HMAC";
 const DESCRIPTION_EN: &str = "Keyed-Hash Message Authentication Codes (HMAC) are a mechanism for message authentication using cryptographic hash functions.";

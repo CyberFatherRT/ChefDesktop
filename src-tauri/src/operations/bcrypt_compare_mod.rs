@@ -1,6 +1,8 @@
-use crate::{create_info_struct, Operation, DOCS_URL};
+use crate::{create_info_struct, run_op, Operation, DOCS_URL};
 use anyhow::{anyhow, Result};
 use serde::{Deserialize, Serialize};
+
+run_op!(run_bcryptcompare, BcryptCompare);
 
 impl Operation<'_, DeserializeMeDaddy> for BcryptCompare {
     fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {

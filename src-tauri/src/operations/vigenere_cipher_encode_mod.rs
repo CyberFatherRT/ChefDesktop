@@ -4,11 +4,14 @@ use serde::{Deserialize, Serialize};
 use crate::{
     create_info_struct,
     libs::vigenere_trait::VigenereCipher,
+    run_op,
     utils::{add, SupportedLanguages},
     Operation, DOCS_URL,
 };
 
 impl VigenereCipher for VigenereCipherEncode {}
+
+run_op!(run_vigenerecipherencode, VigenereCipherEncode);
 
 impl Operation<'_, DeserializeMeDaddy> for VigenereCipherEncode {
     fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {

@@ -1,6 +1,8 @@
-use crate::{create_info_struct, Operation, DOCS_URL};
+use crate::{create_info_struct, run_op, Operation, DOCS_URL};
 use anyhow::{bail, Result};
 use serde::Serialize;
+
+run_op!(run_analysehash, AnalyseHash);
 
 impl Operation<'_, ()> for AnalyseHash {
     fn do_black_magic(&self, input: &str, _request: &str) -> Result<String> {
@@ -187,7 +189,7 @@ impl Operation<'_, ()> for AnalyseHash {
 ///     "Err": "Missing field `input`."
 /// }
 /// ```
-struct AnalyseHash;
+pub struct AnalyseHash;
 
 const NAME: &str = "AnalyseHash";
 const DESCRIPTION_EN: &str = "Tries to determine information about a given hash and suggests which algorithm may have been used to generate it based on its length.";

@@ -1,6 +1,8 @@
-use crate::{create_info_struct, utils::char_repr, Operation, DOCS_URL};
+use crate::{create_info_struct, run_op, utils::char_repr, Operation, DOCS_URL};
 use anyhow::{bail, Result};
 use serde::{Deserialize, Serialize};
+
+run_op!(run_a1z26cipherdecode, A1Z26CipherDecode);
 
 impl Operation<'_, DeserializeMeDaddy> for A1Z26CipherDecode {
     fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {
@@ -27,7 +29,7 @@ impl Operation<'_, DeserializeMeDaddy> for A1Z26CipherDecode {
 }
 
 #[derive(Deserialize)]
-struct DeserializeMeDaddy {
+pub struct DeserializeMeDaddy {
     delimiter: Delimiters,
 }
 

@@ -1,6 +1,10 @@
-use crate::{create_info_struct, operations::Delimiters, utils::char_repr, Operation, DOCS_URL};
+use crate::{
+    create_info_struct, operations::Delimiters, run_op, utils::char_repr, Operation, DOCS_URL,
+};
 use anyhow::Result;
 use serde::{Deserialize, Serialize};
+
+run_op!(run_a1z26cipherencode, A1Z26CipherEncode);
 
 impl Operation<'_, DeserializeMeDaddy> for A1Z26CipherEncode {
     fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {

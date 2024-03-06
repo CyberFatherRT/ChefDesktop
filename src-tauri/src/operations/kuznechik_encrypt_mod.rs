@@ -3,10 +3,12 @@ use crate::{
         akrypt::Akrypt,
         structs::{AkryptFunction, InputFormat, Mode, OutputFormat},
     },
-    Operation,
+    run_op, Operation,
 };
 use anyhow::Result;
 use serde::Deserialize;
+
+run_op!(run_kuznechikencrypt, KuznechikEncrypt);
 
 impl Operation<'_, DeserializeMeDaddy> for KuznechikEncrypt {
     fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {

@@ -5,7 +5,11 @@ use sha1::Sha1;
 use sha2::{Sha224, Sha256, Sha384, Sha512};
 use sha3::{Sha3_224, Sha3_256, Sha3_384, Sha3_512};
 
-use crate::{create_info_struct, libs::base64::to_base64, utils::to_hex, Operation, DOCS_URL};
+use crate::{
+    create_info_struct, libs::base64::to_base64, run_op, utils::to_hex, Operation, DOCS_URL,
+};
+
+run_op!(run_rsaencrypt, RSAEncrypt);
 
 impl Operation<'_, DeserializeMeDaddy> for RSAEncrypt {
     fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {

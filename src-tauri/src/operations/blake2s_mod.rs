@@ -1,6 +1,7 @@
 use crate::{
     create_info_struct,
     libs::base64::to_base64,
+    run_op,
     utils::{convert_to_byte_array, to_hex, SupportedFormats},
     Operation, DOCS_URL,
 };
@@ -10,6 +11,8 @@ use blake2::{
     VarBlake2s,
 };
 use serde::{Deserialize, Serialize};
+
+run_op!(run_blake2s, Blake2s);
 
 impl Operation<'_, DeserializeMeDaddy> for Blake2s {
     fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {

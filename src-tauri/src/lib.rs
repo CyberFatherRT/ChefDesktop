@@ -9,12 +9,18 @@ pub use operations::*;
 use serde::{Deserialize, Serialize};
 use traits::StringTrait;
 
-// pub fn run_operations<'a, I>(operations: impl Operation<'a, I>, request: &str) -> Result<String>
-// where
-//     I: Deserialize<'a>,
-// {
-//     operations.do_black_magic(request)
-// }
+pub fn run_operations<'a, I>(
+    operations: impl Operation<'a, I>,
+    input: &str,
+    request: &str,
+) -> Result<String, String>
+where
+    I: Deserialize<'a>,
+{
+    operations
+        .do_black_magic(input, request)
+        .map_err(|err| err.to_string())
+}
 
 pub trait Operation<'a, I>
 where

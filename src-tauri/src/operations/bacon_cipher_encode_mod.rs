@@ -1,12 +1,15 @@
 use crate::{
     create_info_struct,
     libs::bacon::{BaconCipher, SupportedBaconAlphabet, SupportedBaconTranslation},
+    run_op,
     utils::SupportedLanguages,
     Operation, DOCS_URL,
 };
 use anyhow::Result;
 use serde::{Deserialize, Serialize};
 use std::mem::swap;
+
+run_op!(run_baconcipherencode, BaconCipherEncode);
 
 impl Operation<'_, DeserializeMeDaddy> for BaconCipherEncode {
     fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {
