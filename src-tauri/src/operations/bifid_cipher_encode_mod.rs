@@ -3,34 +3,33 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
 use crate::{
-    create_info_struct, create_me_daddy, create_tauri_wrapper,
+    create_info_struct,
     libs::ciphers::gen_polybius_square,
-    regex_check, run_operations,
+    regex_check,
     traits::CharTrait,
     utils::{get_alphabet, SupportedLanguages},
     Operation, DOCS_URL,
 };
 use anyhow::{bail, Result};
 
-create_tauri_wrapper!(bifid_cipher_encode, BifidCipherEncode);
-
 impl Operation<'_, DeserializeMeDaddy> for BifidCipherEncode {
-    fn do_black_magic(&self, request: &str) -> Result<String> {
+    fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {
         let request = self.validate(request)?;
-        let (input, lang, keyword) = (request.input, request.params.lang, request.params.keyword);
+        let (lang, keyword) = (request.lang, request.keyword);
         let keyword_str = match lang {
             SupportedLanguages::EN => keyword.to_uppercase().replace('J', "I"),
             SupportedLanguages::RU | SupportedLanguages::RU_WITH_YO => keyword.to_uppercase(),
         };
         let keyword: String = keyword_str.chars().dedup().collect();
         let (_, _, _, _, _, reg) = get_alphabet(&lang);
+
         if !regex_check!(reg => &keyword_str) && keyword.is_empty() {
             bail!("The key must consist only of your alphabets characters");
         }
 
         let (input, size) = match lang {
             SupportedLanguages::EN => (input.replace('J', "I").replace('j', "i"), 5),
-            SupportedLanguages::RU | SupportedLanguages::RU_WITH_YO => (input, 6),
+            SupportedLanguages::RU | SupportedLanguages::RU_WITH_YO => (input.to_string(), 6),
         };
 
         let mut x_cord: Vec<usize> = Vec::new();
@@ -97,12 +96,10 @@ impl Operation<'_, DeserializeMeDaddy> for BifidCipherEncode {
 }
 
 #[derive(Deserialize)]
-struct Params {
+struct DeserializeMeDaddy {
     lang: SupportedLanguages,
     keyword: String,
 }
-
-create_me_daddy!();
 
 /// The Bifid cipher is a cipher which uses a Polybius square in conjunction with transposition, which can be fairly difficult to decipher without knowing the alphabet keyword.
 /// <br><br/>

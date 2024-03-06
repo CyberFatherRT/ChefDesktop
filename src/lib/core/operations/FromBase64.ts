@@ -3,7 +3,7 @@ import { BaseOperation, Modules, UserInputOptions } from "../baseOperation";
 export class FromBase64 extends BaseOperation {
 
     name = "From Base64";
-    op_name = "from_base64";
+    op_name = "FromBase64";
     module = Modules["Encryption / Encoding"];
     englishDescription = "Base64 is a notation for encoding arbitrary byte data using a restricted set of symbols that can be conveniently used by humans and processed by computers.<br><br>This operation decodes raw data into an ASCII Base64 string.";
     russianDescription = "Base64 — это нотация для кодирования произвольных байтовых данных с использованием ограниченного набора символов, которые могут удобно использоваться людьми и обрабатываться компьютерами.<br><br>Эта операция декодирует необработанные данные в строку ASCII Base64.";

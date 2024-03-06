@@ -11,25 +11,21 @@ use sha2::*;
 use whirlpool::*;
 
 use crate::{
-    create_info_struct, create_me_daddy, create_tauri_wrapper,
+    create_info_struct,
     libs::base64::to_base64,
-    run_operations,
     utils::{convert_to_byte_array, to_hex, SupportedFormats},
     Operation, DOCS_URL,
 };
 
-create_tauri_wrapper!(hmac, Hmac);
-
 impl Operation<'_, DeserializeMeDaddy> for Hmac {
-    fn do_black_magic(&self, request: &str) -> Result<String> {
+    fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {
         let request = self.validate(request)?;
 
-        let (input, key, key_format, hash_function, output_format) = (
-            request.input,
-            request.params.key,
-            request.params.key_format,
-            request.params.hash_function,
-            request.params.output_format,
+        let (key, key_format, hash_function, output_format) = (
+            request.key,
+            request.key_format,
+            request.hash_function,
+            request.output_format,
         );
 
         let key = convert_to_byte_array(&key, &key_format)?;
@@ -165,14 +161,12 @@ enum SupportedOutputFormat {
 }
 
 #[derive(Deserialize)]
-struct Params {
+struct DeserializeMeDaddy {
     key: String,
     key_format: SupportedFormats,
     hash_function: SupportedHashFunctions,
     output_format: SupportedOutputFormat,
 }
-
-create_me_daddy!();
 
 /// Keyed-Hash Message Authentication Codes (HMAC) are a mechanism for message authentication using cryptographic hash functions.
 /// <br><br/>

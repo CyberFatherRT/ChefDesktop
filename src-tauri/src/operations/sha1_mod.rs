@@ -1,29 +1,17 @@
 use anyhow::Result;
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 use sha1::{Digest, Sha1};
 
-use crate::{
-    create_info_struct, create_tauri_wrapper, run_operations, utils::to_hex, Operation, DOCS_URL,
-};
+use crate::{create_info_struct, utils::to_hex, Operation, DOCS_URL};
 
-create_tauri_wrapper!(sha1, SHA1);
-
-impl Operation<'_, DeserializeMeDaddy> for SHA1 {
-    fn do_black_magic(&self, request: &str) -> Result<String> {
-        let request = self.validate(request)?;
-        let input = request.input;
-
+impl Operation<'_, ()> for SHA1 {
+    fn do_black_magic(&self, input: &str, _request: &str) -> Result<String> {
         let mut hasher = Sha1::new();
         hasher.update(input.as_bytes());
         let result = hasher.finalize().to_vec();
 
         Ok(to_hex(&result))
     }
-}
-
-#[derive(Deserialize)]
-pub struct DeserializeMeDaddy {
-    input: String,
 }
 
 /// The SHA (Secure Hash Algorithm) hash functions were designed by the NSA. SHA-1 is the most established of the existing SHA hash functions, and it is used in a variety of security applications and protocols. However, SHA-1's collision resistance has been weakening as new attacks are discovered or improved.

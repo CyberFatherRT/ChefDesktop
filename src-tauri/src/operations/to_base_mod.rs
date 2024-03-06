@@ -2,16 +2,12 @@ use anyhow::{bail, Error, Result};
 use num::{BigInt, Num};
 use serde::{Deserialize, Serialize};
 
-use crate::{
-    create_info_struct, create_me_daddy, create_tauri_wrapper, run_operations, Operation, DOCS_URL,
-};
-
-create_tauri_wrapper!(to_base, ToBase);
+use crate::{create_info_struct, Operation, DOCS_URL};
 
 impl Operation<'_, DeserializeMeDaddy> for ToBase {
-    fn do_black_magic(&self, request: &str) -> Result<String> {
+    fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {
         let request = self.validate(request)?;
-        let (input, radix) = (request.input, request.params.radix);
+        let radix = request.radix;
 
         #[allow(non_snake_case)]
         let big_D_number = BigInt::from_str_radix(&input, 10)
@@ -22,7 +18,7 @@ impl Operation<'_, DeserializeMeDaddy> for ToBase {
     fn validate(&self, request: &'_ str) -> Result<DeserializeMeDaddy> {
         let request = self.deserialize(request)?;
 
-        if !(4..=31).contains(&request.params.radix) {
+        if !(4..=31).contains(&request.radix) {
             bail!("ERROR: Param `rounds` must be between 4 and 31");
         }
 
@@ -31,11 +27,9 @@ impl Operation<'_, DeserializeMeDaddy> for ToBase {
 }
 
 #[derive(Deserialize)]
-struct Params {
+struct DeserializeMeDaddy {
     radix: u32,
 }
-
-create_me_daddy!();
 
 /// Converts a number from decimal to a given numerical base.
 /// <br><br/>

@@ -1,7 +1,6 @@
 use crate::{
-    create_info_struct, create_me_daddy, create_tauri_wrapper,
+    create_info_struct,
     libs::bacon::{BaconCipher, SupportedBaconAlphabet, SupportedBaconTranslation},
-    run_operations,
     utils::SupportedLanguages,
     Operation, DOCS_URL,
 };
@@ -9,21 +8,16 @@ use anyhow::Result;
 use serde::{Deserialize, Serialize};
 use std::mem::swap;
 
-create_tauri_wrapper!(bacon_cipher_encode, BaconCipherEncode);
-
 impl Operation<'_, DeserializeMeDaddy> for BaconCipherEncode {
-    fn do_black_magic(&self, request: &str) -> Result<String> {
+    fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {
         let request = self.validate(request)?;
-        let (
-            input,
-            Params {
-                bacon_alphabet,
-                translation,
-                keep_extra_character,
-                invert_translation,
-                lang,
-            },
-        ) = (request.input, request.params);
+        let DeserializeMeDaddy {
+            bacon_alphabet,
+            translation,
+            keep_extra_character,
+            invert_translation,
+            lang,
+        } = request;
 
         let (mut a, mut b) = match translation {
             SupportedBaconTranslation::ZeroOne => ('0', '1'),
@@ -54,10 +48,8 @@ impl Operation<'_, DeserializeMeDaddy> for BaconCipherEncode {
     }
 }
 
-create_me_daddy!();
-
 #[derive(Deserialize)]
-struct Params {
+struct DeserializeMeDaddy {
     bacon_alphabet: SupportedBaconAlphabet,
     translation: SupportedBaconTranslation,
     keep_extra_character: bool,

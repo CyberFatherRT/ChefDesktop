@@ -1,22 +1,15 @@
-use crate::{
-    create_me_daddy, create_tauri_wrapper, run_operations, utils::SupportedDelimiter, Operation,
-};
+use crate::{utils::SupportedDelimiter, Operation};
 use anyhow::Result;
 use serde::Deserialize;
 
-create_tauri_wrapper!(filter, Filter);
-
 impl Operation<'_, DeserializeMeDaddy> for Filter {
-    fn do_black_magic(&self, request: &str) -> Result<String> {
+    fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {
         let request = self.validate(request)?;
-        let (
-            input,
-            Params {
-                delimiter,
-                regex,
-                invert_condition,
-            },
-        ) = (request.input, request.params);
+        let DeserializeMeDaddy {
+            delimiter,
+            regex,
+            invert_condition,
+        } = request;
 
         let regex = regex::Regex::new(&regex)?;
 
@@ -30,12 +23,10 @@ impl Operation<'_, DeserializeMeDaddy> for Filter {
 }
 
 #[derive(Deserialize)]
-struct Params {
+struct DeserializeMeDaddy {
     delimiter: SupportedDelimiter,
     regex: String,
     invert_condition: bool,
 }
-
-create_me_daddy!();
 
 pub struct Filter;

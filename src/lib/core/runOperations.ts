@@ -4,7 +4,6 @@ import { invoke } from "@tauri-apps/api/tauri";
 
 export const input: Writable<string> = writable('');
 export const output: Writable<string> = writable('');
-// @ts-ignore
 export const operations: Writable<[string, BaseOperation][]> = writable([]);
 
 input.subscribe(async () => await gsd())
@@ -13,12 +12,9 @@ operations.subscribe(async () => await gsd())
 export async function gsd() {
 
     let foo = get(operations).map(([_, op]) => op.serialize())
-    console.log(foo)
 
-    await invoke("gsd", {
-        input: get(input),
-        ops: foo
-    }).catch(err => console.log(err))
+    await invoke("gsd", { input: get(input), ops: foo })
+    .catch(err => console.log(err))
 
 
     // let local_input = get(input);

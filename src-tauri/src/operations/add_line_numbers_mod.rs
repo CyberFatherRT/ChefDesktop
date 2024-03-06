@@ -1,13 +1,9 @@
-use crate::{create_info_struct, create_tauri_wrapper, run_operations, Operation, DOCS_URL};
+use crate::{create_info_struct, Operation, DOCS_URL};
 use anyhow::Result;
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 
-create_tauri_wrapper!(add_line_number, AddLineNumbers);
-
-impl Operation<'_, DeserializeMeDaddy> for AddLineNumbers {
-    fn do_black_magic(&self, request: &str) -> Result<String> {
-        let request = self.validate(request)?;
-        let input = request.input;
+impl Operation<'_, ()> for AddLineNumbers {
+    fn do_black_magic(&self, input: &str, _request: &str) -> Result<String> {
         let output = input
             .split('\n')
             .enumerate()
@@ -21,11 +17,6 @@ impl Operation<'_, DeserializeMeDaddy> for AddLineNumbers {
 
         Ok(output)
     }
-}
-
-#[derive(Deserialize)]
-struct DeserializeMeDaddy {
-    input: String,
 }
 
 pub struct AddLineNumbers;

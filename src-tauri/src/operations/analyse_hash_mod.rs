@@ -1,14 +1,10 @@
-use crate::{create_info_struct, create_tauri_wrapper, run_operations, Operation, DOCS_URL};
+use crate::{create_info_struct, Operation, DOCS_URL};
 use anyhow::{bail, Result};
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 
-create_tauri_wrapper!(analyse_hash, AnalyseHash);
-
-impl Operation<'_, DeserializeMeDaddy> for AnalyseHash {
-    fn do_black_magic(&self, request: &str) -> Result<String> {
-        let request = self.validate(request)?;
-        let input = request
-            .input
+impl Operation<'_, ()> for AnalyseHash {
+    fn do_black_magic(&self, input: &str, _request: &str) -> Result<String> {
+        let input = input
             .chars()
             .map(|x| match x {
                 '\t' | '\n' | ' ' => "".to_string(),
@@ -90,19 +86,6 @@ impl Operation<'_, DeserializeMeDaddy> for AnalyseHash {
 
         Ok(result)
     }
-}
-
-#[derive(Serialize)]
-pub struct SerializeMeDaddy {
-    hash_length: usize,
-    byte_length: f64,
-    bit_length: f64,
-    possible_hash_functions: Vec<&'static str>,
-}
-
-#[derive(Deserialize)]
-struct DeserializeMeDaddy {
-    input: String,
 }
 
 /// This function tries to determine information about a given hash and suggests which algorithm may have been used to generate it based on its length.

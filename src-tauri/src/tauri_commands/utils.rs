@@ -1,8 +1,9 @@
 use chef_desktop::Operations;
 use serde::{Deserialize, Serialize};
 
+#[allow(unused)]
 pub struct PrevOps {
-    ops: Vec<u32>
+    ops: Vec<u32>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]

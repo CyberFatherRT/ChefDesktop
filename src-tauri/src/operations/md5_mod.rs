@@ -1,29 +1,17 @@
 use anyhow::Result;
 use md5::{Digest, Md5};
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 
-use crate::{
-    create_info_struct, create_tauri_wrapper, run_operations, utils::to_hex, Operation, DOCS_URL,
-};
+use crate::{create_info_struct, utils::to_hex, Operation, DOCS_URL};
 
-create_tauri_wrapper!(md5, MD5);
-
-impl Operation<'_, DeserializeMeDaddy> for MD5 {
-    fn do_black_magic(&self, request: &str) -> Result<String> {
-        let request = self.validate(request)?;
-        let input = request.input;
-
+impl Operation<'_, ()> for MD5 {
+    fn do_black_magic(&self, input: &str, _request: &str) -> Result<String> {
         let mut hasher = Md5::new();
         hasher.update(input.as_bytes());
         let result = hasher.finalize().to_vec();
 
         Ok(to_hex(&result))
     }
-}
-
-#[derive(Deserialize)]
-struct DeserializeMeDaddy {
-    input: String,
 }
 
 /// MD5 (Message-Digest 5) is a widely used hash function. It has been used in a variety of security applications and is also commonly used to check the integrity of files. However, MD5 is not collision resistant, and it isn't suitable for applications like SSL/TLS certificates or digital signatures that rely on this property.

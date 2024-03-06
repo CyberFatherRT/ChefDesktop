@@ -1,29 +1,17 @@
 use anyhow::Result;
 use md2::{Digest, Md2};
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 
-use crate::{
-    create_info_struct, create_tauri_wrapper, run_operations, utils::to_hex, Operation, DOCS_URL,
-};
+use crate::{create_info_struct, utils::to_hex, Operation, DOCS_URL};
 
-create_tauri_wrapper!(md2, MD2);
-
-impl Operation<'_, DeserializeMeDaddy> for MD2 {
-    fn do_black_magic(&self, request: &str) -> Result<String> {
-        let request = self.validate(request)?;
-        let input = request.input;
-
+impl Operation<'_, ()> for MD2 {
+    fn do_black_magic(&self, input: &str, _request: &str) -> Result<String> {
         let mut hasher = Md2::new();
         hasher.update(input);
         let result = hasher.finalize().to_vec();
 
         Ok(to_hex(&result))
     }
-}
-
-#[derive(Deserialize)]
-struct DeserializeMeDaddy {
-    input: String,
 }
 
 /// The MD2 (Message-Digest 2) algorithm is a cryptographic hash function developed by Ronald Rivest in 1989. The algorithm is optimized for 8-bit computers. Although MD2 is no longer considered secure, even as of 2014, it remains in use in public key infrastructures as part of certificates generated with MD2 and RSA.

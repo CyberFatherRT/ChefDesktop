@@ -4,7 +4,7 @@ import { BaseOperation, Modules } from "../baseOperation";
 export class AnalyseHash extends BaseOperation {
 
     name = "Analyse Hash";
-    op_name = "analyse_hash";
+    op_name = "AnalyseHash";
     module = Modules.Hashing;
     englishDescription = "Tries to determine information about a given hash and suggests which algorithm may have been used to generate it based on its length.";
     russianDescription = "Пытается определить информацию о заданном хэше и предлагает, какой алгоритм мог быть использован для его генерации, исходя из его длины.";

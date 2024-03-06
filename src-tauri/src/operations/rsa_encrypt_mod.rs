@@ -5,22 +5,16 @@ use sha1::Sha1;
 use sha2::{Sha224, Sha256, Sha384, Sha512};
 use sha3::{Sha3_224, Sha3_256, Sha3_384, Sha3_512};
 
-use crate::{
-    create_info_struct, create_me_daddy, create_tauri_wrapper, libs::base64::to_base64,
-    run_operations, utils::to_hex, Operation, DOCS_URL,
-};
-
-create_tauri_wrapper!(rsa_encrypt, RSAEncrypt);
+use crate::{create_info_struct, libs::base64::to_base64, utils::to_hex, Operation, DOCS_URL};
 
 impl Operation<'_, DeserializeMeDaddy> for RSAEncrypt {
-    fn do_black_magic(&self, request: &str) -> Result<String> {
+    fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {
         let request = self.validate(request)?;
-        let (input, public_key, encrypted_scheme, message_digest_algorithm, output_format) = (
-            request.input,
-            request.params.public_key,
-            request.params.encrypted_scheme,
-            request.params.message_digest_algorithm,
-            request.params.output_format,
+        let (public_key, encrypted_scheme, message_digest_algorithm, output_format) = (
+            request.public_key,
+            request.encrypted_scheme,
+            request.message_digest_algorithm,
+            request.output_format,
         );
 
         if matches!(encrypted_scheme, SupportedEncryptionSchemes::RSA_OAEP)
@@ -93,7 +87,7 @@ enum SupportedOutputFormat {
 }
 
 #[derive(Deserialize)]
-struct Params {
+struct DeserializeMeDaddy {
     #[serde(rename = "pub_key")]
     public_key: String,
     #[serde(rename = "scheme")]
@@ -102,8 +96,6 @@ struct Params {
     message_digest_algorithm: Option<SupportedMessageDigestAlgorithm>,
     output_format: SupportedOutputFormat,
 }
-
-create_me_daddy!();
 
 /// Encrypt a message with a PEM encoded RSA public key.
 /// <br><br/>

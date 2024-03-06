@@ -9,18 +9,18 @@ pub use operations::*;
 use serde::{Deserialize, Serialize};
 use traits::StringTrait;
 
-pub fn run_operations<'a, I>(operations: impl Operation<'a, I>, request: &str) -> Result<String>
-where
-    I: Deserialize<'a>,
-{
-    operations.do_black_magic(request)
-}
+// pub fn run_operations<'a, I>(operations: impl Operation<'a, I>, request: &str) -> Result<String>
+// where
+//     I: Deserialize<'a>,
+// {
+//     operations.do_black_magic(request)
+// }
 
 pub trait Operation<'a, I>
 where
     I: Deserialize<'a>,
 {
-    fn do_black_magic(&self, request: &str) -> Result<String>;
+    fn do_black_magic(&self, input: &str, request: &str) -> Result<String>;
     fn validate(&self, request: &'a str) -> Result<I> {
         self.deserialize(request)
     }
@@ -67,11 +67,16 @@ pub enum Operations {
     FromBase64,
     FromBase,
     HMAC,
+    KuznechikDecrypt,
+    KuznechikEncrypt,
+    MagmaDecrypt,
+    MagmaEncrypt,
     MD2,
     MD4,
     MD5,
     RSADecrypt,
     RSAEncrypt,
+    Scrypt,
     SHA1,
     SHA2,
     SHA3,

@@ -2,32 +2,27 @@ use anyhow::Result;
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    create_info_struct, create_me_daddy, create_tauri_wrapper,
+    create_info_struct,
     libs::vigenere_trait::VigenereCipher,
-    run_operations,
     utils::{sub, SupportedLanguages},
     Operation, DOCS_URL,
 };
 
-create_tauri_wrapper!(vigenere_cipher_decode, VigenereCipherDecode);
-
 impl VigenereCipher for VigenereCipherDecode {}
 
 impl Operation<'_, DeserializeMeDaddy> for VigenereCipherDecode {
-    fn do_black_magic(&self, request: &str) -> Result<String> {
+    fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {
         let request = self.validate(request)?;
-        let (input, Params { lang, key }) = (request.input, request.params);
+        let DeserializeMeDaddy { lang, key } = request;
         <Self as VigenereCipher>::cipher(lang, &key, &input, sub)
     }
 }
 
 #[derive(Deserialize)]
-struct Params {
+struct DeserializeMeDaddy {
     lang: SupportedLanguages,
     key: String,
 }
-
-create_me_daddy!();
 
 /// The Vigenere cipher is a method of encrypting alphabetic text by using a series of different Caesar common based on the letters of a keyword. It is a simple form of polyalphabetic substitution.
 /// <br><br/>

@@ -1,17 +1,12 @@
-use crate::{
-    create_info_struct, create_me_daddy, create_tauri_wrapper, run_operations, utils::to_hex,
-    Operation, DOCS_URL,
-};
+use crate::{create_info_struct, utils::to_hex, Operation, DOCS_URL};
 use anyhow::Result;
 use serde::{Deserialize, Serialize};
 use sha3::{Digest, Sha3_224, Sha3_256, Sha3_384, Sha3_512};
 
-create_tauri_wrapper!(sha3, SHA3);
-
 impl Operation<'_, DeserializeMeDaddy> for SHA3 {
-    fn do_black_magic(&self, request: &str) -> Result<String> {
+    fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {
         let request = self.validate(request)?;
-        let (input, size) = (request.input, request.params.size);
+        let size = request.size;
 
         let result = match size {
             SupportedSHA3Size::SHA224 => {
@@ -50,11 +45,9 @@ enum SupportedSHA3Size {
 }
 
 #[derive(Deserialize)]
-struct Params {
+struct DeserializeMeDaddy {
     size: SupportedSHA3Size,
 }
-
-create_me_daddy!();
 
 /// The SHA-3 (Secure Hash Algorithm 3) hash functions were released by NIST on August 5, 2015. Although part of the same series of standards, SHA-3 is internally quite different from the MD5-like structure of SHA-1 and SHA-2. SHA-3 is a subset of the broader cryptographic primitive family Keccak designed by Guido Bertoni, Joan Daemen, Michaël Peeters, and Gilles Van Assche, building upon RadioGatún.
 /// <br><br/>

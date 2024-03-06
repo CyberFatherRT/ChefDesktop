@@ -1,23 +1,18 @@
+use crate::{create_info_struct, Operation, DOCS_URL};
+
+use anyhow::Result;
 use base64::{alphabet, engine, Engine};
 use serde::{Deserialize, Serialize};
 
-use crate::{
-    create_info_struct, create_me_daddy, create_tauri_wrapper, run_operations, Operation, DOCS_URL,
-};
-use anyhow::Result;
-create_tauri_wrapper!(from_base64, FromBase64);
-
 impl Operation<'_, DeserializeMeDaddy> for FromBase64 {
-    fn do_black_magic(&self, request: &str) -> Result<String> {
+    fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {
         let request = self.validate(request)?;
-        let (
-            mut input,
-            Params {
-                alphabet,
-                remove_non_alphabetic_chars,
-                strict_mode,
-            },
-        ) = (request.input, request.params);
+        let mut input = input.to_string();
+        let DeserializeMeDaddy {
+            alphabet,
+            remove_non_alphabetic_chars,
+            strict_mode,
+        } = request;
 
         let alphabet = alphabet.unwrap_or(
             "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".to_string(),
@@ -42,13 +37,11 @@ impl Operation<'_, DeserializeMeDaddy> for FromBase64 {
 }
 
 #[derive(Deserialize)]
-struct Params {
+struct DeserializeMeDaddy {
     alphabet: Option<String>,
     remove_non_alphabetic_chars: bool,
     strict_mode: bool,
 }
-
-create_me_daddy!();
 
 /// Base64 is a notation for encoding arbitrary byte data using a restricted set of symbols that can be conveniently used by humans and processed by computers.<br><br>This operation decodes raw data into an ASCII Base64 string.
 /// <br><br/>

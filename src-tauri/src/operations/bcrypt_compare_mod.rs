@@ -1,15 +1,11 @@
-use crate::{
-    create_info_struct, create_me_daddy, create_tauri_wrapper, run_operations, Operation, DOCS_URL,
-};
+use crate::{create_info_struct, Operation, DOCS_URL};
 use anyhow::{anyhow, Result};
 use serde::{Deserialize, Serialize};
 
-create_tauri_wrapper!(bcrypt_compare, BcryptCompare);
-
 impl Operation<'_, DeserializeMeDaddy> for BcryptCompare {
-    fn do_black_magic(&self, request: &str) -> Result<String> {
+    fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {
         let request = self.validate(request)?;
-        let (input, encoded_hash) = (request.input, request.params.encoded_hash);
+        let encoded_hash = request.encoded_hash;
 
         let res = bcrypt::verify(input.as_bytes(), &encoded_hash)?;
 
@@ -21,11 +17,9 @@ impl Operation<'_, DeserializeMeDaddy> for BcryptCompare {
 }
 
 #[derive(Deserialize)]
-struct Params {
+struct DeserializeMeDaddy {
     encoded_hash: String,
 }
-
-create_me_daddy!();
 
 /// Tests whether the input matches the given bcrypt hash. To test multiple possible passwords, use the 'Fork' operation.
 /// <br><br/>

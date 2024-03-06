@@ -64,13 +64,3 @@ macro_rules! create_info_struct {
         }
     };
 }
-
-#[macro_export]
-macro_rules! create_tauri_wrapper {
-    ($wrapper_name:ident, $struct_name:ident) => {
-        #[tauri::command]
-        pub fn $wrapper_name(request: &str) -> Result<String, String> {
-            run_operations($struct_name, request).map_err(|e| e.to_string())
-        }
-    };
-}

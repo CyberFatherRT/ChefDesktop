@@ -1,16 +1,12 @@
-use crate::{
-    create_info_struct, create_me_daddy, create_tauri_wrapper, run_operations, Operation, DOCS_URL,
-};
+use crate::{create_info_struct, Operation, DOCS_URL};
 use anyhow::{bail, Result};
 use bcrypt::Version;
 use serde::{Deserialize, Serialize};
 
-create_tauri_wrapper!(bcrypt, Bcrypt);
-
 impl Operation<'_, DeserializeMeDaddy> for Bcrypt {
-    fn do_black_magic(&self, request: &str) -> Result<String> {
+    fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {
         let request = self.validate(request)?;
-        let (input, Params { rounds, version }) = (request.input, request.params);
+        let DeserializeMeDaddy { rounds, version } = request;
         let res = bcrypt::hash_with_result(input.as_bytes(), rounds)?;
         Ok(res.format_for_version(version))
     }
@@ -18,7 +14,7 @@ impl Operation<'_, DeserializeMeDaddy> for Bcrypt {
     fn validate(&self, request: &'_ str) -> Result<DeserializeMeDaddy> {
         let request = self.deserialize(request)?;
 
-        if !(4..=31).contains(&request.params.rounds) {
+        if !(4..=31).contains(&request.rounds) {
             bail!("ERROR: Param `rounds` must be between 4 and 31");
         }
 
@@ -40,13 +36,11 @@ pub enum MyVersion {
 }
 
 #[derive(Deserialize)]
-struct Params {
+struct DeserializeMeDaddy {
     rounds: u32,
     #[serde(with = "MyVersion")]
     version: Version,
 }
-
-create_me_daddy!();
 
 /// bcrypt is a password hashing function designed by Niels Provos and David Mazières, based on the Blowfish cipher, and presented at USENIX in 1999. Besides incorporating a salt to protect against rainbow table attacks, bcrypt is an adaptive function: over time, the iteration count (rounds) can be increased to make it slower, so it remains resistant to brute-force search attacks even with increasing computation power.
 /// <br><br/>

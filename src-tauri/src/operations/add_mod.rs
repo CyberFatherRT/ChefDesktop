@@ -1,22 +1,18 @@
 use crate::{
-    create_info_struct, create_me_daddy, create_tauri_wrapper,
+    create_info_struct,
     libs::bitwise_op::{add as add_fun, bit_op},
-    run_operations,
     utils::{convert_to_byte_array, SupportedFormats},
     Operation, DOCS_URL,
 };
 use anyhow::Result;
 use serde::{Deserialize, Serialize};
 
-create_tauri_wrapper!(add, ADD);
-
 impl Operation<'_, DeserializeMeDaddy> for ADD {
-    fn do_black_magic(&self, request: &str) -> Result<String> {
+    fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {
         let request = self.validate(request)?;
-        let (input, Params { key, key_format }) = (request.input, request.params);
+        let DeserializeMeDaddy { key, key_format } = request;
 
         let key = convert_to_byte_array(&key, &key_format)?;
-
         let output = String::from_utf8(bit_op(&key, input.as_bytes(), add_fun))?;
 
         Ok(output)
@@ -24,12 +20,10 @@ impl Operation<'_, DeserializeMeDaddy> for ADD {
 }
 
 #[derive(Deserialize)]
-struct Params {
+struct DeserializeMeDaddy {
     key: String,
     key_format: SupportedFormats,
 }
-
-create_me_daddy!();
 
 /// ADD the input with the given key, MOD 255
 /// <br><br/>

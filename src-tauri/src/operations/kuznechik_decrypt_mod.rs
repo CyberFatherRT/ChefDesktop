@@ -1,29 +1,23 @@
 use crate::{
-    create_me_daddy, create_tauri_wrapper,
     libs::libakrypt::{
         akrypt::Akrypt,
         structs::{AkryptFunction, InputFormat, Mode, OutputFormat},
     },
-    run_operations, Operation,
+    Operation,
 };
 use anyhow::Result;
 use serde::Deserialize;
 
-create_tauri_wrapper!(kuznechik_decrypt, KuznechikDecrypt);
-
 impl Operation<'_, DeserializeMeDaddy> for KuznechikDecrypt {
-    fn do_black_magic(&self, request: &str) -> Result<String> {
+    fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {
         let request = self.validate(request)?;
-        let (
-            input,
-            Params {
-                key,
-                iv,
-                mode,
-                input_format,
-                ..
-            },
-        ) = (request.input, request.params);
+        let DeserializeMeDaddy {
+            key,
+            iv,
+            mode,
+            input_format,
+            ..
+        } = request;
 
         let akrypt = Akrypt::new(AkryptFunction::Kuznechik)
             .set_input(&input, input_format)?
@@ -36,14 +30,12 @@ impl Operation<'_, DeserializeMeDaddy> for KuznechikDecrypt {
 }
 
 #[derive(Deserialize)]
-pub struct Params {
+pub struct DeserializeMeDaddy {
     key: String,
     iv: String,
     mode: Mode,
     input_format: InputFormat,
     _output_format: Option<OutputFormat>,
 }
-
-create_me_daddy!();
 
 pub struct KuznechikDecrypt;

@@ -2,17 +2,12 @@ use anyhow::Result;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha224, Sha256, Sha384, Sha512, Sha512_224, Sha512_256};
 
-use crate::{
-    create_info_struct, create_me_daddy, create_tauri_wrapper, run_operations, utils::to_hex,
-    Operation, DOCS_URL,
-};
-
-create_tauri_wrapper!(sha2, SHA2);
+use crate::{create_info_struct, utils::to_hex, Operation, DOCS_URL};
 
 impl Operation<'_, DeserializeMeDaddy> for SHA2 {
-    fn do_black_magic(&self, request: &str) -> Result<String> {
+    fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {
         let request = self.validate(request)?;
-        let (input, size) = (request.input, request.params.size);
+        let size = request.size;
 
         let result = match size {
             SupportedSHA2Size::SHA224 => {
@@ -63,11 +58,9 @@ enum SupportedSHA2Size {
 }
 
 #[derive(Deserialize)]
-struct Params {
+struct DeserializeMeDaddy {
     size: SupportedSHA2Size,
 }
-
-create_me_daddy!();
 
 /// The SHA-2 (Secure Hash Algorithm 2) hash functions were designed by the NSA. SHA-2 includes significant changes from its predecessor, SHA-1. The SHA-2 family consists of hash functions with digests (hash values) that are 224, 256, 384 or 512 bits: SHA224, SHA256, SHA384, SHA512. SHA-512 operates on 64-bit words. SHA-256 operates on 32-bit words. SHA-384 is largely identical to SHA-512 but is truncated to 384 bytes. SHA-224 is largely identical to SHA-256 but is truncated to 224 bytes. SHA-512/224 and SHA-512/256 are truncated versions of SHA-512, but the initial values are generated using the method described in Federal Information Processing Standards (FIPS) PUB 180-4
 /// <br><br/>

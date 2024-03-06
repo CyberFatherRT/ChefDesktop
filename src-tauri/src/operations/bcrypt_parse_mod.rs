@@ -1,14 +1,11 @@
-use crate::{create_info_struct, create_tauri_wrapper, run_operations, Operation, DOCS_URL};
+use crate::{create_info_struct, Operation, DOCS_URL};
 use anyhow::{bail, Result};
 use bcrypt::BcryptError;
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 
-create_tauri_wrapper!(bcrypt_parse, BcryptParse);
-
-impl Operation<'_, DeserializeMeDaddy> for BcryptParse {
-    fn do_black_magic(&self, request: &str) -> Result<String> {
-        let request = self.validate(request)?;
-        let hash = request.hash;
+impl Operation<'_, ()> for BcryptParse {
+    fn do_black_magic(&self, input: &str, _request: &str) -> Result<String> {
+        let hash = input.to_string();
 
         let mut parts = HashParts {
             cost: 0,
@@ -42,11 +39,6 @@ impl Operation<'_, DeserializeMeDaddy> for BcryptParse {
         let result = format!("{} {} {}", parts.cost, parts.salt, parts.hash);
         Ok(result)
     }
-}
-
-#[derive(Deserialize)]
-struct DeserializeMeDaddy {
-    hash: String,
 }
 
 #[derive(Serialize)]

@@ -1,25 +1,19 @@
-use crate::{
-    create_info_struct, create_me_daddy, create_tauri_wrapper, libs::base64::from_base64,
-    run_operations, utils::to_hex, Operation, DOCS_URL,
-};
+use crate::{create_info_struct, libs::base64::from_base64, utils::to_hex, Operation, DOCS_URL};
 use anyhow::{Error, Result};
 use argon2::{Config, ThreadMode, Variant, Version};
 use serde::{Deserialize, Serialize};
 
-create_tauri_wrapper!(argon2, Argon2);
-
 impl Operation<'_, DeserializeMeDaddy> for Argon2 {
-    fn do_black_magic(&self, request: &str) -> Result<String> {
+    fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {
         let request = self.validate(request)?;
 
-        let (params, input) = (request.params, request.input);
         let (salt, variant, mem_cost, time_cost, lanes, hash_length) = (
-            params.salt,
-            params.argon2_type,
-            params.memory,
-            params.iterations,
-            params.parallelism,
-            params.hash_length,
+            request.salt,
+            request.argon2_type,
+            request.memory,
+            request.iterations,
+            request.parallelism,
+            request.hash_length,
         );
 
         let config = Config {
@@ -36,7 +30,7 @@ impl Operation<'_, DeserializeMeDaddy> for Argon2 {
 
         let hash = argon2::hash_encoded(input.as_bytes(), salt.as_bytes(), &config)?;
 
-        let output = match params.output_format {
+        let output = match request.output_format {
             OutputFormat::Encoded => hash,
             format @ (OutputFormat::Hex | OutputFormat::Raw) => {
                 let raw_hash = hash
@@ -75,7 +69,7 @@ enum OutputFormat {
 }
 
 #[derive(Deserialize)]
-struct Params {
+struct DeserializeMeDaddy {
     salt: String,
     iterations: u32,
     memory: u32,
@@ -85,8 +79,6 @@ struct Params {
     argon2_type: Variant,
     output_format: OutputFormat,
 }
-
-create_me_daddy!();
 
 /// Argon2 is a key derivation function that was selected as the winner of the Password Hashing Competition in July 2015. It was designed by Alex Biryukov, Daniel Dinu, and Dmitry Khovratovich from the University of Luxembourg.
 /// <br><br/>

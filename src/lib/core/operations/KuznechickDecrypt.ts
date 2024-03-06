@@ -3,7 +3,7 @@ import { Modules, UserInputOptions, BaseOperation } from "../baseOperation";
 export class KuznechikDecrypt extends BaseOperation {
 
     name = "Kuznechik Decrypt";
-    op_name = "kuznechik_decrypt";
+    op_name = "KuznechikDecrypt";
     module = Modules["Encryption / Encoding"];
     englishDescription = "Kuznyechik is a symmetric block cipher. It has a block size of 128 bits and key length of 256 bits. It is defined in the National Standard of the Russian Federation GOST R 34.12-2015 and also in RFC 7801.";
     russianDescription = "Кузнечик — симметричный блочный шифр. Он имеет размер блока 128 бит и длину ключа 256 бит. Он определен в Национальном стандарте РФ ГОСТ Р 34.12-2015, а также в RFC 7801.";

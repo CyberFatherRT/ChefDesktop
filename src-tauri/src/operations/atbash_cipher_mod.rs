@@ -1,18 +1,15 @@
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    create_info_struct, create_me_daddy, create_tauri_wrapper, libs::ciphers::affine_cipher_encode,
-    run_operations, utils::SupportedLanguages, Operation, DOCS_URL,
+    create_info_struct, libs::ciphers::affine_cipher_encode, utils::SupportedLanguages, Operation,
+    DOCS_URL,
 };
 use anyhow::Result;
 
-create_tauri_wrapper!(atbash_cipher, AtbashCipher);
-
 impl Operation<'_, DeserializeMeDaddy> for AtbashCipher {
-    fn do_black_magic(&self, request: &str) -> Result<String> {
+    fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {
         let request = self.validate(request)?;
-
-        let (input, lang) = (request.input, request.params.lang);
+        let lang = request.lang;
 
         match lang {
             SupportedLanguages::EN => affine_cipher_encode(&input, lang, 25, 25),
@@ -23,11 +20,9 @@ impl Operation<'_, DeserializeMeDaddy> for AtbashCipher {
 }
 
 #[derive(Deserialize)]
-struct Params {
+struct DeserializeMeDaddy {
     lang: SupportedLanguages,
 }
-
-create_me_daddy!();
 
 /// Atbash is a mono-alphabetic substitution cipher originally used to encode the Hebrew alphabet. It has been modified here for use with the Latin alphabet and Cyrillic.
 /// <br><br/>

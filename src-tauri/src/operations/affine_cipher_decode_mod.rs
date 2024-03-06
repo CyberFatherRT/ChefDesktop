@@ -1,5 +1,5 @@
 use crate::{
-    create_info_struct, create_me_daddy, create_tauri_wrapper, run_operations,
+    create_info_struct,
     traits::{CharTrait, IntegerTrait},
     utils::{
         get_alphabet, get_char_by_index, get_index_by_char, mod_inv, modulus, validate_lang,
@@ -10,20 +10,17 @@ use crate::{
 use anyhow::{anyhow, bail, Result};
 use serde::{Deserialize, Serialize};
 
-create_tauri_wrapper!(affine_cipher_decode, AffineCipherDecode);
-
 impl Operation<'_, DeserializeMeDaddy> for AffineCipherDecode {
-    fn do_black_magic(&self, request: &str) -> Result<String> {
+    fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {
         let request = self.validate(request)?;
 
-        let (input, params) = (request.input, request.params);
-        if !validate_lang(&input, &params.lang) {
+        if !validate_lang(&input, &request.lang) {
             bail!("Wrong language.");
         };
 
-        let (a, b) = (params.a as i16, params.b as i16);
+        let (a, b) = (request.a as i16, request.b as i16);
 
-        let (alp_lower, alp_upper, _, _, alp_length, _) = get_alphabet(&params.lang);
+        let (alp_lower, alp_upper, _, _, alp_length, _) = get_alphabet(&request.lang);
         if a.gcd(&(alp_length as i16)) != 1 {
             return Err(anyhow!(
                 "The value of `a` must be coprime to alphabet length({}).",
@@ -59,13 +56,11 @@ impl Operation<'_, DeserializeMeDaddy> for AffineCipherDecode {
 }
 
 #[derive(Deserialize)]
-struct Params {
+struct DeserializeMeDaddy {
     lang: SupportedLanguages,
     a: u8,
     b: u8,
 }
-
-create_me_daddy!();
 
 /// The Affine cipher is a type of monoalphabetic substitution cipher. To decrypt, each letter in an alphabet is mapped to its numeric equivalent, decrypted by a mathematical function, and converted back to a letter.
 /// <br><br/>

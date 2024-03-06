@@ -1,16 +1,11 @@
-use crate::{
-    create_info_struct, create_me_daddy, create_tauri_wrapper, run_operations, Operation, DOCS_URL,
-};
+use crate::{create_info_struct, Operation, DOCS_URL};
 use anyhow::{anyhow, Result};
 use serde::{Deserialize, Serialize};
 
-create_tauri_wrapper!(argon2_compare, Argon2Compare);
-
 impl Operation<'_, DeserializeMeDaddy> for Argon2Compare {
-    fn do_black_magic(&self, request: &str) -> Result<String> {
+    fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {
         let request = self.validate(request)?;
-
-        let (input, encoded_hash) = (request.input, request.params.encoded_hash);
+        let encoded_hash = request.encoded_hash;
 
         let res = argon2::verify_encoded(&encoded_hash, input.as_bytes())?;
 
@@ -22,11 +17,9 @@ impl Operation<'_, DeserializeMeDaddy> for Argon2Compare {
 }
 
 #[derive(Deserialize)]
-struct Params {
+struct DeserializeMeDaddy {
     encoded_hash: String,
 }
-
-create_me_daddy!();
 
 /// Tests whether the input matches the given Argon2 hash. To test multiple possible passwords, use the 'Fork' operation.
 /// <br><br/>

@@ -1,7 +1,6 @@
 use crate::{
-    create_info_struct, create_me_daddy, create_tauri_wrapper,
+    create_info_struct,
     libs::base64::to_base64,
-    run_operations,
     utils::{convert_to_byte_array, to_hex, SupportedFormats},
     Operation, DOCS_URL,
 };
@@ -12,17 +11,14 @@ use blake2::{
 };
 use serde::{Deserialize, Serialize};
 
-create_tauri_wrapper!(blake2s, Blake2s);
-
 impl Operation<'_, DeserializeMeDaddy> for Blake2s {
-    fn do_black_magic(&self, request: &str) -> Result<String> {
+    fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {
         let request = self.validate(request)?;
-        let (input, size, key, key_format, output_format) = (
-            request.input,
-            request.params.size,
-            request.params.key,
-            request.params.key_format,
-            request.params.output_format,
+        let (size, key, key_format, output_format) = (
+            request.size,
+            request.key,
+            request.key_format,
+            request.output_format,
         );
 
         let key = match key {
@@ -78,14 +74,12 @@ enum SupportedOutputFormat {
     Uint8Array,
 }
 #[derive(Deserialize)]
-struct Params {
+struct DeserializeMeDaddy {
     key: Option<String>,
     key_format: Option<SupportedFormats>,
     size: SupportedBlake2sSize,
     output_format: SupportedOutputFormat,
 }
-
-create_me_daddy!();
 
 /// BLAKE2s is a flavour of the BLAKE cryptographic hash function that is optimized for 8- to 32-bit platforms and produces digests of any size between 1 and 32 bytes.
 /// <br><br/>

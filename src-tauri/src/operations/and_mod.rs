@@ -1,19 +1,16 @@
 use crate::{
-    create_info_struct, create_me_daddy, create_tauri_wrapper,
+    create_info_struct,
     libs::bitwise_op::{and as and_fun, bit_op},
-    run_operations,
     utils::{convert_to_byte_array, SupportedFormats},
     Operation, DOCS_URL,
 };
 use anyhow::Result;
 use serde::{Deserialize, Serialize};
 
-create_tauri_wrapper!(and, AND);
-
 impl Operation<'_, DeserializeMeDaddy> for AND {
-    fn do_black_magic(&self, request: &str) -> Result<String> {
+    fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {
         let request = self.validate(request)?;
-        let (input, Params { key, key_format }) = (request.input, request.params);
+        let DeserializeMeDaddy { key, key_format } = request;
 
         let key = convert_to_byte_array(&key, &key_format)?;
 
@@ -24,12 +21,10 @@ impl Operation<'_, DeserializeMeDaddy> for AND {
 }
 
 #[derive(Deserialize)]
-struct Params {
+struct DeserializeMeDaddy {
     key: String,
     key_format: SupportedFormats,
 }
-
-create_me_daddy!();
 
 /// AND the input with the given key.
 /// <br><br/>

@@ -1,16 +1,11 @@
-use crate::{
-    create_info_struct, create_me_daddy, create_tauri_wrapper, operations::Delimiters,
-    run_operations, utils::char_repr, Operation, DOCS_URL,
-};
+use crate::{create_info_struct, operations::Delimiters, utils::char_repr, Operation, DOCS_URL};
 use anyhow::Result;
 use serde::{Deserialize, Serialize};
 
-create_tauri_wrapper!(a1z26_cipher_encode, A1Z26CipherEncode);
-
 impl Operation<'_, DeserializeMeDaddy> for A1Z26CipherEncode {
-    fn do_black_magic(&self, request: &str) -> Result<String> {
+    fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {
         let request = self.validate(request)?;
-        let (input, delimiter) = (request.input, format!("{:?}", request.params.delimiter));
+        let delimiter = format!("{:?}", request.delimiter);
 
         let mut result = String::new();
         let delimiter = char_repr(&delimiter);
@@ -30,11 +25,9 @@ impl Operation<'_, DeserializeMeDaddy> for A1Z26CipherEncode {
 }
 
 #[derive(Deserialize)]
-struct Params {
+struct DeserializeMeDaddy {
     delimiter: Delimiters,
 }
-
-create_me_daddy!();
 
 /// A1Z26 is a simple substitution cipher where each letter is replaced by its serial number in the alphabet.
 /// <br/><br/>

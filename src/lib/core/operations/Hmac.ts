@@ -3,7 +3,7 @@ import { Modules, UserInputOptions, BaseOperation } from "../baseOperation";
 export class Hmac extends BaseOperation {
 
     name = "HMAC";
-    op_name = "hmac";
+    op_name = "HMAC";
     module = Modules.Hashing;
     englishDescription = "Keyed-Hash Message Authentication Codes (HMAC) are a mechanism for message authentication using cryptographic hash functions.";
     russianDescription = "Keyed-Hash Message Authentication Codes (HMAC) — это механизм аутентификации сообщений с использованием криптографических хеш-функций.";

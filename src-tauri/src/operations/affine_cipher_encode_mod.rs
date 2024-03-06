@@ -1,37 +1,27 @@
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    create_info_struct, create_me_daddy, create_tauri_wrapper,
-    libs::ciphers::affine_cipher_encode as ace, run_operations, utils::SupportedLanguages,
+    create_info_struct, libs::ciphers::affine_cipher_encode as ace, utils::SupportedLanguages,
     Operation, DOCS_URL,
 };
 use anyhow::Result;
 
-create_tauri_wrapper!(affine_cipher_encode, AffineCipherEncode);
-
 impl Operation<'_, DeserializeMeDaddy> for AffineCipherEncode {
-    fn do_black_magic(&self, request: &str) -> Result<String> {
+    fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {
         let request = self.validate(request)?;
 
-        let (input, lang, a, b) = (
-            request.input,
-            request.params.lang,
-            request.params.a as i16,
-            request.params.b as i16,
-        );
+        let DeserializeMeDaddy { lang, a, b } = request;
 
         ace(&input, lang, a, b)
     }
 }
 
 #[derive(Deserialize)]
-struct Params {
+struct DeserializeMeDaddy {
     lang: SupportedLanguages,
-    a: u8,
-    b: u8,
+    a: i16,
+    b: i16,
 }
-
-create_me_daddy!();
 
 /// The Affine cipher is a type of monoalphabetic substitution cipher. To decrypt, each letter in an alphabet is mapped to its numeric equivalent, decrypted by a mathematical function, and converted back to a letter.
 /// <br><br/>
