@@ -584,7 +584,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "77e53693616d3075149f4ead59bdeecd204ac6b8192d8969757601b74bddf00f"
 
 [[package]]
-name = "chef_desktop"
+name = "chefdesktop"
 version = "0.0.0"
 dependencies = [
  "anyhow",

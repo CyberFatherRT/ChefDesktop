@@ -1,10 +1,10 @@
 [package]
-name = "chef_desktop"
+name = "chefdesktop"
 version = "0.0.0"
-description = "A Tauri App"
-authors = ["CyberFatherRT"]
-license = ""
-repository = ""
+description = "Cross-platform application for working with various cipher algorithms, encoding and file analysys."
+authors = ["CyberFatherRT <maks12ate@gmail.com>"]
+license = "Apache-2.0"
+repository = "https://github.com/CyberFatherRT/ChefDesktop"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
