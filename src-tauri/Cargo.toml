@@ -4,6 +4,7 @@ version = "0.0.0"
 description = "Cross-platform application for working with various cipher algorithms, encoding and file analysys."
 authors = ["CyberFatherRT <maks12ate@gmail.com>"]
 license = "Apache-2.0"
+keywords = ["crypto", "graphics", "gui", "file", "hash", "image", "time"]
 repository = "https://github.com/CyberFatherRT/ChefDesktop"
 edition = "2021"
 

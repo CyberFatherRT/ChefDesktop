@@ -5,26 +5,27 @@
 
 mod tauri_commands;
 
-use std::{env::args, process::exit};
-use nix::unistd::{fork, ForkResult};
+// use std::{env::args, process::exit};
+// use nix::unistd::{fork, ForkResult};
 
 use tauri_commands::fs::*;
 use tauri_commands::utils::*;
 
 fn main() -> anyhow::Result<()> {
 
-    let args: Vec<_> = args().collect();
-
-    if args.len() == 1 {
-        match unsafe{fork()} {
-            Ok(ForkResult::Child) => start()?,
-            Ok(_) => exit(0),
-            Err(err) => {
-                eprintln!("{err}");
-                exit(1);
-            },
-        }
-    }
+    // let args: Vec<_> = args().collect();
+    //
+    // if args.len() == 1 {
+    //     match unsafe{fork()} {
+    //         Ok(ForkResult::Child) => start()?,
+    //         Ok(_) => exit(0),
+    //         Err(err) => {
+    //             eprintln!("{err}");
+    //             exit(1);
+    //         },
+    //     }
+    // }
+    //
 
     start()?;
 

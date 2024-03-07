@@ -1,4 +1,4 @@
-use chef_desktop::*;
+use chefdesktop::*;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug)]
