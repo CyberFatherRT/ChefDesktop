@@ -1,9 +1,16 @@
+use cmake::Config;
+
+
 fn main() {
-    println!(
-        "cargo:rustc-link-search={}/../libakrypt/build",
-        std::env::var("CARGO_MANIFEST_DIR").unwrap()
-    );
+
+    let _ = Config::new("../libakrypt")
+        .out_dir("../libakrypt")
+        .build_target("all")
+        .build();
+
+    println!("cargo:rustc-link-search=../libakrypt/build");
     println!("cargo:rustc-link-lib=static=akrypt");
     println!("cargo:rustc-link-lib=static=akrypt-base");
-    tauri_build::build()
+
+    tauri_build::build();
 }
