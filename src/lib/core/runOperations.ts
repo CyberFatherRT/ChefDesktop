@@ -1,6 +1,6 @@
 import { get, writable, type Writable } from "svelte/store"
 import { BaseOperation } from "./baseOperation";
-import { invoke } from "@tauri-apps/api/tauri";
+import { invoke } from "@tauri-apps/api/core";
 
 export const input: Writable<string> = writable('');
 export const output: Writable<string> = writable('');

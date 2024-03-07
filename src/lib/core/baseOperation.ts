@@ -1,4 +1,4 @@
-import { invoke } from "@tauri-apps/api";
+import { invoke } from "@tauri-apps/api/core";
 import { gsd } from "./runOperations";
 
 export abstract class BaseOperation {

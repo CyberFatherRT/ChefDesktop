@@ -34,6 +34,8 @@ fn main() -> anyhow::Result<()> {
 
 fn start() -> anyhow::Result<()> {
     tauri::Builder::default()
+        .plugin(tauri_plugin_clipboard_manager::init())
+        .plugin(tauri_plugin_dialog::init())
         .invoke_handler(tauri::generate_handler![gsd, save_to_file, read_from_file,])
         .run(tauri::generate_context!())?;
     Ok(())

@@ -1,5 +1,5 @@
-import { invoke } from "@tauri-apps/api";
-import { open, save } from "@tauri-apps/api/dialog"
+import { invoke } from "@tauri-apps/api/core";
+import { open, save } from "@tauri-apps/plugin-dialog"
 import { input, output } from "../../../core/runOperations";
 import { get } from "svelte/store";
 
@@ -7,9 +7,12 @@ export async function readFromFile() {
 
     const selectedFile = await open({
         multiple: false
-    }) as string | null;
+    });
 
-    let content = await invoke("read_from_file", { path: selectedFile }) as string
+    // @ts-ignore
+    let filePath = selectedFile.message.path;
+
+    let content = await invoke("read_from_file", { path: filePath }) as string
     input.set(content)
 
 }

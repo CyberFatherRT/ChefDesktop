@@ -10,7 +10,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [build-dependencies]
-tauri-build = { version = "1.5.1", features = [] }
+tauri-build = { version = "2.0.0-beta", features = [] }
 
 [dependencies]
 anyhow = "1.0.79"
@@ -35,13 +35,15 @@ rust-argon2 = "1.0.1"
 hmac = "0.12.1"
 ripemd = "0.1.3"
 whirlpool = "0.10.4"
-tauri = { version = "1.6.0", features = [ "dialog-open", "dialog-save", "clipboard-write-text", "clipboard-read-text", "windows7-compat" ] }
+tauri = { version = "2.0.0-beta", features = [] }
 fix-path-env = { git = "https://github.com/tauri-apps/fix-path-env-rs" }
 lazy_static = "1.4.0"
 scrypt = "0.11.0"
 hex = "0.4.3"
 simd-adler32 = "0.3.7"
 nix = { version = "0.28.0", features = ["process"] }
+tauri-plugin-dialog = "2.0.0-beta.2"
+tauri-plugin-clipboard-manager = "2.0.0-beta.2"
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem

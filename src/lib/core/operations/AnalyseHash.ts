@@ -1,4 +1,4 @@
-import { invoke } from "@tauri-apps/api";
+import { invoke } from "@tauri-apps/api/core";
 import { BaseOperation, Modules } from "../baseOperation";
 
 export class AnalyseHash extends BaseOperation {

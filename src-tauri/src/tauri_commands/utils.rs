@@ -9,7 +9,6 @@ pub struct RecipeOperations {
 
 #[tauri::command]
 pub fn gsd(mut input: String, ops: Vec<RecipeOperations>) -> Result<String, String> {
-
     for op in ops {
         input = match op.name {
             Operations::A1Z26CipherDecode => {

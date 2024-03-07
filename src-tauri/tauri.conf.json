@@ -1,53 +1,42 @@
 {
-    "build": {
-        "beforeDevCommand": "bun run dev",
-        "beforeBuildCommand": "bun run build",
-        "devPath": "http://localhost:1420",
-        "distDir": "../dist",
-        "withGlobalTauri": true
-    },
-    "package": {
-        "productName": "ChefDesktop",
-        "version": "0.0.0"
-    },
-    "tauri": {
-        "allowlist": {
-            "clipboard": {
-                "writeText": true,
-                "readText": true
-            },
-            "dialog": {
-                "open": true,
-                "save": true
-            }
-        },
-        "bundle": {
-            "active": true,
-            "targets": "all",
-            "category": "DeveloperTool",
-            "identifier": "chefdesktop",
-            "icon": [
-                "icons/32x32.png",
-                "icons/128x128.png",
-                "icons/128x128@2x.png",
-                "icons/icon.icns",
-                "icons/icon.ico"
-            ]
-        },
-        "security": {
-            "csp": null
-        },
-        "windows": [
-            {
-                "fullscreen": false,
-                "resizable": true,
-                "title": "ChefDesktop",
-                "width": 1920,
-                "height": 1080,
-                "minWidth": 1200,
-                "minHeight": 600,
-                "fileDropEnabled": false
-            }
-        ]
+  "build": {
+    "beforeDevCommand": "bun run dev",
+    "beforeBuildCommand": "bun run build",
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:1420"
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "category": "DeveloperTool",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  },
+  "productName": "ChefDesktop",
+  "version": "0.0.0",
+  "identifier": "chefdesktop",
+  "plugins": {},
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "fullscreen": false,
+        "resizable": true,
+        "title": "ChefDesktop",
+        "width": 1920,
+        "height": 1080,
+        "minWidth": 1200,
+        "minHeight": 600,
+        "fileDropEnabled": false
+      }
+    ],
+    "security": {
+      "csp": null
     }
+  }
 }
