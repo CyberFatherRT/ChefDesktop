@@ -21,7 +21,7 @@ impl Operation<'_, DeserializeMeDaddy> for AffineCipherEncode {
 
         let DeserializeMeDaddy { lang, a, b } = request;
 
-        ace(&input, lang, a, b)
+        ace(input, lang, a, b)
     }
 }
 

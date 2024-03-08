@@ -12,7 +12,6 @@ use tauri_commands::fs::*;
 use tauri_commands::utils::*;
 
 fn main() -> anyhow::Result<()> {
-
     // let args: Vec<_> = args().collect();
     //
     // if args.len() == 1 {

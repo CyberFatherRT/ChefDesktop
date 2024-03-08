@@ -31,7 +31,7 @@ impl Operation<'_, DeserializeMeDaddy> for BaconCipherDecode {
         }
 
         let cipher = BaconCipher::new(a, b, translation, bacon_alphabet, lang);
-        let output = cipher.decode(&input).join("");
+        let output = cipher.decode(input).join("");
 
         Ok(output)
     }

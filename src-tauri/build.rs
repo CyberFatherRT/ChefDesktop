@@ -1,8 +1,6 @@
 use cmake::Config;
 
-
 fn main() {
-
     let _ = Config::new("../libakrypt")
         .out_dir("../libakrypt")
         .build_target("all")

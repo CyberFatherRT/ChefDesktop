@@ -17,7 +17,7 @@ impl Operation<'_, DeserializeMeDaddy> for VigenereCipherDecode {
     fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {
         let request = self.validate(request)?;
         let DeserializeMeDaddy { lang, key } = request;
-        <Self as VigenereCipher>::cipher(lang, &key, &input, sub)
+        <Self as VigenereCipher>::cipher(lang, &key, input, sub)
     }
 }
 

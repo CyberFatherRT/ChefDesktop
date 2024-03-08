@@ -16,7 +16,7 @@ impl Operation<'_, DeserializeMeDaddy> for AffineCipherDecode {
     fn do_black_magic(&self, input: &str, request: &str) -> Result<String> {
         let request = self.validate(request)?;
 
-        if !validate_lang(&input, &request.lang) {
+        if !validate_lang(input, &request.lang) {
             bail!("Wrong language.");
         };
 

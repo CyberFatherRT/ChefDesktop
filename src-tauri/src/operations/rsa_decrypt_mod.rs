@@ -35,7 +35,7 @@ impl Operation<'_, DeserializeMeDaddy> for RSADecrypt {
 
         let input = match input_format {
             SupportedOutputFormat::Hex => hex::decode(input)?,
-            SupportedOutputFormat::Base64 => from_base64(&input)?,
+            SupportedOutputFormat::Base64 => from_base64(input)?,
             SupportedOutputFormat::Raw => input.as_bytes().to_vec(),
         };
 

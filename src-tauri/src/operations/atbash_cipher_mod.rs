@@ -14,9 +14,9 @@ impl Operation<'_, DeserializeMeDaddy> for AtbashCipher {
         let lang = request.lang;
 
         match lang {
-            SupportedLanguages::EN => affine_cipher_encode(&input, lang, 25, 25),
-            SupportedLanguages::RU => affine_cipher_encode(&input, lang, 31, 31),
-            SupportedLanguages::RU_WITH_YO => affine_cipher_encode(&input, lang, 32, 32),
+            SupportedLanguages::EN => affine_cipher_encode(input, lang, 25, 25),
+            SupportedLanguages::RU => affine_cipher_encode(input, lang, 31, 31),
+            SupportedLanguages::RU_WITH_YO => affine_cipher_encode(input, lang, 32, 32),
         }
     }
 }

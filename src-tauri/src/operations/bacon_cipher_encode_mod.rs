@@ -33,7 +33,7 @@ impl Operation<'_, DeserializeMeDaddy> for BaconCipherEncode {
 
         let cipher = BaconCipher::new(a, b, translation, bacon_alphabet, lang);
 
-        let output = cipher.encode(&input);
+        let output = cipher.encode(input);
 
         let output = if keep_extra_character {
             output.join("")

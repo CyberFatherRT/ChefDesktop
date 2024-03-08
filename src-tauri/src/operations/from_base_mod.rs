@@ -15,7 +15,7 @@ impl Operation<'_, DeserializeMeDaddy> for FromBase {
         let radix = request.radix;
 
         #[allow(non_snake_case)]
-        let big_D_number = BigInt::from_str_radix(&input, radix)?;
+        let big_D_number = BigInt::from_str_radix(input, radix)?;
         Ok(big_D_number.to_string())
     }
 

@@ -20,6 +20,7 @@
     bun install
 
 @format:
+    bun run format
     cargo fmt --manifest-path src-tauri/Cargo.toml
 
 @clean:
