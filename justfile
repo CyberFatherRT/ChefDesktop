@@ -3,7 +3,7 @@
     just --list
 
 @build: install
-    bun run tauri build
+    bun run tauri build --no-bundle
 
 @dev: install
     bun run tauri dev
