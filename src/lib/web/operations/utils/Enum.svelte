@@ -9,11 +9,15 @@
     let selected = default_value as string;
 
     const getEnumValue = () => arg.functions.enum(value[selected]);
-
 </script>
 
 <div class="container">
-    <select bind:value={selected} on:change={getEnumValue} name="enum" id={`select-${id}`}>
+    <select
+        bind:value={selected}
+        on:change={getEnumValue}
+        name="enum"
+        id={`select-${id}`}
+    >
         {#each Object.keys(value) as name}
             {#if value[name] == selected}
                 <option value={name} selected>{name}</option>

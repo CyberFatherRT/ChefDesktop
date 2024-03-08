@@ -1,26 +1,25 @@
 <script lang="ts">
-    import {tooltip} from "./title";
+    import { tooltip } from "./title";
 
     export let title: string;
     export let icons: Object = {};
-    export let id: string = '';
-
+    export let id: string = "";
 </script>
 
 <div class="title no-select">
     <p>{title}</p>
     <span>
-    {#each Object.entries(icons) as [icon, values]}
-        <button
-            use:tooltip={{ content: values.description }}
-            on:click={values.func}
-            id="{id}_{icon}"
-            tabindex="-1"
-        >
-            <i class="material-icons">{icon}</i>
-        </button>
-    {/each}
-  </span>
+        {#each Object.entries(icons) as [icon, values]}
+            <button
+                use:tooltip={{ content: values.description }}
+                on:click={values.func}
+                id="{id}_{icon}"
+                tabindex="-1"
+            >
+                <i class="material-icons">{icon}</i>
+            </button>
+        {/each}
+    </span>
 </div>
 
 <style>
@@ -49,7 +48,6 @@
         line-height: 1;
         display: inline-block;
         margin-top: 0.5rem;
-
     }
 
     button {

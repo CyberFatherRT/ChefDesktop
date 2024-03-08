@@ -1,17 +1,17 @@
-import { get, writable, type Writable } from "svelte/store"
+import { get, writable, type Writable } from "svelte/store";
 import { BaseOperation } from "./baseOperation";
 import { invoke } from "@tauri-apps/api/core";
 
-export const input: Writable<string> = writable('');
-export const output: Writable<string> = writable('');
+export const input: Writable<string> = writable("");
+export const output: Writable<string> = writable("");
 export const operations: Writable<[string, BaseOperation][]> = writable([]);
 
-input.subscribe(async () => await gsd())
-operations.subscribe(async () => await gsd())
+input.subscribe(async () => await gsd());
+operations.subscribe(async () => await gsd());
 
 export async function gsd() {
-    let foo = get(operations).map(([_, op]) => op.serialize())
-    let result = await invoke("gsd", { input: get(input), ops: foo })
+    let foo = get(operations).map(([_, op]) => op.serialize());
+    let result = await invoke("gsd", { input: get(input), ops: foo });
 
-    output.set(result as string)
+    output.set(result as string);
 }

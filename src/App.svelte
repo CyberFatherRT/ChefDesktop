@@ -5,22 +5,22 @@
     import IO from "./lib/web/components/IO/IO.svelte";
 </script>
 
-
 <main class="no-select">
     <div class="content-wrapper">
-        <Operations/>
-        <VGutter/>
-        <Recipe/>
-        <VGutter/>
-        <IO/>
+        <Operations />
+        <VGutter />
+        <Recipe />
+        <VGutter />
+        <IO />
     </div>
 </main>
-
 
 <style>
     .content-wrapper {
         display: grid;
-        grid-template-columns: calc(20% - 2px) 4px calc(30% - 4px) 4px calc(50% - 2px);
+        grid-template-columns: calc(20% - 2px) 4px calc(30% - 4px) 4px calc(
+                50% - 2px
+            );
         height: 100%;
     }
 

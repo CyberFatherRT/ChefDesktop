@@ -9,7 +9,7 @@ export let operationList = {
     "Analyse Hash": AnalyseHash,
     "To Base64": ToBase64,
     "From Base64": FromBase64,
-    "HMAC": Hmac,
+    HMAC: Hmac,
     "Kuznechik Encrypt": KuznechikEncrypt,
     "Kuznechik Decrypt": KuznechikDecrypt,
 };
@@ -21,4 +21,4 @@ export {
     Hmac,
     KuznechikEncrypt,
     KuznechikDecrypt,
-}
+};

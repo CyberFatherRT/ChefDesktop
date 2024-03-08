@@ -11,18 +11,20 @@
 
     const getInput = () => arg.functions.input(input);
     const getEnumValue = () => arg.functions.enum(value[selected]);
-
 </script>
 
 <div class="container">
-
     <div class="input-field">
         <label for={id}>{name}</label>
-        <input bind:value={input} on:input={getInput} {id} type="text">
+        <input bind:value={input} on:input={getInput} {id} type="text" />
     </div>
 
     <div class="enum-feild">
-       <select bind:value={selected} on:change={getEnumValue} id={`select-${id}`}>
+        <select
+            bind:value={selected}
+            on:change={getEnumValue}
+            id={`select-${id}`}
+        >
             {#each Object.keys(value) as name}
                 {#if value[name] == selected}
                     <option value={name} selected>{name}</option>
@@ -32,11 +34,9 @@
             {/each}
         </select>
     </div>
-
 </div>
 
 <style>
-
     label {
         will-change: left, top, contents;
         white-space: nowrap;
@@ -77,10 +77,21 @@
 
     input:focus {
         background-color: var(--arg-background);
-        background-image: linear-gradient(to top, #19d2ad 2px, rgba(25, 118, 210, 0) 2px), linear-gradient(to top, rgba(0, 0, 0, 0.26) 1px, rgba(0, 0, 0, 0) 1px);
+        background-image: linear-gradient(
+                to top,
+                #19d2ad 2px,
+                rgba(25, 118, 210, 0) 2px
+            ),
+            linear-gradient(
+                to top,
+                rgba(0, 0, 0, 0.26) 1px,
+                rgba(0, 0, 0, 0) 1px
+            );
         filter: brightness(100%);
 
-        background-size: 100% 100%, 100% 100%;
+        background-size:
+            100% 100%,
+            100% 100%;
         transition-duration: 0.3s;
         border-color: #9acffa;
         outline: 0;
@@ -120,5 +131,4 @@
     option {
         background-color: transparent;
     }
-
 </style>

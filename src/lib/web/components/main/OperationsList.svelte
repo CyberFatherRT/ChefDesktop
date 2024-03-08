@@ -3,17 +3,22 @@
     import Operation from "./Operation.svelte";
     import { operationList } from "../../../core/operations/Operations";
 
-	let search: string;
+    let search: string;
 </script>
 
 <div class="operations">
-    <Title title="Operations"/>
+    <Title title="Operations" />
     <div class="SearchBar">
-        <input bind:value={search} on:drop|preventDefault type="text" placeholder="Search..." />
+        <input
+            bind:value={search}
+            on:drop|preventDefault
+            type="text"
+            placeholder="Search..."
+        />
     </div>
     <section class="operations-list">
         {#each Object.keys(operationList) as name}
-            <Operation {name}/>
+            <Operation {name} />
         {/each}
     </section>
 </div>
@@ -45,5 +50,4 @@
         font-size: 1rem;
         font-weight: 400;
     }
-
 </style>

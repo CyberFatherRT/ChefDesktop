@@ -14,37 +14,37 @@ export abstract class BaseOperation {
     is_breakpoint: boolean = false;
 
     event_function(input: string, key: string) {
-        this.params.set(key, input)
-        gsd()
+        this.params.set(key, input);
+        gsd();
     }
 
     serialize() {
         return {
             name: this.op_name,
-            request: JSON.stringify(Object.fromEntries(this.params))
-        }
+            request: JSON.stringify(Object.fromEntries(this.params)),
+        };
     }
 
     async run(input: string): Promise<string> {
-        let request = { input, params: Object.fromEntries(this.params) }
-        return await invoke(this.op_name, { request: JSON.stringify(request) })
+        let request = { input, params: Object.fromEntries(this.params) };
+        return await invoke(this.op_name, { request: JSON.stringify(request) });
     }
 }
 
 export interface Arg {
-    name: string,
-    op_name: string,
-    type: UserInputOptions,
-    value: any,
-    default_value: string | number | boolean,
+    name: string;
+    op_name: string;
+    type: UserInputOptions;
+    value: any;
+    default_value: string | number | boolean;
     functions: {
-        [key: string]: (input: string) => void,
-    },
+        [key: string]: (input: string) => void;
+    };
 }
 
 export enum Modules {
     "Data Format",
-    'Encryption / Encoding',
+    "Encryption / Encoding",
     "Public Key",
     "Arithmetic / Logic",
     "Networking",
@@ -70,4 +70,3 @@ export enum UserInputOptions {
     checkbox,
     intCounter,
 }
-

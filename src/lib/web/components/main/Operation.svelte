@@ -8,17 +8,15 @@
         let random_key = Math.random().toString(36).substring(4);
         // @ts-ignore
         let operation = operationList[name];
-        operations.update(ops => [...ops, [random_key, new operation()]])
+        operations.update((ops) => [...ops, [random_key, new operation()]]);
     }
-
 </script>
 
-<button on:click={addOperation} class="operation" >
+<button on:click={addOperation} class="operation">
     {name}
 </button>
 
 <style>
-
     .operation {
         cursor: grub;
         padding: 10px;
@@ -38,5 +36,4 @@
     .operation:hover {
         filter: brightness(98%);
     }
-
 </style>

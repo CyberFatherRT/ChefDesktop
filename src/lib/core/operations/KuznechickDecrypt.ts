@@ -1,12 +1,13 @@
 import { Modules, UserInputOptions, BaseOperation } from "../baseOperation";
 
 export class KuznechikDecrypt extends BaseOperation {
-
     name = "Kuznechik Decrypt";
     op_name = "KuznechikDecrypt";
     module = Modules["Encryption / Encoding"];
-    englishDescription = "Kuznyechik is a symmetric block cipher. It has a block size of 128 bits and key length of 256 bits. It is defined in the National Standard of the Russian Federation GOST R 34.12-2015 and also in RFC 7801.";
-    russianDescription = "Кузнечик — симметричный блочный шифр. Он имеет размер блока 128 бит и длину ключа 256 бит. Он определен в Национальном стандарте РФ ГОСТ Р 34.12-2015, а также в RFC 7801.";
+    englishDescription =
+        "Kuznyechik is a symmetric block cipher. It has a block size of 128 bits and key length of 256 bits. It is defined in the National Standard of the Russian Federation GOST R 34.12-2015 and also in RFC 7801.";
+    russianDescription =
+        "Кузнечик — симметричный блочный шифр. Он имеет размер блока 128 бит и длину ключа 256 бит. Он определен в Национальном стандарте РФ ГОСТ Р 34.12-2015, а также в RFC 7801.";
     infoURL = "https://en.wikipedia.org/wiki/Kuznyechik";
 
     params = new Map([
@@ -20,7 +21,6 @@ export class KuznechikDecrypt extends BaseOperation {
         ["output_format", OutputFormat.Raw],
     ]);
 
-
     is_disable = false;
     is_breakpoint = false;
 
@@ -33,8 +33,9 @@ export class KuznechikDecrypt extends BaseOperation {
             value: Key_IV_Format,
             default_value: Key_IV_Format.HEX,
             functions: {
-                input: (input: string) => this.event_function(input, 'key'),
-                enum: (input: string) => this.event_function(input, 'key_format'),
+                input: (input: string) => this.event_function(input, "key"),
+                enum: (input: string) =>
+                    this.event_function(input, "key_format"),
             },
         },
         {
@@ -44,8 +45,9 @@ export class KuznechikDecrypt extends BaseOperation {
             value: Key_IV_Format,
             default_value: Key_IV_Format.HEX,
             functions: {
-                input: (input: string) => this.event_function(input, 'iv'),
-                enum: (input: string) => this.event_function(input, 'iv_format'),
+                input: (input: string) => this.event_function(input, "iv"),
+                enum: (input: string) =>
+                    this.event_function(input, "iv_format"),
             },
         },
         {
@@ -55,8 +57,9 @@ export class KuznechikDecrypt extends BaseOperation {
             value: InputFormat,
             default: InputFormat.Raw,
             function: {
-                enum: (input: string) => this.event_function(input, "input_format"),
-            }
+                enum: (input: string) =>
+                    this.event_function(input, "input_format"),
+            },
         },
         {
             name: "Output type",
@@ -65,8 +68,9 @@ export class KuznechikDecrypt extends BaseOperation {
             value: InputFormat,
             default: InputFormat.Hex,
             function: {
-                enum: (input: string) => this.event_function(input, "output_format"),
-            }
+                enum: (input: string) =>
+                    this.event_function(input, "output_format"),
+            },
         },
         {
             name: "Block mode",
@@ -76,7 +80,7 @@ export class KuznechikDecrypt extends BaseOperation {
             default_value: Mode.ECB,
             function: {
                 enum: (input: string) => this.event_function(input, "mode"),
-            }
+            },
         },
         {
             name: "Padding",
@@ -86,9 +90,9 @@ export class KuznechikDecrypt extends BaseOperation {
             defualt_value: Padding.PKCS5,
             function: {
                 enum: (input: string) => this.event_function(input, "padding"),
-            }
-        }
-    ]
+            },
+        },
+    ];
 }
 
 enum OutputFormat {
@@ -124,4 +128,3 @@ enum Padding {
     Zero = "zero",
     Random = "random",
 }
-

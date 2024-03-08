@@ -1,16 +1,20 @@
 import { BaseOperation, Modules, UserInputOptions } from "../baseOperation";
 
 export class FromBase64 extends BaseOperation {
-
     name = "From Base64";
     op_name = "FromBase64";
     module = Modules["Encryption / Encoding"];
-    englishDescription = "Base64 is a notation for encoding arbitrary byte data using a restricted set of symbols that can be conveniently used by humans and processed by computers.<br><br>This operation decodes raw data into an ASCII Base64 string.";
-    russianDescription = "Base64 — это нотация для кодирования произвольных байтовых данных с использованием ограниченного набора символов, которые могут удобно использоваться людьми и обрабатываться компьютерами.<br><br>Эта операция декодирует необработанные данные в строку ASCII Base64.";
+    englishDescription =
+        "Base64 is a notation for encoding arbitrary byte data using a restricted set of symbols that can be conveniently used by humans and processed by computers.<br><br>This operation decodes raw data into an ASCII Base64 string.";
+    russianDescription =
+        "Base64 — это нотация для кодирования произвольных байтовых данных с использованием ограниченного набора символов, которые могут удобно использоваться людьми и обрабатываться компьютерами.<br><br>Эта операция декодирует необработанные данные в строку ASCII Base64.";
     infoURL = "https://wikipedia.org/wiki/Base64";
 
     params = new Map([
-        ["alphabet", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"],
+        [
+            "alphabet",
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",
+        ],
         ["remove_non_alphabetic_chars", "false"],
         ["strict_mode", "false"],
     ]);
@@ -37,7 +41,8 @@ export class FromBase64 extends BaseOperation {
             value: false,
             default_value: false,
             functions: {
-                checkbox: (input: string) => this.event_function(input, "remove_non_alphabetic_chars"),
+                checkbox: (input: string) =>
+                    this.event_function(input, "remove_non_alphabetic_chars"),
             },
         },
         {
@@ -47,11 +52,11 @@ export class FromBase64 extends BaseOperation {
             value: false,
             default_value: false,
             functions: {
-                checkbox: (input: string) => this.event_function(input, "strict_mode"),
+                checkbox: (input: string) =>
+                    this.event_function(input, "strict_mode"),
             },
-        }
-    ]
-
+        },
+    ];
 }
 
 enum Alphabet {

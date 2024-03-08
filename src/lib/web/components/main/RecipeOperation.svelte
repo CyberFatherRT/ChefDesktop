@@ -1,5 +1,8 @@
 <script lang="ts">
-    import { UserInputOptions, BaseOperation } from "../../../core/baseOperation";
+    import {
+        UserInputOptions,
+        BaseOperation,
+    } from "../../../core/baseOperation";
     import { operations } from "../../../core/runOperations";
     import Enum from "../../operations/utils/Enum.svelte";
     import InputWithType from "../../operations/utils/InputWithType.svelte";
@@ -9,40 +12,42 @@
     export let id: string = "";
 
     const disable = () => {
-        operations.update(ops => ops.filter(([op_name, _]) => op_name !== name));
-        operation.is_disable = !operation.is_disable
+        operations.update((ops) =>
+            ops.filter(([op_name, _]) => op_name !== name)
+        );
+        operation.is_disable = !operation.is_disable;
     };
 
     const breakpoint = () => {
-        operation.is_breakpoint = !operation.is_breakpoint
+        operation.is_breakpoint = !operation.is_breakpoint;
     };
-
 </script>
 
 <li {id} class="preview">
-
     <title>
         <p>{operation.name}</p>
         <div>
-            <button on:click={disable}> <i class="material-icons">pause</i> </button>
-            <button on:click={breakpoint}> <i class="material-icons">not_interested</i> </button>
+            <button on:click={disable}>
+                <i class="material-icons">pause</i>
+            </button>
+            <button on:click={breakpoint}>
+                <i class="material-icons">not_interested</i>
+            </button>
         </div>
     </title>
 
     <div class="arg-wrapper">
         {#each operation.args as arg}
             {#if arg.type === UserInputOptions.inputWithType}
-                <InputWithType {arg}/>
+                <InputWithType {arg} />
             {:else if arg.type === UserInputOptions.enum}
-                <Enum {arg}/>
+                <Enum {arg} />
             {/if}
         {/each}
     </div>
-
 </li>
 
 <style>
-
     title {
         display: flex;
         justify-content: space-between;
@@ -78,7 +83,6 @@
     }
 
     .preview {
-
         padding: 14px;
         cursor: grab;
         position: relative;
@@ -90,5 +94,4 @@
 
         filter: brightness(93%);
     }
-
 </style>

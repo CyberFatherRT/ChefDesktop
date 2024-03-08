@@ -1,12 +1,13 @@
 import { Modules, UserInputOptions, BaseOperation } from "../baseOperation";
 
 export class Hmac extends BaseOperation {
-
     name = "HMAC";
     op_name = "HMAC";
     module = Modules.Hashing;
-    englishDescription = "Keyed-Hash Message Authentication Codes (HMAC) are a mechanism for message authentication using cryptographic hash functions.";
-    russianDescription = "Keyed-Hash Message Authentication Codes (HMAC) — это механизм аутентификации сообщений с использованием криптографических хеш-функций.";
+    englishDescription =
+        "Keyed-Hash Message Authentication Codes (HMAC) are a mechanism for message authentication using cryptographic hash functions.";
+    russianDescription =
+        "Keyed-Hash Message Authentication Codes (HMAC) — это механизм аутентификации сообщений с использованием криптографических хеш-функций.";
     infoURL = "https://wikipedia.org/wiki/HMAC";
 
     params = new Map([
@@ -28,8 +29,9 @@ export class Hmac extends BaseOperation {
             value: KeyFormat,
             default_value: KeyFormat.UTF8,
             functions: {
-                input: (input: string) => this.event_function(input, 'key'),
-                enum: (input: string) => this.event_function(input, 'key_format'),
+                input: (input: string) => this.event_function(input, "key"),
+                enum: (input: string) =>
+                    this.event_function(input, "key_format"),
             },
         },
         {
@@ -39,8 +41,9 @@ export class Hmac extends BaseOperation {
             value: HashFunctions,
             default_value: HashFunctions.SHA256,
             functions: {
-                enum: (input: string) => this.event_function(input, 'hash_function'),
-            }
+                enum: (input: string) =>
+                    this.event_function(input, "hash_function"),
+            },
         },
         {
             name: "Output format",
@@ -49,11 +52,11 @@ export class Hmac extends BaseOperation {
             value: OutputFormats,
             default_value: OutputFormats.Hex,
             functions: {
-                enum: (input: string) => this.event_function(input, 'output_format'),
-            }
-        }
-    ]
-
+                enum: (input: string) =>
+                    this.event_function(input, "output_format"),
+            },
+        },
+    ];
 }
 
 enum OutputFormats {
@@ -85,4 +88,3 @@ enum KeyFormat {
     Base64 = "base64",
     Hex = "hex",
 }
-

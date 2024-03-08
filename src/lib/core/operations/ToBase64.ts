@@ -1,16 +1,20 @@
 import { BaseOperation, Modules, UserInputOptions } from "../baseOperation";
 
 export class ToBase64 extends BaseOperation {
-
     name = "To Base64";
     op_name = "ToBase64";
     module = Modules["Encryption / Encoding"];
-    englishDescription = "Base64 is a notation for encoding arbitrary byte data using a restricted set of symbols that can be conveniently used by humans and processed by computers.<br><br>This operation decodes raw data into an ASCII Base64 string.";
-    russianDescription = "Base64 — это нотация для кодирования произвольных байтовых данных с использованием ограниченного набора символов, которые могут удобно использоваться людьми и обрабатываться компьютерами.<br><br>Эта операция декодирует необработанные данные в строку ASCII Base64.";
+    englishDescription =
+        "Base64 is a notation for encoding arbitrary byte data using a restricted set of symbols that can be conveniently used by humans and processed by computers.<br><br>This operation decodes raw data into an ASCII Base64 string.";
+    russianDescription =
+        "Base64 — это нотация для кодирования произвольных байтовых данных с использованием ограниченного набора символов, которые могут удобно использоваться людьми и обрабатываться компьютерами.<br><br>Эта операция декодирует необработанные данные в строку ASCII Base64.";
     infoURL = "https://wikipedia.org/wiki/Base64";
 
     params = new Map([
-        ["alphabet", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"],
+        [
+            "alphabet",
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",
+        ],
     ]);
 
     is_disable = false;
@@ -28,8 +32,7 @@ export class ToBase64 extends BaseOperation {
                 enum: (input: string) => this.event_function(input, "alphabet"),
             },
         },
-    ]
-
+    ];
 }
 
 enum Alphabet {
