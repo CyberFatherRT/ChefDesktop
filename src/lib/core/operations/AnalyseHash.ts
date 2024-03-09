@@ -5,12 +5,12 @@ export class AnalyseHash extends BaseOperation {
     name = "Analyse Hash";
     op_name = "AnalyseHash";
     module = Modules.Hashing;
-    englishDescription =
-        "Tries to determine information about a given hash and suggests which algorithm may have been used to generate it based on its length.";
-    russianDescription =
-        "Пытается определить информацию о заданном хэше и предлагает, какой алгоритм мог быть использован для его генерации, исходя из его длины.";
-    infoURL =
-        "https://wikipedia.org/wiki/Comparison_of_cryptographic_hash_functions";
+    // prettier-ignore
+    englishDescription = "Tries to determine information about a given hash and suggests which algorithm may have been used to generate it based on its length.";
+    // prettier-ignore
+    russianDescription = "Пытается определить информацию о заданном хэше и предлагает, какой алгоритм мог быть использован для его генерации, исходя из его длины.";
+    // prettier-ignore
+    infoURL = "https://wikipedia.org/wiki/Comparison_of_cryptographic_hash_functions";
 
     params = new Map();
 
@@ -18,8 +18,8 @@ export class AnalyseHash extends BaseOperation {
     is_breakpoint = false;
 
     async run(input: string): Promise<string> {
-        let request = { input, params: Object.fromEntries(this.params) };
-        let [result, status] = await invoke(this.op_name, {
+        const request = { input, params: Object.fromEntries(this.params) };
+        const [result, status] = await invoke(this.op_name, {
             request: JSON.stringify(request),
         })
             .then((ok) => [ok, true])
@@ -29,7 +29,7 @@ export class AnalyseHash extends BaseOperation {
             return "Invalid Hash";
         }
 
-        let [hash_length, byte_length, bit_length, ...hashes] =
+        const [hash_length, byte_length, bit_length, ...hashes] =
             result.split(" ");
         return `Hash length: ${hash_length}
 Byte length: ${byte_length}

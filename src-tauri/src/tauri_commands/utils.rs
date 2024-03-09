@@ -1,4 +1,4 @@
-use chefdesktop::*;
+use chef_desktop::*;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -9,6 +9,7 @@ pub struct RecipeOperations {
 
 #[tauri::command]
 pub fn gsd(mut input: String, ops: Vec<RecipeOperations>) -> Result<String, String> {
+    println!("{ops:?}");
     for op in ops {
         input = match op.name {
             Operations::A1Z26CipherDecode => {

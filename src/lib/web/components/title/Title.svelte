@@ -10,12 +10,7 @@
     <p>{title}</p>
     <span>
         {#each Object.entries(icons) as [icon, values]}
-            <button
-                use:tooltip={{ content: values.description }}
-                on:click={values.func}
-                id="{id}_{icon}"
-                tabindex="-1"
-            >
+            <button use:tooltip={{ content: values.description }} on:click={values.func} id="{id}_{icon}" tabindex="-1">
                 <i class="material-icons">{icon}</i>
             </button>
         {/each}

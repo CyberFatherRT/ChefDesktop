@@ -9,9 +9,9 @@ export async function readFromFile() {
     });
 
     // @ts-ignore
-    let filePath = selectedFile.message.path;
+    const filePath = selectedFile.message.path;
 
-    let content = (await invoke("read_from_file", {
+    const content = (await invoke("read_from_file", {
         path: filePath,
     })) as string;
     input.set(content);
@@ -19,7 +19,7 @@ export async function readFromFile() {
 
 export async function saveToFile() {
     const savePath = await save();
-    let output_content = get(output);
+    const output_content = get(output);
 
     await invoke("save_to_file", { path: savePath, content: output_content });
 }

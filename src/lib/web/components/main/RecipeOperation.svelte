@@ -1,8 +1,5 @@
 <script lang="ts">
-    import {
-        UserInputOptions,
-        BaseOperation,
-    } from "../../../core/baseOperation";
+    import { UserInputOptions, BaseOperation } from "../../../core/baseOperation";
     import { operations } from "../../../core/runOperations";
     import Enum from "../../operations/utils/Enum.svelte";
     import InputWithType from "../../operations/utils/InputWithType.svelte";
@@ -12,9 +9,7 @@
     export let id: string = "";
 
     const disable = () => {
-        operations.update((ops) =>
-            ops.filter(([op_name, _]) => op_name !== name)
-        );
+        operations.update((ops) => ops.filter(([op_name, _]) => op_name !== name));
         operation.is_disable = !operation.is_disable;
     };
 

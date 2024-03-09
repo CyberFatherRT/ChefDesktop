@@ -26,7 +26,7 @@ export abstract class BaseOperation {
     }
 
     async run(input: string): Promise<string> {
-        let request = { input, params: Object.fromEntries(this.params) };
+        const request = { input, params: Object.fromEntries(this.params) };
         return await invoke(this.op_name, { request: JSON.stringify(request) });
     }
 }
@@ -35,6 +35,7 @@ export interface Arg {
     name: string;
     op_name: string;
     type: UserInputOptions;
+    // @ts-error-expected
     value: any;
     default_value: string | number | boolean;
     functions: {
