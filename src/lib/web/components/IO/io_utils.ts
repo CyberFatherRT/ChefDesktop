@@ -8,7 +8,10 @@ export async function readFromFile() {
         multiple: false,
     });
 
-    // @ts-ignore
+    if (selectedFile == null) {
+        return;
+    }
+
     const filePath = selectedFile.path;
 
     const content = (await invoke("read_from_file", {
