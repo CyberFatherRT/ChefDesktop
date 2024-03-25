@@ -1,0 +1,18 @@
+# directories
+.git
+.docker
+.xwin-cache
+.idea
+.vscode
+src-tauri/target
+libakrypt/build
+dist
+node_modules
+
+# files
+LICENSE
+README.md
+bun.lockb
+.dockerignore
+.gitignore
+src-tauri/Cargo.lock

@@ -9,7 +9,7 @@ export async function readFromFile() {
     });
 
     // @ts-ignore
-    const filePath = selectedFile.message.path;
+    const filePath = selectedFile.path;
 
     const content = (await invoke("read_from_file", {
         path: filePath,
