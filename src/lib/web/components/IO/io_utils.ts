@@ -4,25 +4,25 @@ import { input, output } from "../../../core/runOperations";
 import { get } from "svelte/store";
 
 export async function readFromFile() {
-    const selectedFile = await open({
-        multiple: false,
-    });
+	const selectedFile = await open({
+		multiple: false
+	});
 
-    if (selectedFile == null) {
-        return;
-    }
+	if (selectedFile == null) {
+		return;
+	}
 
-    const filePath = selectedFile.path;
+	const filePath = selectedFile.path;
 
-    const content = (await invoke("read_from_file", {
-        path: filePath,
-    })) as string;
-    input.set(content);
+	const content = (await invoke("read_from_file", {
+		path: filePath
+	})) as string;
+	input.set(content);
 }
 
 export async function saveToFile() {
-    const savePath = await save();
-    const output_content = get(output);
+	const savePath = await save();
+	const output_content = get(output);
 
-    await invoke("save_to_file", { path: savePath, content: output_content });
+	await invoke("save_to_file", { path: savePath, content: output_content });
 }

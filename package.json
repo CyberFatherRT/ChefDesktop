@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "lint": "eslint src",
     "check": "svelte-check --tsconfig ./tsconfig.json",
-    "format": "prettier -w ./src",
+    "lint": "prettier --check src && eslint src",
+    "format": "prettier --write src",
     "build": "vite build",
     "preview": "vite preview",
     "tauri": "tauri",

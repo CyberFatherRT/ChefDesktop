@@ -6,19 +6,12 @@ import { KuznechikEncrypt } from "./KuznechickEncrypt";
 import { ToBase64 } from "./ToBase64";
 
 export const operationList = {
-    "Analyse Hash": AnalyseHash,
-    "To Base64": ToBase64,
-    "From Base64": FromBase64,
-    HMAC: Hmac,
-    "Kuznechik Encrypt": KuznechikEncrypt,
-    "Kuznechik Decrypt": KuznechikDecrypt,
+	"Analyse Hash": AnalyseHash,
+	"To Base64": ToBase64,
+	"From Base64": FromBase64,
+	HMAC: Hmac,
+	"Kuznechik Encrypt": KuznechikEncrypt,
+	"Kuznechik Decrypt": KuznechikDecrypt
 };
 
-export {
-    AnalyseHash,
-    ToBase64,
-    FromBase64,
-    Hmac,
-    KuznechikEncrypt,
-    KuznechikDecrypt,
-};
+export { AnalyseHash, ToBase64, FromBase64, Hmac, KuznechikEncrypt, KuznechikDecrypt };

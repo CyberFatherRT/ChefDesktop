@@ -1,92 +1,92 @@
 <script lang="ts">
-    import { UserInputOptions, BaseOperation } from "../../../core/baseOperation";
-    import { operations } from "../../../core/runOperations";
-    import Enum from "../../operations/utils/Enum.svelte";
-    import InputWithType from "../../operations/utils/InputWithType.svelte";
+	import { UserInputOptions, BaseOperation } from "../../../core/baseOperation";
+	import { operations } from "../../../core/runOperations";
+	import Enum from "../../operations/utils/Enum.svelte";
+	import InputWithType from "../../operations/utils/InputWithType.svelte";
 
-    export let operation: BaseOperation;
-    export let name: string;
-    export let id: string = "";
+	export let operation: BaseOperation;
+	export let name: string;
+	export let id: string = "";
 
-    const disable = () => {
-        operations.update((ops) => ops.filter(([op_name, _]) => op_name !== name));
-        operation.is_disable = !operation.is_disable;
-    };
+	const disable = () => {
+		operations.update((ops) => ops.filter(([op_name, _]) => op_name !== name));
+		operation.is_disable = !operation.is_disable;
+	};
 
-    const breakpoint = () => {
-        operation.is_breakpoint = !operation.is_breakpoint;
-    };
+	const breakpoint = () => {
+		operation.is_breakpoint = !operation.is_breakpoint;
+	};
 </script>
 
 <li {id} class="preview">
-    <title>
-        <p>{operation.name}</p>
-        <div>
-            <button on:click={disable}>
-                <i class="material-icons">pause</i>
-            </button>
-            <button on:click={breakpoint}>
-                <i class="material-icons">not_interested</i>
-            </button>
-        </div>
-    </title>
+	<title>
+		<p>{operation.name}</p>
+		<div>
+			<button on:click={disable}>
+				<i class="material-icons">pause</i>
+			</button>
+			<button on:click={breakpoint}>
+				<i class="material-icons">not_interested</i>
+			</button>
+		</div>
+	</title>
 
-    <div class="arg-wrapper">
-        {#each operation.args as arg}
-            {#if arg.type === UserInputOptions.inputWithType}
-                <InputWithType {arg} />
-            {:else if arg.type === UserInputOptions.enum}
-                <Enum {arg} />
-            {/if}
-        {/each}
-    </div>
+	<div class="arg-wrapper">
+		{#each operation.args as arg}
+			{#if arg.type === UserInputOptions.inputWithType}
+				<InputWithType {arg} />
+			{:else if arg.type === UserInputOptions.enum}
+				<Enum {arg} />
+			{/if}
+		{/each}
+	</div>
 </li>
 
 <style>
-    title {
-        display: flex;
-        justify-content: space-between;
-        height: 39px;
-    }
+	title {
+		display: flex;
+		justify-content: space-between;
+		height: 39px;
+	}
 
-    .arg-wrapper {
-        display: flex;
-        flex: row;
-    }
+	.arg-wrapper {
+		display: flex;
+		flex: row;
+	}
 
-    i {
-        font-size: 18px;
-    }
+	i {
+		font-size: 18px;
+	}
 
-    p {
-        font-size: 14px;
-        color: var(--rec-list-operation-font-color);
-        font-weight: var(--rec-list-operation-font-weight);
-    }
+	p {
+		font-size: 14px;
+		color: var(--rec-list-operation-font-color);
+		font-weight: var(--rec-list-operation-font-weight);
+	}
 
-    button {
-        margin-right: 10px;
+	button {
+		margin-right: 10px;
 
-        background: transparent;
-        border: none;
-        color: var(--breakpoint-icon-color);
+		background: transparent;
+		border: none;
+		color: var(--breakpoint-icon-color);
 
-        float: right;
-        cursor: pointer;
+		float: right;
+		cursor: pointer;
 
-        line-height: var(--primary-line-height);
-    }
+		line-height: var(--primary-line-height);
+	}
 
-    .preview {
-        padding: 14px;
-        cursor: grab;
-        position: relative;
+	.preview {
+		padding: 14px;
+		cursor: grab;
+		position: relative;
 
-        width: 100%;
+		width: 100%;
 
-        background-color: var(--rec-list-operation-bg-color);
-        border-bottom: 1px solid var(--rec-list-operation-border-color);
+		background-color: var(--rec-list-operation-bg-color);
+		border-bottom: 1px solid var(--rec-list-operation-border-color);
 
-        filter: brightness(93%);
-    }
+		filter: brightness(93%);
+	}
 </style>

@@ -10,8 +10,8 @@ input.subscribe(async () => await gsd());
 operations.subscribe(async () => await gsd());
 
 export async function gsd() {
-    const foo = get(operations).map(([_, op]) => op.serialize());
-    const result = await invoke("gsd", { input: get(input), ops: foo });
+	const foo = get(operations).map(([_, op]) => op.serialize());
+	const result = await invoke("gsd", { input: get(input), ops: foo });
 
-    output.set(result as string);
+	output.set(result as string);
 }

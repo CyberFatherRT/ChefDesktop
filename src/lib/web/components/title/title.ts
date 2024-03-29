@@ -4,20 +4,20 @@ import "tippy.js/dist/tippy.css";
 type Options = Partial<Props>;
 
 export function tooltip(element: HTMLElement, options: Options) {
-    const option: Options = {
-        ...options,
-        arrow: false,
-        theme: "custom",
-    };
+	const option: Options = {
+		...options,
+		arrow: false,
+		theme: "custom"
+	};
 
-    const tooltip = tippy(element, option);
+	const tooltip = tippy(element, option);
 
-    return {
-        update() {
-            tooltip.setProps(option);
-        },
-        destroy() {
-            tooltip.destroy();
-        },
-    };
+	return {
+		update() {
+			tooltip.setProps(option);
+		},
+		destroy() {
+			tooltip.destroy();
+		}
+	};
 }
