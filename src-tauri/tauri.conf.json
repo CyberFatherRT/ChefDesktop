@@ -31,8 +31,7 @@
         "width": 1920,
         "height": 1080,
         "minWidth": 1200,
-        "minHeight": 700,
-        "fileDropEnabled": false
+        "minHeight": 700
       }
     ],
     "security": {
